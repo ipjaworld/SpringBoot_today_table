@@ -6,7 +6,17 @@
 <mapper namespace="com.ezen.todaytable.dao.IRecipeDao">
 
 	<resultMap  id="RecipeMap" type="java.util.HashMap"></resultMap>
-
-
+	
+	<!-- <select id="getAllRecipe">
+		select * from recipe_
+	</select>
+	
+	<select id="getVariableRecipe">
+	
+	</select>
+	
+	<select id="getBannerList">
+	
+	</select> -->
 
 </mapper>

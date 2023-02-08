@@ -23,11 +23,11 @@ public class MainService {
 
 	public void startIndex(HashMap<String, Object> paramMap) {
 		
-		rdao.getAllRecipe(paramMap);
-		
-		rdao.getVariableRecipe(paramMap);
-		
-		rdao.getBannerList(paramMap);
+//		rdao.getAllRecipe(paramMap);
+//		
+//		rdao.getVariableRecipe(paramMap);
+//		
+//		rdao.getBannerList(paramMap);
 		
 	}
 	

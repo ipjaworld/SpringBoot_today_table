@@ -32,18 +32,18 @@ public class MainController {
 		paramMap.put("ref_cursor2", null);
 		paramMap.put("ref_cursor3", null);
 		
-		ms.startIndex(paramMap);
+		//ms.startIndex(paramMap);
 		
-		ArrayList<HashMap<String , Object>> allList
-			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor1");
-		ArrayList<HashMap<String , Object>> typeList
-			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor2");
-		ArrayList<HashMap<String , Object>> bannerList
-			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor3");
+		//ArrayList<HashMap<String , Object>> allList
+		//	= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor1");
+		//ArrayList<HashMap<String , Object>> typeList
+		//	= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor2");
+		//ArrayList<HashMap<String , Object>> bannerList
+		//	= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor3");
 		
-		mav.addObject("allList", allList);
-		mav.addObject("typeList", typeList);
-		mav.addObject("bannerList", bannerList);
+		//mav.addObject("allList", allList);
+		//mav.addObject("typeList", typeList);
+		//mav.addObject("bannerList", bannerList);
 		
 		
 		mav.setViewName("index");
