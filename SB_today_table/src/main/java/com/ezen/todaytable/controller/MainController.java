@@ -26,6 +26,8 @@ public class MainController {
 		
 		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("ListName", "type");
 		paramMap.put("ref_cursor1", null);
 		paramMap.put("ref_cursor2", null);
 		paramMap.put("ref_cursor3", null);

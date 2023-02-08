@@ -22,7 +22,12 @@ public class MainService {
 	IRecipeDao rdao;
 
 	public void startIndex(HashMap<String, Object> paramMap) {
-		// TODO Auto-generated method stub
+		
+		rdao.getAllRecipe(paramMap);
+		
+		rdao.getVariableRecipe(paramMap);
+		
+		rdao.getBannerList(paramMap);
 		
 	}
 	
