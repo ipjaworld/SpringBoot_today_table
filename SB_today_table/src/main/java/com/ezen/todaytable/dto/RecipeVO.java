@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class RecipeVO {
-	private int rnum;  
+	private int rnum;
 	private String id; 
 	private String nick;
 	private String img;
