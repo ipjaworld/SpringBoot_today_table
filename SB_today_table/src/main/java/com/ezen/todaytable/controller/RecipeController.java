@@ -22,18 +22,15 @@ public class RecipeController {
 	public ModelAndView recipeDetailView(@RequestParam("rnum") int rnum) {
 		ModelAndView mav = new ModelAndView();
 		
-		// paramMap으로 1,2,3 전달받기
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-		
 		paramMap.put("rnum", rnum);
 		
 		
 		// 1. recipe 전달받는 cursor
 		paramMap.put("ref_cursor1", null);
-		// 2. 재료 정보 (service에서 배열 합친 후 controller로 하나의 배열로 전달) (또는 controller에서 작업)
+		// 2. 재료 정보
 		paramMap.put("ref_cursor2", null);
 		paramMap.put("ref_cursor3", null);
-		
 		// 3. processImages 
 		paramMap.put("ref_cursor4", null);
 		// 4. 댓글 리스트
@@ -81,6 +78,35 @@ public class RecipeController {
 		mav.addObject("rnum", paramMap.get("rnum"));
 		mav.setViewName("recipe/recipeDetail");
 		return mav;
+	}
+	
+	@RequestMapping("/recipeDetailWithoutView")
+	public ModelAndView recipeDetailWithoutView(@RequestParam("rnum") int rnum) {
+		ModelAndView mav = new ModelAndView();
+		
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("rnum", rnum);
+		// 1. recipe 전달받는 cursor
+		paramMap.put("ref_cursor1", null);
+		// 2. 재료 정보
+		paramMap.put("ref_cursor2", null);
+		paramMap.put("ref_cursor3", null);
+		// 3. processImages 
+		paramMap.put("ref_cursor4", null);
+		// 4. 댓글 리스트
+		paramMap.put("ref_cursor5", null);
+		rs.recipeDetailWithoutView(paramMap);
+		
+		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor1");
+		mav.addObject("recipeVO", list.get(0));
+		mav.addObject("ingArray", (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor2"));
+		mav.addObject("qtyArray", (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor3"));
+		mav.addObject("processImgs", (ArrayList<HashMap<String, Object>>)paramMap.get("ref_cursor4"));
+		mav.addObject("replyList", (ArrayList<HashMap<String, Object>>)paramMap.get("ref_cursor5"));
+		mav.addObject("rnum", paramMap.get("rnum"));
+		mav.setViewName("recipe/recipeDetail");
+		return mav;
+		
 	}
 	
 	

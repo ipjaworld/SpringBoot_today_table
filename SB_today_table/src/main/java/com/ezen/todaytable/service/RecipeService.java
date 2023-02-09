@@ -33,6 +33,11 @@ public class RecipeService {
 		
 		
 	}
+
+	public void recipeDetailWithoutView(HashMap<String, Object> paramMap) {
+		rdao.getRecipe(paramMap);
+		
+	}
 	
 	
 	
