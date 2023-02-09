@@ -20,10 +20,17 @@
 	{
 		CALL insertMemberttable(
 		#{id}, #{pwd},#{name},#{nick},#{email},#{phone},#{zip_num},#{address1},#{address2},#{address3},#{img}
-		
 		)
 	}
 	</insert>
+	
+	<update id ="updateMemberttable" statementType="CALLABLE"  parameterType="java.util.HashMap">
+	{
+		CALL updateMemberttable(
+		#{id}, #{pwd},#{name},#{nick},#{email},#{phone},#{zip_num},#{address1},#{address2},#{address3},#{img}
+		)
+	}
+	</update>
 	
 
 

@@ -1,5 +1,6 @@
 package com.ezen.todaytable.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,12 +21,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen.todaytable.dto.MemberVO;
 import com.ezen.todaytable.service.MemberService;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 @Controller
 public class MemberController {
 
 	@Autowired
 	MemberService ms;
+	
+	
 	
 	@RequestMapping(value="/loginForm")
 	public String loginForm() {
@@ -64,7 +69,7 @@ public class MemberController {
 		      else if( mvo.get("PWD").equals(membervo.getPwd())) {
 		         HttpSession session = request.getSession();
 		         session.setAttribute("loginUser", mvo);
-		         url = "redirect:/";
+		         url = "index";
 		      }else if(mvo.get("USEYN").equals("N")) {
 		    	  model.addAttribute("message", "휴면 계정입니다. 휴면계정을 복구하려면 관리자에게 문의하세요");
 		      }
@@ -115,9 +120,9 @@ public class MemberController {
 		
 		return "member/idcheck";
 	}
-	
 	@Autowired
 	ServletContext context;
+	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	   public ModelAndView join(
 	            @ModelAttribute("dto") @Valid MemberVO membervo, BindingResult result,
@@ -155,5 +160,63 @@ public class MemberController {
 	      return mav;
 	   }
 	
-	
+	@RequestMapping(value="/updateMemForm")
+	public String updateMemForm () {
+		return "member/updateMemForm";
+	}
+	 @RequestMapping(value="/memberUpdate",method=RequestMethod.POST)
+	   public ModelAndView memberUpdate(HttpServletRequest request,
+			   @ModelAttribute("dto") @Valid MemberVO membervo, BindingResult result,
+	            @RequestParam(value="pwdCheck", required=false) String pwdCheck
+	            ) {
+		  String savepath = context.getRealPath("/imageProfile");
+			HashMap<String,Object> paramMap =new HashMap<String, Object>();
+	 
+		   ModelAndView mav = new ModelAndView();
+		   try {
+				MultipartRequest multi = new MultipartRequest(
+						request,savepath,5*1024*1024, "UTF-8", new DefaultFileRenamePolicy()
+						);
+		   mav.setViewName("member/memberUpdateForm");
+		  if(result.getFieldError("pwd")!=null)
+		        mav.addObject("message", result.getFieldError("pwd").getDefaultMessage() );
+		      else if(result.getFieldError("name")!=null)
+		         mav.addObject("message", result.getFieldError("name").getDefaultMessage() );
+		      else if(result.getFieldError("nick")!=null)
+			         mav.addObject("message", result.getFieldError("nick").getDefaultMessage() );
+		      else if(result.getFieldError("email")!=null)
+		         mav.addObject("message", result.getFieldError("email").getDefaultMessage() );
+		      else if(result.getFieldError("phone")!=null)
+		         mav.addObject("message", result.getFieldError("phone").getDefaultMessage() );
+		      else if( pwdCheck == null || ( pwdCheck != null && !pwdCheck.equals(membervo.getPwd() ) ) )
+		         mav.addObject("message", "비밀번호 확인이 일치하지 않습니다." );
+		      else {
+		    	  
+		    	  paramMap.put("ID",membervo.getId());
+		    	  paramMap.put("PWD",membervo.getPwd());
+		    	  paramMap.put("NAME",membervo.getName());
+		    	  paramMap.put("NICK",membervo.getNick());
+		    	  paramMap.put("EMAIL",membervo.getEmail());
+		    	  paramMap.put("PHONE",membervo.getPhone());
+		    	  paramMap.put("ZIP_NUM",membervo.getZip_num());
+		    	  paramMap.put("ADDRESS1",membervo.getAddress1());
+		    	  paramMap.put("ADDRESS2",membervo.getAddress2());
+		    	  paramMap.put("ADDRESS3",membervo.getAddress3());
+		    	  
+		    	  if(multi.getFilesystemName("image")==null) {
+						paramMap.put("image", multi.getParameter("oldfilenmae"));// 수정하려는 이미지가 없을 경우 이전 이미지 적용
+					}else {
+						paramMap.put("image", multi.getFilesystemName("image"));
+					}
+		         ms.updateMemberttable( paramMap );
+		         HttpSession session = request.getSession();
+		         session.setAttribute("loginUser", paramMap);
+		         mav.setViewName("redirect:/");
+		      		}
+		     
+		   }catch (IOException e) {
+				e.printStackTrace();
+			}
+		   return mav;
+	 }
 }

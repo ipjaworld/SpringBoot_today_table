@@ -14,6 +14,8 @@ public interface IMemberDao {
 	void getMembersList(HashMap<String, Object> paramMap);
 
 	void insertMemberttable(MemberVO membervo);
+
+	void updateMemberttable(HashMap<String, Object> paramMap);
 	
 
 }

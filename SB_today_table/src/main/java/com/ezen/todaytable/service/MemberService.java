@@ -23,5 +23,10 @@ public class MemberService {
 	public void insertMemberttable( MemberVO membervo) {
 		mdao.insertMemberttable(membervo);
 	}
+
+	public void updateMemberttable(HashMap<String, Object> paramMap) {
+		mdao.updateMemberttable(paramMap);
+		
+	}
 	
 }
