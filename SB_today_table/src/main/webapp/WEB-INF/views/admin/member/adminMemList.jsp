@@ -26,7 +26,7 @@
 	    </c:otherwise>
 	    </c:choose>
 	    </td>
-	    	<td><a href="recipe.do?command=adminMemDetail&id=${membersVO.ID}">${membersVO.NAME}</a></td><td>${membersVO.EMAIL}</td><td>${membersVO.NICK}</td>
+	    	<td><a href="go_view('adminMemDetail','id','${membersVO.ID}')">${membersVO.NAME}</a></td><td>${membersVO.EMAIL}</td><td>${membersVO.NICK}</td>
 	    	<td><fmt:formatDate value="${membersVO.INDATE}"/></td></tr>
 	  </c:forEach>
 	  <tr>

@@ -32,7 +32,7 @@
     </div>
 
     <div class="smi_title">
-        <div><a href="recipe.do?command=adminQnaList&page=1&key=">Q&amp;A 관리</a></div>
+        <div><a href="adminQnaList?first='1'">Q&amp;A 관리</a></div>
     </div>
 </div>
 

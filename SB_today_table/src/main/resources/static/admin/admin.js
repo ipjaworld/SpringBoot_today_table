@@ -135,7 +135,7 @@ function go_reply_delete(){
 	    document.frmm.submit();    
 	}    
 }
-
+/*qna삭제*/
 function go_adminQna_delete(){
 	var count = 0;
 	if( document.frm.qseq.length == undefined ){
@@ -152,12 +152,12 @@ function go_adminQna_delete(){
 		alert("삭제할 항목을 선택하세요");
 	}	
 	else{	
-		document.frm.action = "recipe.do?command=adminDeleteQna";
+		document.frm.action = "adminDeleteQna";
 	    document.frm.submit();    
 	}    
 }
 
-
+/*체크박스 전체선택 또는 해제*/
 function selectAll(selectAll,name)  {
   const checkboxes 
        = document.getElementsByName(name);
@@ -167,13 +167,13 @@ function selectAll(selectAll,name)  {
   })
 }
 
-
+/*각 테이블 디테일*/
 function go_view(command,column,value){
-	location.href="recipe.do?command="+command+"&"+column+"="+value;
+	location.href=command+"?"+column+"="+value;
 }
-
+/*Qna답변쓰기*/
 function go_rep(){
-	document.frm.action="recipe.do?command=adminSaveReply";
+	document.frm.action="adminSaveReply";
 	document.frm.submit();
 }
 
