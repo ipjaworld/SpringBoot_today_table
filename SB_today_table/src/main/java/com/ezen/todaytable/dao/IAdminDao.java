@@ -22,5 +22,9 @@ public interface IAdminDao {
 	void getAdminQnaDetail(HashMap<String, Object> paramMap);
 	//Qna답변
 	void adminSaveReply(int qseq,String replyQna);
+	//댓글목록조회
+	void getAdminReplyList(HashMap<String, Object> paramMap);
+	//댓글삭제
+	void adminDeleteReply(int replyseq);
 
 }

@@ -6,7 +6,7 @@ function go_admin( comm ){
 }
 */
 
-
+/*게시글 검색*/
 function go_search( comm ){
 	if( document.frm.key.value == "" ){
 		alert("검색버튼 사용시에는 검색어 입력이 필수입니다");
@@ -16,7 +16,7 @@ function go_search( comm ){
 	document.frm.action = url;
 	document.frm.submit();
 }
-
+/*게시글 전체보기*/
 function go_total( comm ){
 	document.frm.key.value="";
 	document.frm.action = comm + "?first=1";
@@ -114,15 +114,15 @@ function go_sleep_member(){
 	}    
 }
 
-
+/*댓글삭제*/
 function go_reply_delete(){
 	var count = 0;
-	if( document.frmm.delrp.length == undefined ){
-		if( document.frmm.delrp.checked==true ) count++;
+	if( document.frm.replyseq.length == undefined ){
+		if( document.frm.replyseq.checked==true ) count++;
 		
 	}else{
-		for( var i=0; i<document.frmm.delrp.length; i++){
-			if( document.frmm.delrp[i].checked==true){
+		for( var i=0; i<document.frm.replyseq.length; i++){
+			if( document.frm.replyseq[i].checked==true){
 				count++;
 			}
 		}
@@ -131,8 +131,8 @@ function go_reply_delete(){
 		alert("삭제할 항목을 선택하세요");
 	}	
 	else{	
-		document.frmm.action = "recipe.do?command=adminDeleteReply";
-	    document.frmm.submit();    
+		document.frm.action = "adminDeleteReply";
+	    document.frm.submit();    
 	}    
 }
 /*qna삭제*/

@@ -28,7 +28,7 @@
     </div>
 
     <div class="smi_title">
-        <div><a href="recipe.do?command=adminReplyList&page=1&key=">댓글 관리</a></div>
+        <div><a href="adminReplyList?first='1'">댓글 관리</a></div>
     </div>
 
     <div class="smi_title">

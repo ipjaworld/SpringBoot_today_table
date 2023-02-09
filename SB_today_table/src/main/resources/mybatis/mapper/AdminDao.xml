@@ -75,7 +75,23 @@
          ) 
       }
 </update>
+<!-- 댓글리스트 -->
+<select id="getAdminReplyList" statementType="CALLABLE" parameterType="java.util.HashMap">
+      {
+         CALL getAdminReplyList (
+         #{startNum}, #{endNum},#{key},
+         #{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=AdminMap}
+         ) 
+      }
+</select >
 
+<delete id="adminDeleteReply">
+	{
+         CALL adminDeleteReply (
+         #{replyseq}
+         ) 
+      }
+</delete>
 
 
 </mapper>

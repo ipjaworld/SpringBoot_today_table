@@ -5,7 +5,7 @@
 <h1>회원리스트</h1>  
 <form name="frm" method="post">
 <table class="admin-search-area">
-	<tr><td>회원 이름 <input type="text" name="key" value="${key2}">
+	<tr><td>회원 이름 <input type="text" name="key" value="${key}">
 	<input class="btn" type="button" value="검색" onclick="go_search('memberList')">
 	<input class="btn" type="button" name="btn_total" value="전체보기 "	onClick="go_total('memberList')"></td> </tr>
 </table><br>
@@ -26,7 +26,7 @@
 	    </c:otherwise>
 	    </c:choose>
 	    </td>
-	    	<td><a href="go_view('adminMemDetail','id','${membersVO.ID}')">${membersVO.NAME}</a></td><td>${membersVO.EMAIL}</td><td>${membersVO.NICK}</td>
+	    	<td><a href="#" onClick="go_view('adminMemDetail','id','${membersVO.ID}')">${membersVO.NAME}</a></td><td>${membersVO.EMAIL}</td><td>${membersVO.NICK}</td>
 	    	<td><fmt:formatDate value="${membersVO.INDATE}"/></td></tr>
 	  </c:forEach>
 	  <tr>
