@@ -4,25 +4,25 @@
 <nav class="">
 	<div class="container main-top-area">
 		<div class="main-page-card col-md-6 col-sm-12" id="main-total">
-			<a class="" href="recipe.do?command=recipeCategory&status=recipe&page=1">
+			<a class="" href="recipeCategory?status=recipe&page=1">
 				<img src="image/maintable.png" />
 			</a>
 			<div class="main-page-card-black-area"></div>
 		</div>
 		<div class="main-page-card col-md-6 col-sm-12" id="main-type">
-			<a class="" href="recipe.do?command=recipeCategory&status=type&page=1">
+			<a class="" href="recipeCategory?status=type&page=1">
 				<img src="image/typerecipe.png" />
 			</a>
 			<div class="main-page-card-black-area"></div>
 		</div>
 		<div class="main-page-card col-md-6 col-sm-12" id="main-theme">
-			<a class="" href="recipe.do?command=recipeCategory&status=theme&page=1">
+			<a class="" href="recipeCategory?status=theme&page=1">
 				<img src="image/themerecipe.png" />
 			</a>
 			<div class="main-page-card-black-area"></div>
 		</div>
 		<div class="main-page-card col-md-6 col-sm-12" id="main-ing">
-			<a class="" href="recipe.do?command=recipeCategory&status=ing&page=1">
+			<a class="" href="recipeCategory?status=ing&page=1">
 				<img src="image/ingredientsrecipe.png" />
 			</a>
 			<div class="main-page-card-black-area"></div>
@@ -52,14 +52,14 @@
 		      	<c:choose>
 		      		<c:when test="${loginUser.id == recipeVO.id}">
 		      			<div class="item">
-				        	<a href="recipe.do?command=recipeDetailWithoutView&rnum=${recipeVO.rnum}">
+				        	<a href="recipeDetailWithoutView?rnum=${recipeVO.rnum}">
 				            	<img src="${recipeVO.thumbnail}" width=300 height=200>
 				            </a>
 			            </div>
 		        	</c:when>
 		      		<c:otherwise>
 			      		<div class="item">
-			        		<a href="recipe.do?command=recipeDetailView&rnum=${recipeVO.rnum}" class="item">
+			        		<a href="recipeDetailWithoutView?rnum=${recipeVO.rnum}" class="item">
 			            		<img src="${recipeVO.thumbnail}" width=300 height=200>
 			          		</a>
 			          	</div>
