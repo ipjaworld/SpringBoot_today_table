@@ -11,6 +11,8 @@ public interface IRecipeDao {
 	 
 	void getRecipeBannerList(HashMap<String, Object> paramMap);
 
+	void addRecipeView(HashMap<String, Object> paramMap);
 
+	void getRecipe(HashMap<String, Object> paramMap);
 
 }

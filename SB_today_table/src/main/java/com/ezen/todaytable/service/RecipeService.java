@@ -18,6 +18,22 @@ public class RecipeService {
 		rdao.recipeCategory( paramMap );
 	}
 	
+	public void recipeDetailView(HashMap<String, Object> paramMap) {
+		// 조회수 증가
+		rdao.addRecipeView(paramMap);
+		// * 아래 4개의 과정을 하나의 프로시저로
+		rdao.getRecipe(paramMap);
+		// recipe 조회
+		
+		// 재료 조회
+		
+		// 상세과정 조회
+		
+		// 댓글 리스트 조회
+		
+		
+	}
+	
 	
 	
 	

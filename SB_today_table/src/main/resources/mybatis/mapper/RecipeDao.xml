@@ -8,6 +8,8 @@
 	<resultMap  id="RecipeMap" type="java.util.HashMap"></resultMap>
 	<resultMap  id="RecipeMap2" type="java.util.HashMap"></resultMap>
 	<resultMap  id="RecipeMap3" type="java.util.HashMap"></resultMap>
+	<resultMap  id="RecipeMap4" type="java.util.HashMap"></resultMap>
+	<resultMap  id="RecipeMap5" type="java.util.HashMap"></resultMap>
 	
 	<select id="getAllRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
@@ -54,6 +56,27 @@
 			CALL recipeCategory(
 				#{recipekey},
 				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2}
+			)
+		}
+	</select>
+	
+	<update id="addRecipeView" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL addRecipeView(
+				#{rnum}
+			)
+		}
+	</update>
+	
+	<select id="getRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL getRecipe(
+				#{rnum},
+				#{ref_cursor1, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap},
+				#{ref_cursor2, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2},
+				#{ref_cursor3, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap3},
+				#{ref_cursor4, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap4},
+				#{ref_cursor5, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap5}
 			)
 		}
 	</select>
