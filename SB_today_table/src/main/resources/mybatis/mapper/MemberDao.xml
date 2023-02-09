@@ -6,7 +6,16 @@
 <mapper namespace="com.ezen.todaytable.dao.IMemberDao">
 
 	<resultMap  id="memberMap" type="java.util.HashMap"></resultMap>
-
+	
+	<select id ="getMembersList" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL  getMembersList (
+			#{id},
+			#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=memberMap }
+			)
+		}
+		
+	</select>
 
 
 </mapper>

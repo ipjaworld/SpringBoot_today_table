@@ -34,7 +34,7 @@
 			<div class="container">
 				<div class="boxFlexTop">
 					<div class="col-md-1 col-sm-12 header-title">
-						<a class="navbar-brand" href="recipe.do?command=index">
+						<a class="navbar-brand" href="index">
 							<!-- 우리의 식탁 -->
 							<img src="image/todaytabletitle.jpg">
 						</a>
@@ -53,19 +53,19 @@
 					<c:if test="${loginUser.id==null && loginAdmin.adminId==null}">
 						<div id="loginOrJoin" class="col-md-5 col-sm-12">
 							<input type="button" value="로그인" class="header-btn"
-							onClick="location.href='recipe.do?command=loginForm'" />
+							onClick="location.href='loginForm'" />
 							<input type="button" value="회원가입" class="header-btn"
-							onClick="location.href='recipe.do?command=contract'" />
+							onClick="location.href='contract'" />
 						</div>
 					</c:if>
 					<c:if test="${loginUser.id!=null}">
 						<div id="loginOrJoin" class="col-5">
 							<b>${loginUser.name}(${loginUser.id})님<br>안녕하세요!</b>
 							<input type="button" value="마이페이지" class="header-btn" 
-								onClick="location.href='recipe.do?command=myPageView'"/>
+								onClick="location.href='myPageView'"/>
 							<input type="button" value="로그아웃" class="header-btn"
-								onClick="location.href='recipe.do?command=logout'" />
-							<div class="top_Icon"><a href="recipe.do?command=recipeForm"><img class="top_Icon"
+								onClick="location.href='logout'" />
+							<div class="top_Icon"><a href="recipeForm"><img class="top_Icon"
 										src="image/pensil1.png"></a></div>
 						</div>
 					</c:if>
@@ -73,10 +73,10 @@
 						<div id="loginOrJoin" class="col-5">
 							<b>${loginAdmin.adminId}님<br>안녕하세요!</b>
 							<input type="button" value="관리자페이지" class="header-btn"
-								onClick="location.href='recipe.do?command=admin'" />
+								onClick="location.href='admin'" />
 							<input type="button" value="로그아웃" class="header-btn"
-								onClick="location.href='recipe.do?command=logout'" />
-							<div class="top_Icon"><a href="recipe.do?command=recipeForm"><img class="top_Icon"
+								onClick="location.href='logout'" />
+							<div class="top_Icon"><a href="recipeForm"><img class="top_Icon"
 										src="image/pensil1.png"></a></div>
 						</div>
 					</c:if>
