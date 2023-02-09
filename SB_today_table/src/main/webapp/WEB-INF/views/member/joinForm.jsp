@@ -16,7 +16,7 @@
              <div><label>비밀번호 확인</label><input type="password" name="pwdCheck" id="userpwdchk"><br> </div>
                <p id="error1" style="color:red"> </p>
                <div><label>전화번호</label><input  type="text" name="phone" onkeyup="chkPhoneCode(event)" value="${dto.phone}"><br></div>
-              <div><label>이메일</label><input type="text"  name="email" id="useremail" placeholder="ex)abc@naver.com" required><br> </div>
+              <div><label>이메일</label><input type="text"  name="email" id="useremail" value="${dto.email}" placeholder="ex)abc@naver.com" required ><br> </div>
                <p id="error2" style="color:red"> </p>
              <div><label>우편번호</label><input type="text" name="zip_num" id="sample6_postcode"  size="10" value="${dto.zip_num}" readonly>     
              <input type="button" value="주소 찾기" class="dup" onclick="sample6_execDaumPostcode()"><br> </div>
@@ -79,8 +79,8 @@
          
          <div class="clear"></div>
          <div id="buttons">
-             <input type="button" value="회원가입" class="submit" onclick="go_save()"> 
-             <input type="reset" value="취소" class="cancel" onclick="index'">
+             <input type="button" value="회원가입" class="submit" > 
+             <input type="reset" value="취소" class="cancel" >
          </div>
       </form>
    </div>

@@ -16,6 +16,15 @@
 		}
 		
 	</select>
+	<insert id ="insertMemberttable" statementType="CALLABLE" parameterType="com.ezen.mshop.dto.MemberVO">
+	{
+		CALL insertMemberttable(
+		#{id}, #{pwd},#{name},#{nick},#{email},#{phone},#{zip_num},#{address1},#{address2},#{address3},#{img}
+		
+		)
+	}
+	</insert>
+	
 
 
 </mapper>

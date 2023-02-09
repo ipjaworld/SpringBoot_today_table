@@ -2,17 +2,39 @@ package com.ezen.todaytable.dto;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
 @Data
 public class MemberVO {
 	
-	private String id; // 아이디
-	private String pwd; // 비밀번호
-	private String name; // 이름
-	private String phone; // 전화번호
-	private String email; // 이메일
+	
+	@NotNull(message="아이디를 입력하세요")
+	@NotEmpty(message="아이디를 입력하세요")
+	private String id;
+	
+	@NotNull(message="비밀번호를 입력하세요")
+	@NotEmpty(message="비밀번호를 입력하세요")
+    private String pwd;
+	
+	@NotNull(message="이름을 입력하세요")
+	@NotEmpty(message="이름을 입력하세요")
+    private String name;
+	
+	@NotNull(message="이메일을 입력하세요")
+	@NotEmpty(message="이메일을 입력하세요")
+    private String email;
+	
+	@NotNull(message="핸드폰번호를 입력하세요")
+	@NotEmpty(message="핸드폰번호를 입력하세요")
+	private String phone;
+	
+	@NotNull(message="닉네임을 입력하세요")
+	@NotEmpty(message="닉네임을 입력하세요")
 	private String nick; // 닉네임
+	
 	private String address1; // 주소1
 	private String address2; // 주소2
 	private String address3; // 주소3

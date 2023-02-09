@@ -14,3 +14,20 @@ function go_next(){
    }
 }
 
+function idcheck(){
+   if( document.joinForm.id.value=="" ){
+      alert("아이디를 입력하고 중복체크를 진행하세요" );
+      documnet.joinForm.id.focus();
+      return;
+   }
+   var url = "idCheckForm&id=" + document.joinForm.id.value;
+   var opt = "toolbar=no, menubar=no, resizable=no, width=500, height=250, scrollbars=no";
+   window.open(url, "IdCheck", opt);   
+}
+
+
+function idok( userid ){
+	opener.formm.id.value = userid;
+	opener.formm.reid.value = userid;
+	self.close();
+}
