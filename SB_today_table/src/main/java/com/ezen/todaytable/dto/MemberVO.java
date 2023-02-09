@@ -15,6 +15,7 @@ public class MemberVO {
 	private String nick; // 닉네임
 	private String address1; // 주소1
 	private String address2; // 주소2
+	private String address3; // 주소3
 	private String zip_num; // 집우편주소?
 	private Timestamp indate; // 가입날짜?
 	private String img; // 프로필사진?
