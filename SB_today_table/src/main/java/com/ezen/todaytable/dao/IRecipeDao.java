@@ -17,6 +17,7 @@ public interface IRecipeDao {
 
 	void recipeFavoriteAndRec(HashMap<String, Object> paramMap);
 
-	void addReply(int rnum);
+	void addReply(int rnum, String reply);
+
 
 }

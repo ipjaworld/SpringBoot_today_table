@@ -70,7 +70,14 @@
 		}
 	</select> -->
 	
-
+	<update id="addReply">
+		{
+			CALL addReply(
+				#{param1}, #{param2}
+			)
+		}
+	</update> 
+	
 	
 
 </mapper>

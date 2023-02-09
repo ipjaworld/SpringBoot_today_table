@@ -30,11 +30,11 @@
 	
 </div>
 	<div class="main-contents-list">
-		<c:forEach items="${RecipeAllList}" var="recipeVO" varStatus="status">
+		<c:forEach items="${RecipeCategory}" var="recipeVO" varStatus="status">
 		   	<div class="recipe-card">
 		   		<div class="item">
 			   		<c:choose>
-		      		<c:when test="${loginUser.id == recipeVO.id}">
+		      		<c:when test="${loginUser.id == recipeVO.ID}">
 		      			<a href="recipeDetailWithoutView?rnum=${recipeVO.RNUM}">
 				            	<img src="/${recipeVO.THUMBNAIL}" width=300 height=200>
 				         </a>

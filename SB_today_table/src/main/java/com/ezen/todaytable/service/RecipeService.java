@@ -1,5 +1,6 @@
 package com.ezen.todaytable.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,10 @@ public class RecipeService {
 		rdao.recipeFavoriteAndRec(paramMap);
 	}
 
-	public void addReply(int rnum) {
-		rdao.addReply(rnum);
+	public void addReply(int rnum, String reply) {
+		rdao.addReply(rnum, reply);
 	}
+
 	
 	
 	

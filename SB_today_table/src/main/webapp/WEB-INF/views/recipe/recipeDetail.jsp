@@ -25,7 +25,7 @@
 		${ing} <br>
 	</c:forEach>
 </div> --%>
-<div class="">
+<div class="recipe-ingredients">
 	재료 : 
 	<c:forEach items="${ingArray}" var="ing" varStatus="status">
 		${ing.TAG}&nbsp;${qtyArray[status.index].QUANTITY} <br>
@@ -104,12 +104,12 @@
 <div id="recipe-button-area" class="container">
 	<c:if test="${recipeVO.ID.equals(loginUser.ID)}">
 		<input type="button" name="modify" value="수정하기" 
-			onclick="location.href='recipe.do?command=recipeUpdateForm&rnum=${recipeVO.RNUM}'"/>
+			onclick="recipeUpdateForm?rnum=${recipeVO.RNUM}'"/>
 		<input type="button" name="modify" value="삭제하기" 
-			onclick="location.href='recipe.do?command=deleteRecipe&rnum=${recipeVO.RNUM}'"/>
+			onclick="deleteRecipe?rnum=${recipeVO.RNUM}'"/>
 	</c:if>
 	<input type="button" name="modify" value="메인으로" 
-			onclick="location.href='recipe.do?command=index'"/>
+			onclick="location.href='/'"/>
 	<input type="button" name="modify" value="목록으로" 
 			onclick="history.go(-1);"/>
 	
