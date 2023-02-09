@@ -27,14 +27,14 @@ public class MainController {
 		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		
-		paramMap.put("ref_cursor1", null);
+		paramMap.put("ref_cursor", null);
 		paramMap.put("ref_cursor2", null);
 		paramMap.put("ref_cursor3", null);
 		
 		ms.startIndex(paramMap);
 		
 		ArrayList<HashMap<String , Object>> allList
-			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor1");
+			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor");
 		ArrayList<HashMap<String , Object>> typeList
 			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor2");
 		ArrayList<HashMap<String , Object>> bannerList

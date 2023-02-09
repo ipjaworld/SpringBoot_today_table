@@ -11,6 +11,9 @@ import com.ezen.todaytable.dao.IRecipeDao;
 
 @Service
 public class MainService {
+	
+	@Autowired
+	RecipeService rs;
 
 	@Autowired
 	IMainDao maindao;
@@ -20,12 +23,14 @@ public class MainService {
 	
 	@Autowired
 	IRecipeDao rdao;
+	
+	
 
 	public void startIndex(HashMap<String, Object> paramMap) {
 		
-		rdao.getAllRecipe(paramMap);
+		rs.getAllRecipe(paramMap);
 		
-		rdao.getTypeRecipe(paramMap);
+		rs.getTypeRecipe(paramMap);
 		
 		rdao.getRecipeBannerList(paramMap);
 		
