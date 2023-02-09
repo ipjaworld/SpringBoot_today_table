@@ -1,5 +1,6 @@
 package com.ezen.todaytable.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +24,7 @@ public class RecipeGHController {
 	public ModelAndView recipeCategory(
 			@RequestParam("status") String status,
 			@RequestParam("page") int page,
-			HttpServletRequest request,
-			Model model
+			HttpServletRequest request
 			) {
 
 		ModelAndView mav = new ModelAndView();
@@ -49,5 +49,74 @@ public class RecipeGHController {
 		return mav;
 		
 	}
+	
+	
+	@RequestMapping("/recipeFavoriteAndRec")
+	public ModelAndView recipeFavoriteAndRec(
+			@RequestParam("page") int page) {
+		
+		ModelAndView mav = new ModelAndView();
+		HashMap<String, Object> paramMap = new HashMap<>();
+		paramMap.put("ref_cursor", null); // 관리자 추천
+		paramMap.put("ref_cursor2", null); 	// 단골레시피 상위권
+		
+		rs.recipeFavoriteAndRec( paramMap );
+		
+		ArrayList<HashMap<String , Object>> recommandList
+			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor");
+		ArrayList<HashMap<String , Object>> favoriteList
+			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor2");
+		
+		mav.addObject("recommandList", recommandList);
+		mav.addObject("favoriteList", favoriteList);
+		
+		mav.setViewName("recipe/recipeFavoriteAndRec");
+		return mav;
+	}
+	
+	
+	@RequestMapping("/addReply")
+	public String addreply(
+			@RequestParam("rnum") int rnum
+			) {
+		
+		rs.addReply( rnum );
+		
+		return "recipeWithoutView?rnum="+rnum;
+	}
+	
+	@RequestMapping("/updateReply")
+	public ModelAndView updateReply(
+			@RequestParam("rnum") int rnum
+			) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("redirect:/recipeWithoutView?rnum="+rnum);
+		return mav;
+	}
+	
+	@RequestMapping("/deleteReply")
+	public String deleteReply(
+			@RequestParam("rnum") int rnum
+			) {
+
+		return "redirect:/recipeWithoutView?rnum="+rnum;
+	}
+	
+	@RequestMapping("/likeRecipe")
+	public String likeRecipe(
+			@RequestParam("rnum") int rnum
+			) {
+		
+		return "redirect:/recipeWithoutView?rnum="+rnum;
+	}
+	
+	@RequestMapping("/reportRecipe")
+	public String reportRecipe(
+			@RequestParam("rnum") int rnum
+			) {
+		return "redirect:/recipeWithoutView?rnum="+rnum;
+	}
+	
 	
 }

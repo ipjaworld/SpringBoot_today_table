@@ -45,4 +45,29 @@ public class MainController {
 		mav.setViewName("index");
 		return mav;
 	}
+	
+	
+	@RequestMapping("/announcement")
+	public String announcement() {
+		return "main/announcement";
+	}
+	
+	@RequestMapping("/ourstory")
+	public String ourstory() {
+		return "main/ourstory";
+	}
+	
+	@RequestMapping("/privatePolicy")
+	public String privatePolicy() {
+		return "main/privatePolicy";
+	}
+	
+	@RequestMapping("/terms")
+	public String terms() {
+		return "main/terms";
+	}
+	
+	
+	
+	
 }

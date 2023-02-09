@@ -34,7 +34,7 @@
 			<div class="container">
 				<div class="boxFlexTop">
 					<div class="col-md-1 col-sm-12 header-title">
-						<a class="navbar-brand" href="index">
+						<a class="navbar-brand" href="/">
 							<!-- 우리의 식탁 -->
 							<img src="/image/todaytabletitle.jpg">
 						</a>

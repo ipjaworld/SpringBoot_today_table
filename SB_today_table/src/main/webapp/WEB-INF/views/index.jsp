@@ -27,9 +27,9 @@
 			</a>
 			<div class="main-page-card-black-area"></div>
 		</div>
-		<!-- 추후에 업데이트 예정
+		
 		<div class="main-page-card" id="main-favorite">
-			<a class="" href="recipe.do?command=recipeFavoriteAndRec&page=1">
+			<a class="" href="recipeFavoriteAndRec?page=1">
 				<img src="image/regularcustomerRecipe.png" />
 			</a>
 			<div class="main-page-card-black-area"></div>
@@ -38,7 +38,7 @@
 		<div class="main-page-card">
 			<a class="" href="recipe.do?command=index">사이트맵</a>
 		</div> 
-		-->
+		
 	</div>
 </nav>
 
