@@ -49,6 +49,18 @@
 		}
 	</select>
 	
+	<!-- <select id="getRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL getRecipe(
+				#{rnum},
+				#{ref_cursor1, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap},
+				#{ing, mode=OUT, jdbcType=VARCHAR},
+				#{ref_cursor2, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2},
+				#{ref_cursor3, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap3}
+			)
+		}
+	</select> -->
+	
 
 	
 
