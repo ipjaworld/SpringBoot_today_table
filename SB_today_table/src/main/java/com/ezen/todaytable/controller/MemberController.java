@@ -69,7 +69,7 @@ public class MemberController {
 		      else if( mvo.get("PWD").equals(membervo.getPwd())) {
 		         HttpSession session = request.getSession();
 		         session.setAttribute("loginUser", mvo);
-		         url = "index";
+		         url = "redirect:/";
 		      }else if(mvo.get("USEYN").equals("N")) {
 		    	  model.addAttribute("message", "휴면 계정입니다. 휴면계정을 복구하려면 관리자에게 문의하세요");
 		      }
@@ -102,7 +102,6 @@ public class MemberController {
 			@RequestParam("id") String id /*전달 받은 id*/) {
 		// getMemberShop 메서드를 호출해서 전달된 아이디의 유무를 확인하고 member/check.jsp로 
 		// 결과와 아이디를 갖고 이동합니다.
-		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("id",id);
 		paramMap.put("ref_cursor", null);
@@ -120,8 +119,7 @@ public class MemberController {
 		
 		return "member/idcheck";
 	}
-	@Autowired
-	ServletContext context;
+
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	   public ModelAndView join(
@@ -133,7 +131,7 @@ public class MemberController {
 	      
 	      ModelAndView mav = new ModelAndView();
 	      mav.setViewName("member/joinForm");
-	      
+	      System.out.println(456);
 	      // 매개변수 구성 + 밸리데이션 구성 + 회원가입 실행
 	      // 회원가입 프로시져 이름 insertMemberShop
 	      if(result.getFieldError("id")!=null)
@@ -142,14 +140,16 @@ public class MemberController {
 	         mav.addObject("message", result.getFieldError("pwd").getDefaultMessage() );
 	      else if(result.getFieldError("name")!=null)
 	         mav.addObject("message", result.getFieldError("name").getDefaultMessage() );
-	      else if(result.getFieldError("nick")!=null)
+	      else if(result.getFieldError("nickname")!=null)
 		         mav.addObject("message", result.getFieldError("nick").getDefaultMessage() );
 	      else if(result.getFieldError("email")!=null)
 	         mav.addObject("message", result.getFieldError("email").getDefaultMessage() );
 	      else if(result.getFieldError("phone")!=null)
 	         mav.addObject("message", result.getFieldError("phone").getDefaultMessage() );
-	      else if( reid == null || ( reid != null && !reid.equals(membervo.getId() )) )  
+	      else if( reid == null || ( reid != null && !reid.equals(membervo.getId() )) )  {
 	         mav.addObject("message", "아이디 중복체크를 하지 않으셨습니다.");
+	      	mav.addObject("reid", reid);
+	      }
 	      else if( pwdCheck == null || ( pwdCheck != null && !pwdCheck.equals(membervo.getPwd() ) ) )
 	         mav.addObject("message", "비밀번호 확인이 일치하지 않습니다." );
 	      else {
@@ -159,6 +159,9 @@ public class MemberController {
 	      }
 	      return mav;
 	   }
+	@Autowired
+	ServletContext context;
+	
 	
 	@RequestMapping(value="/updateMemForm")
 	public String updateMemForm () {
@@ -170,7 +173,7 @@ public class MemberController {
 	            @RequestParam(value="pwdCheck", required=false) String pwdCheck
 	            ) {
 		  String savepath = context.getRealPath("/imageProfile");
-			HashMap<String,Object> paramMap =new HashMap<String, Object>();
+		HashMap<String,Object> paramMap =new HashMap<String, Object>();
 	 
 		   ModelAndView mav = new ModelAndView();
 		   try {

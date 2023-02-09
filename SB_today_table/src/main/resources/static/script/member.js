@@ -20,17 +20,18 @@ function idcheck(event){
       documnet.joinForm.id.focus();
       return;
    }
-   var url = "idCheckForm&id=" + document.joinForm.id.value;
+   var url = "idCheckForm?id=" + document.joinForm.id.value;
    var opt = "toolbar=no, menubar=no, resizable=no, width=500, height=250, scrollbars=no";
    window.open(url, "IdCheck", opt);   
 }
 
-
 function idok( userid ){
-	opener.formm.id.value = userid;
-	opener.formm.reid.value = userid;
+	opener.document.joinForm.id.value = userid;
+	opener.document.joinForm.reid.value = userid;
 	self.close();
 }
+
+
 
 function autoHypenPhone(str){
             str = str.replace(/[^0-9]/g, '');

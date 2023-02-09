@@ -5,30 +5,25 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="/script/member.js" type="text/javascript">
+</script>
 </head>
 <body>
 
-<h1>ID 중복 확인</h1>
-<form method="post" name="idCheckForm" action="idCheckForm">
-	<!-- id 입력창 -->
-	User ID :  <input type="text" name="id" value="${id}" >
-	<!-- 재조회버튼 --> 
-	<input type="submit" value="검색" class="submit"><br><br><br>
-	
-	<div>
+<h1>ID 중복확인</h1>
+<form method="post" name="formm" action="idCheckForm">
+	User ID <input type="text" name="id" value="${id}">
+	<input type=submit value="검색" class="submit"><br>     
+	<div style="margin-top: 20px">
 		<c:if test="${result == 1}">
-			<script type="text/javascript">
-				opener.document.joinForm.id.value="";
-				opener.document.joinForm.reid.value="";
-			</script>
+			<script type="text/javascript">opener.document.formm.id.value="";</script>
 			${id}는 이미 사용중인 아이디입니다.
 		</c:if>
-		<c:if test="${result == -1}">
+		<c:if test="${result==-1}">
 			${id}는 사용 가능한 ID입니다.    
-			<input type="button" value="사용" class="cancel" onclick="idok('${id}');">
+			<input type="button" value="사용" class="cancel"	onclick="idok('${id}')">
 		</c:if>
-		
-	</div>
-
+		</div>
+</form>
 </body>
 </html>

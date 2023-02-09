@@ -1,22 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 
 <%@ include file="../include/headerfooter/header.jsp" %>
+
 <article>
    <div id="joinForm">
-      <form method="post" name="joinForm"  enctype="multipart/form-data">
+      <form method="post" name="joinForm"  action="join">
          <fieldset id="join">
          <legend>Basic Info</legend><br>
             <div><label>프로필사진</label><input type="file" name="img"><br></div>
             <div><label>아 이 디</label><input type="text" name="id" size="12" onkeyup="chkIdCode(event)" value="${dto.id}">
-            <input type="hidden" name="reid" value="${dto.reid}">
+            <input type="hidden" name="reid" value="${reid}">
              <input type="button" value="중복 체크" class="dup" onclick="idcheck(event)"><br></div>
              <div><label>이     름</label><input type="text"  name="name" value="${dto.name}"><br> </div>
-             <div><label>닉 네 임</label><input type="text" name="nickname" size="12"><br></div>
+             <div><label>닉 네 임</label><input type="text" name="nickname" size="12" value="${dto.nick}"><br></div>
              <div><label>비밀번호</label><input type="password" name="pwd" id="userpwd"><br> </div>
              <div><label>비밀번호 확인</label><input type="password" name="pwdCheck" id="userpwdchk"><br> </div>
                <p id="error1" style="color:red"> </p>
                <div><label>전화번호</label><input  type="text" name="phone" onkeyup="chkPhoneCode(event)" value="${dto.phone}"><br></div>
-              <div><label>이메일</label><input type="text"  name="email" id="useremail" value="${dto.email}" placeholder="ex)abc@naver.com" required ><br> </div>
+              <div><label>이메일</label><input type="text"  name="email" id="useremail" value="${dto.email}" placeholder="ex)abc@naver.com"  ><br> </div>
                <p id="error2" style="color:red"> </p>
              <div><label>우편번호</label><input type="text" name="zip_num" id="sample6_postcode"  size="10" value="${dto.zip_num}" readonly>     
              <input type="button" value="주소 찾기" class="dup" onclick="sample6_execDaumPostcode()"><br> </div>
@@ -76,10 +77,10 @@
             
                <input type="hidden" name="useyn" value="Y">
          </fieldset>
-         
+         <div >${message }</div>
          <div class="clear"></div>
          <div id="buttons">
-             <input type="button" value="회원가입" class="submit" > 
+             <input type="submit" value="회원가입" class="submit" > 
              <input type="reset" value="취소" class="cancel" >
          </div>
       </form>
