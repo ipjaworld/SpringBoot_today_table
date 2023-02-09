@@ -14,21 +14,11 @@ public class RecipeService {
 	IRecipeDao rdao;
 
 
-	public void getAllRecipe(HashMap<String, Object> paramMap) {
-		rdao.getAllRecipe( paramMap );
+	public void recipeCategory(HashMap<String, Object> paramMap) {
+		rdao.recipeCategory( paramMap );
 	}
-
-	public void getTypeRecipe(HashMap<String, Object> paramMap) {
-		rdao.getTypeRecipe( paramMap );
-	}
-
-	public void getThemeRecipe(HashMap<String, Object> paramMap) {
-		rdao.getThemeRecipe( paramMap );
-	}
-
-	public void getIngRecipe(HashMap<String, Object> paramMap) {
-		rdao.getIngRecipe( paramMap );
-	}
+	
+	
 	
 	
 }

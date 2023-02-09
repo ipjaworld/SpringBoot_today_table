@@ -25,15 +25,9 @@ public class MainService {
 	IRecipeDao rdao;
 	
 	
-
-	public void startIndex(HashMap<String, Object> paramMap) {
-		
-		rs.getAllRecipe(paramMap);
-		
-		rs.getTypeRecipe(paramMap);
-		
+	
+	public void getRecipeBanner(HashMap<String, Object> paramMap) {
 		rdao.getRecipeBannerList(paramMap);
-		
 	}
 	
 }

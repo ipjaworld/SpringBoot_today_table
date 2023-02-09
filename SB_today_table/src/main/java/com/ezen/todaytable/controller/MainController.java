@@ -27,23 +27,20 @@ public class MainController {
 		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		
+		paramMap.put("recipekey", "recipe");
 		paramMap.put("ref_cursor", null);
-		paramMap.put("ref_cursor2", null);
 		paramMap.put("ref_cursor3", null);
 		
-		ms.startIndex(paramMap);
+		rs.recipeCategory(paramMap);
+		ms.getRecipeBanner(paramMap);
 		
 		ArrayList<HashMap<String , Object>> allList
 			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor");
-		ArrayList<HashMap<String , Object>> typeList
-			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor2");
 		ArrayList<HashMap<String , Object>> bannerList
 			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor3");
 		
 		mav.addObject("allList", allList);
-		mav.addObject("typeList", typeList);
 		mav.addObject("bannerList", bannerList);
-		
 		
 		mav.setViewName("index");
 		return mav;

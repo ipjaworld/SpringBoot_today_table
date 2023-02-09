@@ -49,6 +49,15 @@
 		}
 	</select>
 	
+	<select id="recipeCategory" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL recipeCategory(
+				#{recipekey},
+				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2}
+			)
+		}
+	</select>
+	
 
 	
 
