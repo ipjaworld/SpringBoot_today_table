@@ -22,13 +22,11 @@
 <div class="categoryListTitle container">
 총 <b>${total}</b>개의 레시피가 있습니다.
 
-	<!-- 2차때 작업할 영역
 	<ul class="nav nav-tabs2 pull-right">
 		<li><a href="" onclick="sortBy()">정확순</a></li>
 		<li><a href="" onclick="sortBy()">최신순</a></li>
 		<li><a href="" onclick="sortBy()">추천순</a></li>
 	</ul> 
-	-->
 	
 </div>
 	<div class="main-contents-list">
@@ -37,19 +35,19 @@
 		   		<div class="item">
 			   		<c:choose>
 		      		<c:when test="${loginUser.id == recipeVO.id}">
-		      			<a href="recipeDetailWithoutView?rnum=${recipeVO.rnum}">
-				            	<img src="${recipeVO.thumbnail}" width=300 height=200>
+		      			<a href="recipeDetailWithoutView?rnum=${recipeVO.RNUM}">
+				            	<img src="/${recipeVO.THUMBNAIL}" width=300 height=200>
 				         </a>
 			         </c:when>
 		      		<c:otherwise>
-			      		<a href="recipeDetailWithoutView?rnum=${recipeVO.rnum}">
-			            		<img src="${recipeVO.thumbnail}" width=300 height=200>
+			      		<a href="recipeDetailWithoutView?rnum=${recipeVO.RNUM}">
+			            		<img src="/${recipeVO.THUMBNAIL}" width=300 height=200>
 			          	</a>
 			          </c:otherwise>
 	        	</c:choose>	
 		   		</div>				
-		   		<div><h4>${recipeVO.subject}</h4></div>
-		   		<div class="recipe-card-nick-area"><img src="${recipeVO.img}" width=20 height=20>${recipeVO.nick} 
+		   		<div><h4>${recipeVO.SUBJECT}</h4></div>
+		   		<div class="recipe-card-nick-area"><img src="/${recipeVO.IMG}" width=20 height=20>${recipeVO.NICK} 
 		   			<c:if test="${replyCountList[status.index]!=0}">
 		   				<b>(${replyCountList[status.index]})</b>
 		   			</c:if>

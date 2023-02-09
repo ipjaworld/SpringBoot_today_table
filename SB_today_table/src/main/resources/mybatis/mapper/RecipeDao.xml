@@ -36,6 +36,15 @@
 		}
 	</update>
 	
+	<select id="recipeFavoriteAndRec" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL recipeFavoriteAndRec(
+				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap},
+				#{ref_cursor2, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2}
+			)
+		}
+	</select>
+	
 	<select id="getRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
 			CALL getRecipe(

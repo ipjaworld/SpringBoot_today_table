@@ -36,7 +36,14 @@ public class RecipeService {
 
 	public void recipeDetailWithoutView(HashMap<String, Object> paramMap) {
 		rdao.getRecipe(paramMap);
-		
+	}
+
+	public void recipeFavoriteAndRec(HashMap<String, Object> paramMap) {
+		rdao.recipeFavoriteAndRec(paramMap);
+	}
+
+	public void addReply(int rnum) {
+		rdao.addReply(rnum);
 	}
 	
 	
