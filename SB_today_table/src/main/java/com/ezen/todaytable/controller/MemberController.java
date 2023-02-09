@@ -17,6 +17,11 @@ public class MemberController {
 	@Autowired
 	MemberService ms;
 	
+	@RequestMapping(value="/loginForm")
+	public String loginForm() {
+		return "member/login";
+	}
+	
 	
 	
 }
