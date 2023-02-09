@@ -11,4 +11,6 @@ public interface IAdminDao {
 
 	void getAdminMemberList(HashMap<String, Object> paramMap);
 
+	void adminSleepMem(String useid);
+
 }

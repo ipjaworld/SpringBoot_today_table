@@ -67,4 +67,18 @@ public class AdminService {
 	      
 		
 	}
+
+	public void adminSleepMem() {
+		
+		
+	}
+
+	public void adminSleepMem(String[] id) {
+		
+		for(String useid : id) {
+			System.out.println(useid);
+			adao.adminSleepMem(useid);
+		}
+		
+	}
 }

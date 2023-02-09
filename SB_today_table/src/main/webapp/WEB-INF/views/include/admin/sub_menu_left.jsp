@@ -24,7 +24,7 @@
 				<div><a href="recipe.do?command=adminRecipeList&page=1&key=">레시피 관리</a></div>
 			</div>
     <div class="smi_title">
-        <div><a href="memberList">회원 관리</a></div>
+        <div><a href="memberList?first='1'">회원 관리</a></div>
     </div>
 
     <div class="smi_title">

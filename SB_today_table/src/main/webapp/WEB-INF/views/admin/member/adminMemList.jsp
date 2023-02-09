@@ -6,12 +6,12 @@
 <form name="frm" method="post">
 <table class="admin-search-area">
 	<tr><td>회원 이름 <input type="text" name="key" value="${key2}">
-	<input class="btn" type="button" value="검색" onclick="go_search('adminMemList')">
-	<input class="btn" type="button" name="btn_total" value="전체보기 "	onClick="go_total('adminMemList')"></td> </tr>
+	<input class="btn" type="button" value="검색" onclick="go_search('memberList')">
+	<input class="btn" type="button" name="btn_total" value="전체보기 "	onClick="go_total('memberList')"></td> </tr>
 </table><br>
 <table id="membersList">
 
-	<tr> <th><input type='checkbox'name='id' value='selectall' onclick='selectAll(this,name)'/>전체선택/해제</th>
+	<tr> <th><input type='checkbox' value='selectall' onclick='selectAll(this,"id")'/>전체선택/해제</th>
 	<th>아이디</th><th> 이름 </th><th>이메일</th><th>닉네임</th><th>가입일</th>
 	</tr>
     <c:forEach items="${membersList}" var="membersVO">  
@@ -20,7 +20,7 @@
 	    <td>
 	    <c:choose>
 	    <c:when test='${membersVO.USEYN=="Y"}'>	    
-	    ${membersVO.id}<span style="font-weight:bold; color:blue;">정상</span>		    
+	    ${membersVO.ID}<span style="font-weight:bold; color:blue;">정상</span>		    
 	    </c:when>
 	    <c:otherwise>${membersVO.ID}<span style="font-weight:bold; color:red;">휴먼</span>		    		    
 	    </c:otherwise>

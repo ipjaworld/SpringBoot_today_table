@@ -8,18 +8,18 @@ function go_admin( comm ){
 
 
 function go_search( comm ){
-	/* if( document.frm.key.value == "" ){
+	if( document.frm.key.value == "" ){
 		alert("검색버튼 사용시에는 검색어 입력이 필수입니다");
 	 	return;
-	} */
-	var url = "recipe.do?command=" + comm + "&page=1";   // 검색어로 검색한 결과의 1페이지로 이동
+	}
+	var url = comm+"?page=1";   // 검색어로 검색한 결과의 1페이지로 이동
 	document.frm.action = url;
 	document.frm.submit();
 }
 
 function go_total( comm ){
 	document.frm.key.value="";
-	document.frm.action = "recipe.do?command=" + comm + "&page=1";
+	document.frm.action = comm + "?first=1";
 	document.frm.submit();
 }
 
@@ -92,7 +92,7 @@ function go_adminRecipe_delete(){
 
 
 
-
+/*휴면회원전환*/
 function go_sleep_member(){
 	var count = 0;
 	if( document.frm.id.length == undefined ){
@@ -109,7 +109,7 @@ function go_sleep_member(){
 		alert("휴먼전환할 회원을 선택해주세요");
 	}	
 	else{	
-		document.frm.action = "recipe.do?command=adminSleepMem";
+		document.frm.action = "adminSleepMem";
 	    document.frm.submit();    
 	}    
 }
@@ -240,4 +240,7 @@ g.selectAll('path')
 .enter().append('path')
 .attr('fill', (d, i) => colors(i) )
 .attr('d', arc);
+
+
+
 
