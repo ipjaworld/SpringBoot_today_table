@@ -8,18 +8,6 @@ begin
         select * from recipe_page_view;
 end;
 
-
-
--- 겟 배너 레시피
-CREATE OR REPLACE PROCEDURE getRecipeBannerList(
-    p_cur OUT   SYS_REFCURSOR
-)
-IS
-BEGIN
-    open p_cur for
-        select * from recipebanner order by useyn desc, order_seq asc;
-END;
-
 -- 레시피 배너 테이블 생성
 create table recipebanner(
     bseq number(5) primary key,
@@ -54,7 +42,15 @@ begin
 end;
 
 
-
+-- 겟 배너 레시피
+CREATE OR REPLACE PROCEDURE getRecipeBannerList(
+    p_cur OUT   SYS_REFCURSOR
+)
+IS
+BEGIN
+    open p_cur for
+        select * from recipebanner order by useyn desc, order_seq asc;
+END;
 
 
 
