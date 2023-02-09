@@ -7,7 +7,7 @@
       <form method="post" name="joinForm"  action="join">
          <fieldset id="join">
          <legend>Basic Info</legend><br>
-            <div><label>프로필사진</label><input type="file" name="img"><br></div>
+           <!--  <div><label>프로필사진</label><input type="file" name="img"><br></div> -->
             <div><label>아 이 디</label><input type="text" name="id" size="12" onkeyup="chkIdCode(event)" value="${dto.id}">
             <input type="hidden" name="reid" value="${reid}">
              <input type="button" value="중복 체크" class="dup" onclick="idcheck(event)"><br></div>
@@ -74,16 +74,23 @@
 		        }).open();
 		    }
 		</script><br>
-            
-               <input type="hidden" name="useyn" value="Y">
-         </fieldset>
-         <div >${message }</div>
+               <div><label>프로필사진</label><input type="hidden" name="img" id="img"><br></div>
+  		<input type="hidden" name="useyn" value="Y">
+			</fieldset>
+        
+         
          <div class="clear"></div>
          <div id="buttons">
              <input type="submit" value="회원가입" class="submit" > 
              <input type="reset" value="취소" class="cancel" >
          </div>
+          <div >${message }</div>
       </form>
+      <div style="position:relative;   margin:0 auto; top:-140px; width:500px; left:100px;">
+	<form name="fromm" id="fileupForm" method="post" enctype="multipart/form-data">
+				<input type="file" name="img"><input type="button" id="myButton" value="추가">
+	</form>
+</div>
    </div>
 </article>
 

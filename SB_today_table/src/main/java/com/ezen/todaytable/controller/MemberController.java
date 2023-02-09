@@ -136,12 +136,12 @@ public class MemberController {
 	      // 회원가입 프로시져 이름 insertMemberShop
 	      if(result.getFieldError("id")!=null)
 	         mav.addObject("message", result.getFieldError("id").getDefaultMessage() );
+	      else if(result.getFieldError("name")!=null)
+		         mav.addObject("message", result.getFieldError("name").getDefaultMessage() );
+		  else if(result.getFieldError("nickname")!=null)
+			         mav.addObject("message", result.getFieldError("nick").getDefaultMessage() );
 	      else if(result.getFieldError("pwd")!=null)
 	         mav.addObject("message", result.getFieldError("pwd").getDefaultMessage() );
-	      else if(result.getFieldError("name")!=null)
-	         mav.addObject("message", result.getFieldError("name").getDefaultMessage() );
-	      else if(result.getFieldError("nickname")!=null)
-		         mav.addObject("message", result.getFieldError("nick").getDefaultMessage() );
 	      else if(result.getFieldError("email")!=null)
 	         mav.addObject("message", result.getFieldError("email").getDefaultMessage() );
 	      else if(result.getFieldError("phone")!=null)

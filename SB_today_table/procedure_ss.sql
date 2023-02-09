@@ -10,9 +10,9 @@ begin
         select * from members where id =p_id;
     p_curvar := result_cur;
 end;
-
+select*from members;
 --회원가입
-create or replace procedure insertMemberShop(
+create or replace procedure insertMemberttable(
     p_id IN members.id%type,
     p_pwd IN members.pwd%type,
     p_name IN members.name%type,
@@ -37,7 +37,7 @@ end;
 alter table members add address3 varchar2(50);
 
 --회원정보수정
-create or replace procedure updateMemberShop(
+create or replace procedure updateMemberttable(
     p_id IN members.id%type,
     p_pwd IN members.pwd%type,
     p_name IN members.name%type,
