@@ -28,12 +28,12 @@ public class QnaController {
 	QnaService qs;
 	
 	@RequestMapping("/qnaList")
-	public ModelAndView qnaList(Model model, HttpServletRequest request, HttpSession session){
+	public ModelAndView qnaList(HttpServletRequest request, HttpSession session){
 
 	ModelAndView mav = new ModelAndView();
-	HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
-	if ( loginUser == null) mav.setViewName("member/login");
-	else{
+	//HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
+	//if ( loginUser == null) mav.setViewName("member/login");
+	//else{
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("request", request);
 		paramMap.put("ref_cursor",null);
@@ -46,107 +46,99 @@ public class QnaController {
 		mav.addObject("paging",(Paging)paramMap.get("paging"));
 		mav.setViewName("qna/qnaList");
 	
-	}
+//}
 		return mav;
 	}
 	
-	@RequestMapping("/passCheck")
-	public ModelAndView passCheck( @RequestParam("qseq")int qseq) {
+	@RequestMapping("/qnaDetail")
+	public ModelAndView qnaDetail(HttpServletRequest request, HttpSession session,
+			@RequestParam("qseq") int qseq){
+
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("qseq",qseq);
-		mav.setViewName("qna/checkPass");
+		//HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
+		//if ( loginUser == null) mav.setViewName("member/login");
+		//else{
+			HashMap<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("qseq", qseq);
+			paramMap.put("ref_cursor",null);
+			qs.oneQna(paramMap);
+			
+			ArrayList<HashMap<String,Object>> list
+			= (ArrayList<HashMap<String,Object>>)paramMap.get("ref_cursor");
+			
+			mav.addObject("qnaVO",list.get(0));
+			mav.setViewName("qna/qnaDetail");
 		
-		return mav;
-	}
+	//}
+			return mav;
+		}
 	
-	@RequestMapping(value="/qnaCheckPass", method=RequestMethod.POST)
-	public ModelAndView qnapassCheck( 
-			@RequestParam("qseq")int qseq,
-			@RequestParam("pass")String pass) {
-		
-		ModelAndView mav = new ModelAndView();
-		HashMap<String,Object> paramMap = new HashMap<String,Object>();
-		paramMap.put("qseq", qseq);
-		paramMap.put("ref_cursor", null);
-		qs.getQna(paramMap);
+	@RequestMapping("/myqnaList")
+	public ModelAndView myqnaList(HttpServletRequest request, HttpSession session){
+
+	ModelAndView mav = new ModelAndView();
+	//HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
+	//if ( loginUser == null) mav.setViewName("member/login");
+	//else{
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("request", request);
+		paramMap.put("ref_cursor",null);
+		qs.listQna(paramMap);
 		
 		ArrayList<HashMap<String,Object>> list
 		= (ArrayList<HashMap<String,Object>>)paramMap.get("ref_cursor");
 		
-		HashMap<String,Object> qvo = list.get(0);
-		mav.addObject("qseq",qseq);
-		if ( qvo.get("PASS").equals(pass)){
-			mav.setViewName("qna/checkPassSuccess");
-		}else {
-			mav.addObject("message","비밀번호가 맞지 않습니다");
-			mav.setViewName("qna/checkPass");
-		}
-		return mav;
-	}
+		mav.addObject("qnaList",list);
+		mav.addObject("paging",(Paging)paramMap.get("paging"));
+		mav.setViewName("qna/myqnaList");
 	
-	@RequestMapping(value="/qnaView")
-	public ModelAndView qnaView( HttpServletRequest request,
-			@RequestParam("qseq")int qseq ) {
-
-		ModelAndView mav = new ModelAndView();
-		HttpSession session = request.getSession();
-		HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
-		if ( loginUser == null) mav.setViewName("member/login");
-		else{
-			HashMap<String, Object> paramMap = new HashMap<String, Object>();
-			paramMap.put("qseq", qseq);
-			paramMap.put("ref_cursor",null);
-			qs.getQna(paramMap);
-			ArrayList<HashMap<String,Object>> list
-			= (ArrayList<HashMap<String,Object>>)paramMap.get("ref_cursor");
-			mav.addObject("qnaVO",list.get(0));
-			mav.setViewName("qna/qnaView");
-		}
+//}
 		return mav;
 	}
 	
 	@RequestMapping(value="/qnaWriteForm")
-	public String qnaWriteForm (	HttpSession session){
-	
-		HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
-		if ( loginUser == null) return "member/login";				
-		return "qna/qnaWrite";
+	public String qna_writre_form( HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		// HashMap<String, Object> loginUser 
+		//	= (HashMap<String, Object>) session.getAttribute("loginUser");
+		// if( loginUser == null ) return "member/login";
+		
+	    return "qna/qnaWriteForm";
 	}
 	
 	@RequestMapping("qnaWrite")
-	   public ModelAndView qna_write(
-	         @ModelAttribute("dto") @Valid QnaVO qnavo,
-	         @RequestParam(value="pass", required=false)String pass,
-	         @RequestParam(value="secret", required=false) String secret,
-	         BindingResult result, HttpServletRequest request) {
-	      
-	      ModelAndView mav = new ModelAndView();
-	      HttpSession session = request.getSession();
-	         HashMap<String, Object>loginUser 
-	         = (HashMap<String, Object>)session.getAttribute("loginUser");
-	         
-	         if (loginUser == null){
-	            mav.setViewName("member/login");
-	         }else{
-	            if(result.getFieldError("subject")!=null)
-	               mav.addObject("message", result.getFieldError("subject").getDefaultMessage());
-	            else if(result.getFieldError("content")!=null)
-	               mav.addObject("message", result.getFieldError("content").getDefaultMessage());
-	            else {
-	            	System.out.println("secret:" + secret+", pass:"+pass);
-	               if( secret == null) {
-	            	   secret="N";
-	                   pass="1234";
-	               }
-	               HashMap<String, Object>paramMap = new HashMap<String, Object>();
-	               qnavo.setId((String)loginUser.get("ID") );
-	               paramMap.put("qnavo", qnavo);
-	               paramMap.put("secret", secret);
-	               paramMap.put("pass", pass);
-	               qs.insertQna(paramMap);
-	               mav.setViewName("redirect:/qnaList");
-	            }     
-	         }
-	         return mav;
-	   }
+	public ModelAndView qna_write( @ModelAttribute("dto") @Valid QnaVO qnavo,
+			@RequestParam(value="pass", required=false) String pass,
+			@RequestParam(value="check", required=false) String check,
+			BindingResult result,  HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		// HttpSession session = request.getSession();
+		// HashMap<String, Object> loginUser 
+		// 	= (HashMap<String, Object>) session.getAttribute("loginUser");
+		mav.setViewName("qnaWriteForm");
+	   //  if (loginUser == null) 
+	    	mav.setViewName("member/login");
+	    // else {
+	    	if(result.getFieldError("subject") != null ) 
+	    		mav.addObject("message", result.getFieldError("subject").getDefaultMessage() );
+	    	else if(result.getFieldError("content") != null )
+	    		mav.addObject("message", result.getFieldError("content").getDefaultMessage());
+	    	else {
+	    		if( check == null ) {
+	    			check="N";
+	    			pass="";
+	    		}else {
+	    			check="Y";
+	    		}
+	    		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+	    	//	qnavo.setId( (String)loginUser.get("ID") );
+	    		paramMap.put("qnavo", qnavo);
+	    		paramMap.put("secret", check);
+	    		paramMap.put("pass", pass);
+	    		qs.insertQna( paramMap );
+				mav.setViewName("redirect:/qnaList");
+	    	}
+	    return mav;
+	}
 }

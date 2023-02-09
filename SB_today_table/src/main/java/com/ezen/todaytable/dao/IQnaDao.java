@@ -11,7 +11,7 @@ public interface IQnaDao {
 
 	void listQna(HashMap<String, Object> paramMap);
 
-	void getQna(HashMap<String, Object> paramMap);
+	void oneQna(HashMap<String, Object> paramMap);
 
 	void insertQna(HashMap<String, Object> paramMap);
 

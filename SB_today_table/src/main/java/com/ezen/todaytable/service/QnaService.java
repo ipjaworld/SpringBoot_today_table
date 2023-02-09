@@ -20,41 +20,39 @@ public class QnaService {
 	public void listQna(HashMap<String, Object> paramMap) {
 		HttpServletRequest request = (HttpServletRequest)paramMap.get("request");
 		HttpSession session = request.getSession();
-		int page=1; 
-		if( request.getParameter("page") !=null ) {
+		int page=1;
+		if( request.getParameter("page")!= null) {
 			page = Integer.parseInt( request.getParameter("page") );
 			session.setAttribute("page", page);
-		}else if ( session.getAttribute("page")!=null) {
-			page = (Integer) session.getAttribute("page");
-		} else {
-			session.removeAttribute("page"); 
+		}else if( session.getAttribute("page")!=null) {
+			page = (Integer)session.getAttribute("page");
+		}else {
+			session.removeAttribute("page");
 		}
-		
 		Paging paging = new Paging();
 		paging.setPage(page);
 		paging.setDisplayPage(5);
-		paging.setDisplayPage(5);
+		paging.setDisplayRow(5);
 		
-		paramMap.put("cnt",0);
+		paramMap.put("cnt", 0);
 		qdao.getAllCount(paramMap);
-		int count = Integer.parseInt(paramMap.get("cnt")+"");
+		int count = Integer.parseInt( paramMap.get("cnt")+"");
 		paging.setTotalCount(count);
 		paging.paging();
-		paramMap.put("startNum", paging.getStartNum());
-		paramMap.put("endNum", paging.getEndNum());
+		paramMap.put("startNum", paging.getStartNum() );
+		paramMap.put("endNum", paging.getEndNum() );
 		paramMap.put("paging", paging);
-		qdao.listQna(paramMap);
-	
+		qdao.listQna( paramMap );
+	}
+
+		public void oneQna(HashMap<String, Object> paramMap) {
+			qdao.oneQna(paramMap);
 		
 	}
 
-	public void getQna(HashMap<String, Object> paramMap) {
-		qdao.getQna(paramMap);
-		
-	}
-
-	public void insertQna(HashMap<String, Object> paramMap) {
-		qdao.insertQna(paramMap);
-		
-	}
+		public void insertQna(HashMap<String, Object> paramMap) {
+			qdao.insertQna(paramMap);
+			
+		}
 }
+

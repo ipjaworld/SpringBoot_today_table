@@ -1,63 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../include/headerfooter/header.jsp" %>
-<%@ include file="../include/sub04/sub_image_menu.jsp" %> 
-<article>
-<h2> 1:1 고객 게시판 </h2>
-<h3> 고객님의 질문에 대해서 운영자가 1:1 답변을 드립니다.</h3>
-	<form name="formm" method="post">
-		<table id="cartList">
-			<tr><th>번호</th><th>제목</th> <th>등록일</th><th>답변 여부</th></tr>
-      		<c:forEach items="${qnaList}"  var="qnaVO">
-      			<tr><td> ${qnaVO.QSEQ} </td> 
-      				
-  					<td style="text-align:left;">
-  						<c:choose>
-  							<c:when test="${qnaVO.SECRET=='Y'}">
-  								<a href='#' onClick="passCheck('${qnaVO.QSEQ}')">
-	  								${qnaVO.SUBJECT}&nbsp;
-	  								<img src="/images/key.png" style="width:20px;vertical-align:middle">
-  								</a>
-  								</c:when>
-  								<c:otherwise>
-  									<a href="qnaView?qseq=${qnaVO.QSEQ}">${qnaVO.SUBJECT}</a>
-  								</c:otherwise>
-  						</c:choose>
-  					</td>      
-        			<td>
-        			
-        			<fmt:formatDate value="${qnaVO.INDATE}" type="date" /></td>
-        			<td><c:choose>
-					        <c:when test="${qnaVO.REP==1}"> N </c:when>
-					        <c:when test="${qnaVO.REP==2}"> Y </c:when>
-					</c:choose></td></tr>
-      		</c:forEach>
-		</table><div class="clear"></div>
-		
-		<br />
+<%@ include file= "../include/headerfooter/header.jsp"%>
+<%@ include file="qna_sub_menu_left.jsp" %>
 
-		<div id="paging" align="center" style="font-size:110%;">
-			<c:url var="action" value="qnaList" />
-			<c:if test="${paging.prev}">
-				<a href="${action}?page=${paging.beginPage-1}">◀</a>&nbsp;
-			</c:if>
-			<c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-				<c:choose>
-		        	<c:when test="${paging.page==index}">
-		        		<span style="color:red;font-weight:bold">${index}&nbsp;</span>
-		        	</c:when>
-			        <c:otherwise> 
-						<a href="${action}?page=${index}">${index}</a>&nbsp;
-					</c:otherwise>
-				</c:choose>
+<script>
+
+function checkPass( qseq ){
+	var url = "qtest.do?command=passForm&qseq=" + qseq;
+	var opt = "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=500, height=300";
+	window.open(    url,   'checkPassword' ,   opt);
+}
+
+function chgChk(checkbox){
+	
+	  const tbox = document.getElementById('pass');
+	  tbox.disabled = checkbox.checked ? false : true;
+	  
+	  if(tbox.disabled) {
+	    tbox.value = null;
+	    
+	  }else {
+	    tbox.focus();
+	  }
+	  }
+
+</script>
+
+
+<article>
+	<h2 class="pt-3 pb-3 mt-3 mb-3" align="center"> 고객 게시판</h2>
+	<h5 class="pt-3 pb-3 mt-3 mb-3"> 궁금하신 사항은 언제든지 문의하세요 </h5>
+	<form name="formm" method="post" >
+		<table id="qnaListTable" style="width:100%;">
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>등록일</th>
+				<th>답변 여부</th>
+			</tr>
+			<c:forEach items="${qnaList}" var="qnaVO">
+				<tr>
+					<td>${qnaVO.QSEQ}</td>				
+					<c:choose>
+						<c:when test="${qnaVO.SECRET=='0'}">
+							<td><a href="qnaDetail?qseq=${qnaVO.QSEQ}">${qnaVO.QSUBJECT}</a></td>
+						</c:when>
+						<c:otherwise>
+							<td><a href="#" onclick="pwdcheck(${qnaVO.QNAPASS},${qnaVO.QSEQ})">${qnaVO.QSUBJECT}
+							<img src="image/key1.png" style="width:13px vertical-align:middle;"></a></td>
+						</c:otherwise>					
+					</c:choose>
+						
+					<td><fmt:formatDate value="${qnaVO.QNADATE}" type="date" /></td>
+					<td>
+						<c:choose>
+						 	<c:when test="${qnaVO.REP==1}">no</c:when>
+						 	<c:when test="${qnaVO.REP==2}">yes</c:when>
+						</c:choose>
+					</td>
+				</tr>
 			</c:forEach>
-			<c:if test="${paging.next}">
-					<a href="${action}?page=${paging.endPage+1}">▶</a>&nbsp;
-			</c:if>	
-		</div> <br>
-		
-		<div id="buttons" style="float:right">
-	   		<input type="button"  value="1:1 질문하기"  class="submit"	onclick="location.href='qnaWriteForm'"> 
-	   		<input type="button"  value="쇼핑 계속하기"  class="cancel" onclick="location.href='/shop/'"></div>
-	</form>
-</article>
-<%@ include file="../include/headerfooter/footer.jsp" %>
+		</table>
+<jsp:include page="../paging/paging.jsp">
+   <jsp:param name="command" value="qnaList"/>
+</jsp:include>
+</form>
+</article>	
+
+
+<%@ include file= "../include/headerfooter/footer.jsp"%>
