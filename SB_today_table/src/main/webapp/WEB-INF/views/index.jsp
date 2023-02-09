@@ -5,25 +5,25 @@
 	<div class="container main-top-area">
 		<div class="main-page-card col-md-6 col-sm-12" id="main-total">
 			<a class="" href="recipeCategory?status=recipe&page=1">
-				<img src="image/maintable.png" />
+				<img src="/image/maintable.png" />
 			</a>
 			<div class="main-page-card-black-area"></div>
 		</div>
 		<div class="main-page-card col-md-6 col-sm-12" id="main-type">
 			<a class="" href="recipeCategory?status=type&page=1">
-				<img src="image/typerecipe.png" />
+				<img src="/image/typerecipe.png" />
 			</a>
 			<div class="main-page-card-black-area"></div>
 		</div>
 		<div class="main-page-card col-md-6 col-sm-12" id="main-theme">
 			<a class="" href="recipeCategory?status=theme&page=1">
-				<img src="image/themerecipe.png" />
+				<img src="/image/themerecipe.png" />
 			</a>
 			<div class="main-page-card-black-area"></div>
 		</div>
 		<div class="main-page-card col-md-6 col-sm-12" id="main-ing">
 			<a class="" href="recipeCategory?status=ing&page=1">
-				<img src="image/ingredientsrecipe.png" />
+				<img src="/image/ingredientsrecipe.png" />
 			</a>
 			<div class="main-page-card-black-area"></div>
 		</div>
@@ -50,17 +50,17 @@
 	      <div class="slide" id="slide0">
 	        <c:forEach items="${allList}" var="recipeVO" end="20">
 		      	<c:choose>
-		      		<c:when test="${loginUser.id == recipeVO.id}">
+		      		<c:when test="${loginUser.id == recipeVO.ID}">
 		      			<div class="item">
-				        	<a href="recipeDetailWithoutView?rnum=${recipeVO.rnum}">
-				            	<img src="${recipeVO.thumbnail}" width=300 height=200>
+				        	<a href="recipeDetailWithoutView?rnum=${recipeVO.RNUM}">
+				            	<img src="/${recipeVO.THUMBNAIL}" width=300 height=200>
 				            </a>
 			            </div>
 		        	</c:when>
 		      		<c:otherwise>
 			      		<div class="item">
-			        		<a href="recipeDetailWithoutView?rnum=${recipeVO.rnum}" class="item">
-			            		<img src="${recipeVO.thumbnail}" width=300 height=200>
+			        		<a href="recipeDetailWithoutView?rnum=${recipeVO.RNUM}" class="item">
+			            		<img src="/${recipeVO.THUMBNAIL}" width=300 height=200>
 			          		</a>
 			          	</div>
 		        	</c:otherwise>

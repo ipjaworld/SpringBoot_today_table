@@ -11,38 +11,6 @@
 	<resultMap  id="RecipeMap4" type="java.util.HashMap"></resultMap>
 	<resultMap  id="RecipeMap5" type="java.util.HashMap"></resultMap>
 	
-	<select id="getAllRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
-		{
-			CALL getAllRecipe(
-				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap}
-			)
-		}
-	</select>
-	
-	<select id="getTypeRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
-		{
-			CALL getTypeRecipe(
-				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2}
-			)
-		}
-	</select>
-	
-	<select id="getThemeRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
-		{
-			CALL getTypeRecipe(
-				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2}
-			)
-		}
-	</select>
-	
-	<select id="getIngRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
-		{
-			CALL getTypeRecipe(
-				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2}
-			)
-		}
-	</select>
-	
 	<select id="getRecipeBannerList" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
 			CALL getRecipeBannerList(

@@ -36,7 +36,7 @@
 					<div class="col-md-1 col-sm-12 header-title">
 						<a class="navbar-brand" href="index">
 							<!-- 우리의 식탁 -->
-							<img src="image/todaytabletitle.jpg">
+							<img src="/image/todaytabletitle.jpg">
 						</a>
 					</div>
 					<div class="col-md-6 col-sm-12 header-mid-area">
@@ -66,7 +66,7 @@
 							<input type="button" value="로그아웃" class="header-btn"
 								onClick="location.href='logout'" />
 							<div class="top_Icon"><a href="recipeForm"><img class="top_Icon"
-										src="image/pensil1.png"></a></div>
+										src="/image/pensil1.png"></a></div>
 						</div>
 					</c:if>
 					<c:if test="${loginAdmin.adminId!=null}">
@@ -77,7 +77,7 @@
 							<input type="button" value="로그아웃" class="header-btn"
 								onClick="location.href='logout'" />
 							<div class="top_Icon"><a href="recipeForm"><img class="top_Icon"
-										src="image/pensil1.png"></a></div>
+										src="/image/pensil1.png"></a></div>
 						</div>
 					</c:if>
 				</div>
