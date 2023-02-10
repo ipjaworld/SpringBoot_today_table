@@ -34,30 +34,21 @@ public class RecipeGHController {
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> paramMap = new HashMap<>();
 		paramMap.put("ref_cursor", null);	// 카테고리에 해당하는 레시피vo 를 가져올 커서
+		paramMap.put("ref_cursor2", null);
 		
-		/** 버전 1
-		//스위치문으로 다른 메서드를 서비스에서 호출하기
-		switch(status) {
-			case "recipe" : rs.getAllRecipe(paramMap); break;
-			case "type" : rs.getTypeRecipe(paramMap); break;
-			case "theme" : rs.getThemeRecipe(paramMap); break;
-			case "ing" : rs.getIngRecipe(paramMap); break;
-		}*/
-		
-		// 버전 2 - 컨트롤러, 서비스의 코드를 최소화하고 프로시져에서 if 문으로 분기점을 잡습니다.
 		// 레시피 키라는 이름으로 웹페이지에서 status 라고 넘긴 값을 전송합니다. 이것을 이용해서 sql문에 접근합니다.
 		paramMap.put("recipekey", status);
 		rs.recipeCategory( paramMap );
 		
 		ArrayList<HashMap<String , Object>> recipeCategory
 		= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor");
-		//ArrayList<Integer> replyCountList = rs.countReply(recipeCategory);
-
+		ArrayList<HashMap<String, Object>> replyCountList
+		= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor2");
 		
 		//RecipeVO rvo = (RecipeVO)recipeCategory.get(0);
 		
 		mav.addObject("RecipeCategory", recipeCategory);
-		//mav.addObject("replyCountList", replyCountList);
+		mav.addObject("replyCountList", replyCountList);
 		mav.addObject("total", recipeCategory.size());
 		 
 		mav.setViewName("recipe/recipeCategory");

@@ -41,15 +41,25 @@ public class RecipeService {
 	
 	public void deleteRecipe(HashMap<String, Object> paramMap) {
 		rdao.deleteRecipe(paramMap);
-		
 	}
 
 	public void recipeFavoriteAndRec(HashMap<String, Object> paramMap) {
 		rdao.recipeFavoriteAndRec(paramMap);
 	}
 
-	public void addReply(int rnum, String reply) {
-		rdao.addReply(rnum, reply);
+	public void addReply(HashMap<String, Object> paramMap) {
+		rdao.addReply(paramMap);
+	}
+
+	public void deleteReply(int replyseq) {
+		rdao.deleteReply(replyseq);
+	}
+
+	public void likeRecipe(HashMap<String, Object> paramMap) {
+		rdao.likeRecipe(paramMap);
+	}
+	public void reportRecipe(HashMap<String, Object> paramMap) {
+		rdao.reportRecipe(paramMap);
 	}
 
 	

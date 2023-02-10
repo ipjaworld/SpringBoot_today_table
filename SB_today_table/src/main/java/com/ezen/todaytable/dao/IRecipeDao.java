@@ -19,7 +19,13 @@ public interface IRecipeDao {
 
 	void recipeFavoriteAndRec(HashMap<String, Object> paramMap);
 
-	void addReply(int rnum, String reply);
+	void addReply(HashMap<String, Object> paramMap);
+
+	void deleteReply(int replyseq);
+
+	void likeRecipe(HashMap<String, Object> paramMap);
+
+	void reportRecipe(HashMap<String, Object> paramMap);
 
 
 }

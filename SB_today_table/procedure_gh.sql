@@ -74,6 +74,25 @@ begin
 end;
 
 
+-- 레시피 카테고리 프로시져 덧글도 가져오는 버전
+create or replace procedure recipeCategory(
+    p_recipekey IN varchar,
+    p_cur OUT SYS_REFCURSOR,
+    --p_cur2 OUT SYS_REFCURSOR
+)
+IS
+	v_cur		SYS_REFCURSOR;
+	v_SQL       VARCHAR2(1000);
+begin
+    v_SQL := 'select * from '||p_recipekey||'_page_view';
+    EXECUTE IMMEDIATE v_SQL INTO v_cur ;
+    p_cur := v_cur;
+end;
+
+
+
+
+
 -- 겟 배너 레시피
 CREATE OR REPLACE PROCEDURE getRecipeBannerList(
     p_cur OUT   SYS_REFCURSOR

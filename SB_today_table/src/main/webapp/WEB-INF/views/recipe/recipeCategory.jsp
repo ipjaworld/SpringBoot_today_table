@@ -5,16 +5,16 @@
 
 <article class="" id="recipe-category-list">
 <div class="container">
-	<c:if test="${whatIsthis.equals('recipe')}">
+	<c:if test="${status.equals('recipe')}">
 		<h2><b>전체</b> 레시피 게시판 입니다~</h2>
 	</c:if>
-	<c:if test="${whatIsthis.equals('type')}">
+	<c:if test="${status.equals('type')}">
 		<h2><b>종류별</b> 레시피 게시판 입니다~</h2>
 	</c:if>
-	<c:if test="${whatIsthis.equals('theme')}">
+	<c:if test="${status.equals('theme')}">
 		<h2><b>테마별</b> 레시피 게시판 입니다~</h2>
 	</c:if>
-	<c:if test="${whatIsthis.equals('ing')}">
+	<c:if test="${status.equals('ing')}">
 		<h2><b>재료별</b> 레시피 게시판 입니다~</h2>
 	</c:if>
 </div>
@@ -54,15 +54,15 @@
 		   		</div>
 		   		<div>
 		   			<h5>
-   					<img src="image/likeBtn1.png" class="recipe-card-likes"/> ${recipeVO.likes} &nbsp;&nbsp;	
-		   			<img src="image/viewIcon.png" class="recipe-card-likes"/> ${recipeVO.views}</h5>
+   					<img src="image/likeBtn1.png" class="recipe-card-likes"/> ${recipeVO.LIKES} &nbsp;&nbsp;	
+		   			<img src="image/viewIcon.png" class="recipe-card-likes"/> ${recipeVO.VIEWS}</h5>
 		   		</div>
-		   		<div><h6>조리시간 : ${recipeVO.time}분</h6></div>
+		   		<div><h6>조리시간 : ${recipeVO.TIME}분</h6></div>
 		   	</div>
 		</c:forEach>
 	</div>
 	<jsp:include page="../paging/paging.jsp">
-		<jsp:param name="command" value="recipeCategory?status=${whatIsthis}" />
+		<jsp:param name="command" value="recipeCategory?status=${status}" />
 	</jsp:include>
 </article>
 
