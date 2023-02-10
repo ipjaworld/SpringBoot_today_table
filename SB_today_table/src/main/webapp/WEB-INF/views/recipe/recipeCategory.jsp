@@ -40,7 +40,7 @@
 				         </a>
 			         </c:when>
 		      		<c:otherwise>
-			      		<a href="recipeDetailWithoutView?rnum=${recipeVO.RNUM}">
+			      		<a href="recipeDetailView?rnum=${recipeVO.RNUM}">
 			            		<img src="/${recipeVO.THUMBNAIL}" width=300 height=200>
 			          	</a>
 			          </c:otherwise>
