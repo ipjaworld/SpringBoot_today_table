@@ -342,5 +342,19 @@ function withDrawal(id,pwd){
 		return;
 	}
 
+}
 
+	// qna 비밀글설정
+   function chgChk(checkbox){
+   
+     const tbox = document.getElementById('pass');
+     tbox.disabled = checkbox.checked ? false : true;
+     
+     if(tbox.disabled) {
+       tbox.value = null;
+       
+     }else {
+       tbox.focus();
+  }
+  
 }

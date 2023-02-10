@@ -50,8 +50,8 @@ public class QnaService {
 		
 	}
 
-		public void insertQna(HashMap<String, Object> paramMap) {
-			qdao.insertQna(paramMap);
+		public void insertQnas(HashMap<String, Object> paramMap) {
+			qdao.insertQnas(paramMap);
 			
 		}
 }

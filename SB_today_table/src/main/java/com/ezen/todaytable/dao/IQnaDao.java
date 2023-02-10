@@ -13,6 +13,6 @@ public interface IQnaDao {
 
 	void oneQna(HashMap<String, Object> paramMap);
 
-	void insertQna(HashMap<String, Object> paramMap);
+	void insertQnas(HashMap<String, Object> paramMap);
 
 }
