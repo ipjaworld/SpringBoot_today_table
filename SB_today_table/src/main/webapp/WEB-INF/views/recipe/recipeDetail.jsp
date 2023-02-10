@@ -56,10 +56,14 @@
 			<td  class="col-6"><div class="processimgs-description">${pImgs.DESCRIPTION}</div></td></tr>
 	</c:forEach>
 	</table>
-	
-	<div id="like-btn">
-		<a href="#" onClick="ILikeThis(${recipeVO.RNUM});"><img src="image/likeBtn1.png"/></a>
-		좋아요 : ${recipeVO.LIKES}
+	<div>
+		<div id="like-btn">
+			<a href="#" onClick="ILikeThis(${recipeVO.RNUM});"><img src="image/likeBtn1.png"/></a>
+			좋아요 : ${recipeVO.LIKES}
+		</div>
+		<div id="like-btn">
+			<a href="#" onClick="IReportThis(${recipeVO.RNUM});">신고하기</a>
+		</div>
 	</div>
 </div>
 
