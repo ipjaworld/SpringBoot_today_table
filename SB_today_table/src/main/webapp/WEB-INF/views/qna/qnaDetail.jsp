@@ -25,6 +25,8 @@
       <input type="button" value="레시피 계속보기" class="cancel" onclick="location.href='/'">
       </c:when>
       <c:otherwise>
+      <input type="button" value="수정하기" class="submit" onclick="location.href='qnaUpdateForm?qseq=${qnaVO.QSEQ}'">
+      <input type="button" value="삭제하기" class="submit" onclick="deleteQna('${qnaVO.QSEQ}','${refer}')">
       <input type="button" value="목록보기" class="submit" onclick="location.href='/qnaList'">
       <input type="button" value="레시피 계속보기" class="cancel" onclick="location.href='/'">
       </c:otherwise>

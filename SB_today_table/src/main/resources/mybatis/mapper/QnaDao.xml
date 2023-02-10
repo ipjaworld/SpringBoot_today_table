@@ -33,12 +33,21 @@
 		}
    </select>
  
-      <insert id="insertQnas" statementType="CALLABLE" parameterType="java.util.HashMap">
+     <insert id="insertQnas" statementType="CALLABLE" parameterType="java.util.HashMap">
 	   	{
 	   		CALL insertQnas( 
 	   		#{qnavo.qsubject},#{qnavo.qcontent},#{qnavo.secret},#{qnavo.qnapass}
 	   		)
 	   	}
-   </insert>
+   	</insert>
+	
+	<insert id="qnaupdate" statementType="CALLABLE" parameterType="java.util.HashMap">
+	   	{
+	   		CALL qnaupdate( 
+	   		#{qnavo.qseq},#{qnavo.qsubject},#{qnavo.qcontent}
+	   		)
+	   	}
+   	</insert>
+ 
 	
 </mapper>

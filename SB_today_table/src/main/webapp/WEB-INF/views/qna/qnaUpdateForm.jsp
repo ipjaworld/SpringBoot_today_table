@@ -5,8 +5,8 @@
 <h2> 1:1 문의하기</h2>
 	<h3> 고객님의 질문에 대해서 운영자가 1:1답변을 드립니다.</h3>
 	<div id="qna-update-form-content">
-		<form name="formm" method="post" action="recipe.do">
-			<input type="hidden" name="command" value="updateQna">
+		<form name="formm" method="post" action="qnaUpdate">
+		
 			<input type="hidden" name="qseq" value="${qnaVO.QSEQ}">
 			<fieldset>
 				<!-- <legend>문의하기</legend> -->
@@ -16,9 +16,9 @@
 			</fieldset>
 			<div class="clear"></div>
 			<div id="buttons" style="float:right">
-				<input type="submit" value="글쓰기"  class="submit" >
+				<input type="submit" value="글쓰기"  class="submit" onclick="location.href='update'">
 				<input type="reset" value="취소"  class="cancel">
-				<input type="button" value="레시피계속보기"  class="submit" onclick="location.href='recipe.do?command=index'">
+				<input type="button" value="레시피계속보기"  class="submit" onclick="location.href='/'">
 			</div>
 		</form>
 	</div>

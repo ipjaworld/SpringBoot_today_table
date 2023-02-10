@@ -10,19 +10,6 @@ function checkPass( qseq ){
 	window.open(    url,   'checkPassword' ,   opt);
 }
 
-function chgChk(checkbox){
-	
-	  const tbox = document.getElementById('pass');
-	  tbox.disabled = checkbox.checked ? false : true;
-	  
-	  if(tbox.disabled) {
-	    tbox.value = null;
-	    
-	  }else {
-	    tbox.focus();
-	  }
-	  }
-
 </script>
 
 
@@ -45,7 +32,7 @@ function chgChk(checkbox){
 							<td><a href="qnaDetail?qseq=${qnaVO.QSEQ}">${qnaVO.QSUBJECT}</a></td>
 						</c:when>
 						<c:otherwise>
-							<td><a href="#" onclick="pwdcheck(${qnaVO.QNAPASS},${qnaVO.QSEQ})">${qnaVO.QSUBJECT}
+							<td><a href="#" onclick="qnaPwdCheck(${qnaVO.QNAPASS},${qnaVO.QSEQ})">${qnaVO.QSUBJECT}
 							<img src="image/key1.png" style="width:13px vertical-align:middle;"></a></td>
 						</c:otherwise>					
 					</c:choose>

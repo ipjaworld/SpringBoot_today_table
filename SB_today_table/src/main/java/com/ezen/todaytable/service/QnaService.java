@@ -54,5 +54,11 @@ public class QnaService {
 			qdao.insertQnas(paramMap);
 			
 		}
+
+		public void qnaupdate(HashMap<String, Object> paramMap) {
+			qdao.qnaupdate(paramMap);
+			
+		}
+
 }
 
