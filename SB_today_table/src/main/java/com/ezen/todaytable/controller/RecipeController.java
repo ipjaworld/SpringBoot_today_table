@@ -1,18 +1,30 @@
 package com.ezen.todaytable.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.todaytable.dto.ProcessImgVO;
+import com.ezen.todaytable.dto.RecipeFormVO;
 import com.ezen.todaytable.service.RecipeService;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 @Controller
 public class RecipeController {
@@ -123,6 +135,133 @@ public class RecipeController {
 		return url;
 	}
 	
+	@RequestMapping("/recipeForm")
+	public String recipeForm(HttpServletRequest request) {
+		String url = "recipe/recipeForm";
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginUser") == null) url = "member/loginForm";
+		return url;
+	}
+	
+	@Autowired
+	ServletContext context;
+	
+	@RequestMapping(value="thumbnailUp", method=RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> thumbnailUp(Model model, HttpServletRequest request) {
+		String path = context.getRealPath("/imageRecipe");
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		try {
+			MultipartRequest multi = new MultipartRequest(
+					request, path, 5*1024*1024, "UTF-8", new DefaultFileRenamePolicy()
+			);
+			result.put("STATUS", 1);
+			result.put("FILENAME", multi.getFilesystemName("thumbnail") );
+			System.out.println("thumbnail의 이름 : " + multi.getFilesystemName("thumbnail") );
+		} catch (IOException e) { e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value="processImgUp", method=RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> processImgUp(Model model, HttpServletRequest request) {
+		String path = context.getRealPath("/imageRecipe");
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		try {
+			MultipartRequest multi = new MultipartRequest(
+					request, path, 5*1024*1024, "UTF-8", new DefaultFileRenamePolicy()
+			);
+			result.put("STATUS", 1);
+			result.put("FILENAME", multi.getFilesystemName("processImg") );
+			System.out.println("processImg의 이름 : " + multi.getFilesystemName("processImg") );
+		} catch (IOException e) { e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	/*
+	@RequestMapping(value="writeRecipe", method=RequestMethod.POST)
+	public ModelAndView writeRecipe( HttpServletRequest request,
+			@RequestParam("") String 
+	 	) {
+		ModelAndView mav = new ModelAndView();
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		
+		
+		return mav;
+	}
+	*/
+	
+	@RequestMapping(value="writeRecipe", method=RequestMethod.POST)
+	public ModelAndView writeRecipe(
+			@ModelAttribute("rvo") @Valid RecipeFormVO recipeformvo, BindingResult result, 
+			HttpServletRequest request, 
+			@RequestParam("count") int count) {
+		ModelAndView mav = new ModelAndView();
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		System.out.println("writeRecipe 도착");
+		
+		if(result.getFieldError("subject") != null) {
+			mav.addObject("message", result.getFieldError("subject").getDefaultMessage());
+			System.out.println("message : " + result.getFieldError("subject").getDefaultMessage());
+		}
+		else if(result.getFieldError("content") != null)
+			mav.addObject("message", result.getFieldError("content").getDefaultMessage());
+		else if(result.getFieldError("thumbnail") != null)
+			mav.addObject("message", result.getFieldError("thumbnail").getDefaultMessage());
+		else if(result.getFieldError("checkIng") != null)
+			mav.addObject("message", result.getFieldError("checkIng").getDefaultMessage());
+		else {
+		paramMap.put("id", recipeformvo.getId());
+		System.out.println("recipeformvo로 전달된 id : " + recipeformvo.getId());
+		// paramMap.put("nick", recipeformvo.getNick());
+		paramMap.put("subject", recipeformvo.getSubject());
+		paramMap.put("content", recipeformvo.getContent());
+		paramMap.put("cookingtime", recipeformvo.getCookingTime());
+		paramMap.put("thumbnail", "imageRecipe/"+recipeformvo.getThumbnail());
+		paramMap.put("checkIng", recipeformvo.getCheckIng());
+		paramMap.put("type", recipeformvo.getType());
+		paramMap.put("theme", recipeformvo.getTheme());
+		paramMap.put("count", count);
+		
+		// processImgs와 processDetail들의 수는 미정이어서 우선 request.getParameter 사용
+		ArrayList<ProcessImgVO> processList = new ArrayList<ProcessImgVO>();
+		for(int i=0; i<count; i++) {
+			ProcessImgVO pvo = new ProcessImgVO();
+			String fileName = request.getParameter("processImg"+(i+1));
+			if(fileName==null || fileName.equals(""))
+				pvo.setLinks("imageRecipe/cookingTimer.png");
+			else pvo.setLinks("imageRecipe/" + fileName);
+			System.out.println("fileName : " + fileName);
+			pvo.setIseq(i+1);
+			String detail = request.getParameter("processDetail"+ (i+1));
+			if(detail == null || detail.equals("")) {
+				System.out.println("detail이 null인 경우 : " + detail);
+				pvo.setDescription("요리 과정을 입력하지 않았어요.");
+			}
+			else {
+				System.out.println(detail);
+				pvo.setDescription(detail);
+			}
+			processList.add(pvo);
+		}
+		
+		paramMap.put("processList", processList);
+		paramMap.put("max_rnum", null);
+		paramMap.put("lastTagId", 0);
+		// paramMap.put("max_rnum", null);
+		rs.insertRecipe(paramMap);
+		System.out.println("max_rnum : service 거친 후 : " + Integer.parseInt(String.valueOf(paramMap.get("max_rnum"))));
+		rs.insertProcessIng(paramMap);
+		mav.setViewName("recipe/recipeList");
+		}
+		return mav;
+	}
 	
 	
 	

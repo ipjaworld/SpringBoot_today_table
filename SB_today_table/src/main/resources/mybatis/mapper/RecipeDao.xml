@@ -84,6 +84,37 @@
 		}
 	</update> 
 	
+	<insert id="insertRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL insertRecipe(
+				#{id}, #{subject}, #{content}, #{thumbnail}, #{cookingtime}, #{type}, #{theme},
+				#{max_rnum, mode=OUT, jdbcType=INTEGER}
+			)
+		}
+	</insert>
+	
+	<insert id="insertProcess" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL insertProcess(
+				#{rnum}, #{iseq}, #{links}, #{description}
+			)
+		}
+	</insert>
+	
+	<insert id="insertIng" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL insertIng( 
+				#{tag}, #{rnum}, #{quantity} 
+			)
+		}
+	</insert>
+	
+	<!-- <insert id="insertIng" statementType="CALLABLE">
+		{
+			CALL insertIng( #{param1}, #{param2}, #{param3} )
+		}
+	</insert> -->
+	
 	
 
 </mapper>
