@@ -8,10 +8,10 @@
 	  	
 	<form name="formm" method="post" action="qnaWrite" >
 	
-		<fieldset>
+		<fieldset> 
 			<legend>문의하기</legend>
 			<table>
-				<tr><td colspan="2"><input type="checkbox" name="secret" value="1" onClick="chgChk(this)">
+				<tr><td colspan="2"><input type="checkbox" name="secret" value="1" onClick="qnaChgChk(this)">
 				비밀글설정&nbsp;&nbsp;&nbsp;비밀번호: <input type="password" name="qnapass" id="pass" size="15" disabled><br>
 				<tr><th class="col-2">제목</th><td class="col-10"><input type="text" name="qsubject" size="60" id="qsubject" placeholder="제목을 입력해주세요"></td></tr>
 				<tr><th class="col-2">내용</th><td class="col-10"><textarea rows="8" cols="61" name="qcontent" placeholder="내용을 입력해주세요"></textarea><td></tr>
