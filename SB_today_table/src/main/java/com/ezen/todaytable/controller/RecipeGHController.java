@@ -162,20 +162,23 @@ public class RecipeGHController {
 			@RequestParam("rnum") int rnum,
 			HttpServletRequest request
 			) {
-		ModelAndView mav = new ModelAndView();
+		String url = "";
 		HttpSession session = request.getSession();
 		HashMap<String, Object> loginUser 
 		= (HashMap<String, Object>)session.getAttribute("loginUser");
 		if( loginUser == null ) {
-			mav.setViewName("member/login");
+			url = "member/login";
+			
 		}else {
 			HashMap<String, Object> paramMap = new HashMap<>();
 			paramMap.put("id", loginUser.get("ID"));
 			paramMap.put("rnum", rnum );
 			rs.reportRecipe(paramMap);
+			System.out.println("recipe report를 했대요");
+			url = "redirect:/recipeDetailWithoutView?rnum="+rnum;
 		}
 		
-		return "redirect:/recipeDetailWithoutView?rnum="+rnum;
+		return url;
 	}
 	
 	

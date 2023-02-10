@@ -23,6 +23,7 @@ DROP TABLE recipe_page CASCADE CONSTRAINTS;
 DROP TABLE reply CASCADE CONSTRAINTS;
 DROP TABLE recipe CASCADE CONSTRAINTS;
 DROP TABLE members CASCADE CONSTRAINTS;
+DROP TABLE recipe_report CASCADE CONSTRAINTS;
 
 
 
@@ -41,6 +42,7 @@ drop sequence reply_seq;
 DROP SEQUENCE fnum_seq;
 DROP SEQUENCE interestnum_seq;
 drop sequence ingTag_seq;
+drop sequence report_seq;
 
 select recipe_seq.nextVal from dual;
 select qseq_seq.nextVal from dual;
@@ -48,6 +50,7 @@ select reply_seq.nextVal from dual;
 select fnum_seq.nextVal from dual;
 select interestnum_seq.nextVal from dual;
 select ingTag_seq.nextVal from dual;
+select report_seq.nextVal from dual;
 
 /* Create Sequences */
 
@@ -57,6 +60,7 @@ create sequence reply_seq increment by 1 start with 1;
 CREATE SEQUENCE fnum_seq INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE interestnum_seq INCREMENT BY 1 START WITH 1;
 create sequence ingTag_seq start with 132 increment by 1; -- 숫자 수정 (recipeTag 테이블 채운 후)
+create sequence report_seq increment by 1 start with 1;
 
 
 /* Create Tables */
@@ -186,6 +190,17 @@ CREATE TABLE reply
 );
 
 
+CREATE TABLE recipe_report
+(
+	reportseq number(5) NOT NULL,
+	id varchar2(50) NOT NULL,
+	rnum number(20) NOT NULL,
+	reportyn char(1) DEFAULT 'Y',
+	PRIMARY KEY (reportseq)
+);
+
+
+
 
 /* Create Foreign Keys */
 
@@ -260,6 +275,15 @@ ALTER TABLE reply
 	REFERENCES recipe (rnum)
 ;
 
+ALTER TABLE recipe_report
+	ADD FOREIGN KEY (rnum)
+	REFERENCES recipe (rnum)
+;
+
+ALTER TABLE recipe_report
+	ADD FOREIGN KEY (id)
+	REFERENCES members (id)
+;
 
 
 /* Create Triggers */

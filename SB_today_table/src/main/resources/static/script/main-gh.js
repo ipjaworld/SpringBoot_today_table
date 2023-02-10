@@ -55,6 +55,11 @@ function ILikeThis( rnum ){
 	location.href=url;
 }
 
+function IReportThis( rnum ){
+	let url = 'reportRecipe?rnum='+rnum;
+	location.href=url;
+}
+
 function deleteThisReply(replyseq){
    let msg = confirm("댓글 삭제하시겠습니까?")
    if (msg==true){
@@ -68,4 +73,10 @@ function deleteThisReply(replyseq){
 function footer_go_to( destination ){
 	location.href=destination;
 }
+
+
+
+
+
+
 

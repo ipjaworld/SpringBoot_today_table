@@ -59,7 +59,7 @@
 		        	</c:when>
 		      		<c:otherwise>
 			      		<div class="item">
-			        		<a href="recipeDetailWithoutView?rnum=${recipeVO.RNUM}" class="item">
+			        		<a href="recipeDetailView?rnum=${recipeVO.RNUM}" class="item">
 			            		<img src="/${recipeVO.THUMBNAIL}" width=300 height=200>
 			          		</a>
 			          	</div>
@@ -71,6 +71,7 @@
 	      <button class="ctrl-btn pro-next" id="nextBtn">Next</button>
 	    </div>
 	</div>
+
 
 
 <%@ include file="include/headerfooter/footer.jsp" %> 
