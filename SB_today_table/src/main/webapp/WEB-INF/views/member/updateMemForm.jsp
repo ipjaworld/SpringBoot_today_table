@@ -5,31 +5,26 @@
 <article>
         <h2>Edit Profile</h2>
         <form method="post" name="joinForm"  enctype="multipart/form-data">
-         <input type="hidden" name="oldImg" value="${loginUser.img}">
+         <input type="hidden" name="oldImg" value="${loginUser.IMG}">
             <!-- <input type="hidden" name="command" value="memberUpdate" /> -->
             <fieldset>
                 <legend>Basic Info</legend>
-                <label>Profile</label><input type="file" name="img" value="${loginUser.img }"><br>
-                (주의사항 : 이미지를 변경하고자 할때만 선택하세요)<br>
-                 <label>이     름</label><input type="text" name="name"  value="${loginUser.name}"><br> 
-                <label>아 이 디</label><input type="text" name="id" value="${loginUser.id}" readonly><br>
-                <label>닉 네 임</label><input type="text" name="nickname" value="${loginUser.nick }"><br>
+                <label>이     름</label><input type="text" name="name"  value="${loginUser.NAME}"><br> 
+                <label>아 이 디</label><input type="text" name="id" value="${loginUser.ID}" readonly><br>
+                <label>닉 네 임</label><input type="text" name="nick" value="${loginUser.NICK }"><br>
                 <label>비밀번호</label><input type="password"  name="pwd" id="userpwd"><br> 
                 <label>비밀번호 확인</label><input type="password"  name="pwdCheck" id="userpwdchk" ><br>
                 <p id="error1" style="color:red"> </p>
-                <label>전화번호</label><input  type="text" name="phone"  value="${loginUser.phone}" onkeyup="chkPhoneCode(event)"><br>
-                <label>이메일</label><input type="text" name="email" value="${loginUser.email}" id="useremail"><br>
-                <label>우편번호</label><input type="text" name="zip_num" id="sample6_postcode" size="10" value="${loginUser.zip_num}">      
+                <label>전화번호</label><input  type="text" name="phone"  value="${loginUser.PHONE}" onkeyup="chkPhoneCode(event)"><br>
+                <label>이메일</label><input type="text" name="email" value="${loginUser.EMAIL}" id="useremail"><br>
+                <label>우편번호</label><input type="text" name="zip_num" id="sample6_postcode" size="10" value="${loginUser.ZIP_NUM}">      
                     <input type="button" value="주소 찾기" class="dup" onclick="sample6_execDaumPostcode()"><br>
-                <label>주    소</label><input type="text" name="address1" id="sample6_address" size="50" value="${loginUser.address1}" ><br>
-                <label>상세주소</label><input type="text" name="address2" id="sample6_detailAddress"  size="25" value="${loginUser.address2}"><br>
-                <label>상세주소</label><input type="text" name="address3" id="sample6_extraAddress" size="25" value="${loginUser.address3}"><br>
-              
-                
-                <input type="hidden" name="indate" value="${loginUser.indate }">
-                <input type="hidden" name="useyn" value="${loginUser.useyn }">
-                
-                <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+                <label>주    소</label><input type="text" name="address1" id="sample6_address" size="50" value="${loginUser.ADDRESS1}" ><br>
+                <label>상세주소</label><input type="text" name="address2" id="sample6_detailAddress"  size="25" value="${loginUser.ADDRESS2}"><br>
+                <label>상세주소</label><input type="text" name="address3" id="sample6_extraAddress" size="25" value="${loginUser.ADDRESS3}"><br>
+                <input type="hidden" name="indate" value="${loginUser.INDATE }">
+                <input type="hidden" name="useyn" value="${loginUser.USEYN }">
+                 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
             <script>
 		    function sample6_execDaumPostcode() {
 		        new daum.Postcode({
@@ -79,11 +74,24 @@
 		        }).open();
 		    }
 		</script><br>
+<%--                 <div><label>프로필사진</label><input type="hidden" name="img" id="img" value="${loginUser.IMG }"><div id="filename"></div></div>
+ --%>          <label>프로필사진</label><img src="/imageProfile/${loginUser.IMG}" width="200pt"><br>
+      <input type="file" name="img"> * 주의 : 이미지를 수정할때에만 선택해주세요
                 
+               
             </fieldset>
-            <div id="buttons"><input type="button" value="정보수정" class="submit" onclick="go_update();"> 
+            <div id="buttons"><input type="button" value="정보수정" class="submit" onclick="go_update_mypage('${loginUser.IMG}')"> 
                 <input type="reset" value="취소" class="cancel" onclick="myPageView'"></div>
         </form>
-        </article>
+
+	<!-- <div
+		style="position: relative; margin: 0 auto; top: -140px; width: 500px; left: 100px;">
+		<form name="fromm" id="fileupForm" method="post"
+			enctype="multipart/form-data">
+			<input type="file" name="fileimage"><input type="button"
+				id="myButton" value="추가">
+		</form>
+	</div> -->
+</article>
         
  <%@ include file="../include/headerfooter/footer.jsp" %>

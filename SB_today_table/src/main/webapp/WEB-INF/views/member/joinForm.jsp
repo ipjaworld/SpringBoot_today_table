@@ -12,7 +12,7 @@
             <input type="hidden" name="reid" value="${reid}">
              <input type="button" value="중복 체크" class="dup" onclick="idcheck(event)"><br></div>
              <div><label>이     름</label><input type="text"  name="name" value="${dto.name}"><br> </div>
-             <div><label>닉 네 임</label><input type="text" name="nickname" size="12" value="${dto.nick}"><br></div>
+             <div><label>닉 네 임</label><input type="text" name="nick" size="12" value="${dto.nick}"><br></div>
              <div><label>비밀번호</label><input type="password" name="pwd" id="userpwd"><br> </div>
              <div><label>비밀번호 확인</label><input type="password" name="pwdCheck" id="userpwdchk"><br> </div>
                <p id="error1" style="color:red"> </p>
@@ -74,7 +74,7 @@
 		        }).open();
 		    }
 		</script><br>
-               <div><label>프로필사진</label><input type="hidden" name="img" id="img"><br></div>
+               <div><label>프로필사진</label><input type="hidden" name="img" id="img"><div id="filename"></div></div>
   		<input type="hidden" name="useyn" value="Y">
 			</fieldset>
         
@@ -88,7 +88,7 @@
       </form>
       <div style="position:relative;   margin:0 auto; top:-140px; width:500px; left:100px;">
 	<form name="fromm" id="fileupForm" method="post" enctype="multipart/form-data">
-				<input type="file" name="img"><input type="button" id="myButton" value="추가">
+				<input type="file" name="fileimage"><input type="button" id="myButton" value="추가">
 	</form>
 </div>
    </div>

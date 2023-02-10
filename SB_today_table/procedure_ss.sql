@@ -1,16 +1,25 @@
--- 멤버리스트
-create or replace procedure getMembersList(
+-- 멤버,어드민리스트
+create or replace procedure compareAdminOrMember(
     p_id IN members.id%type,
-    p_curvar out SYS_REFCURSOR
+    p_aid IN admins.aid%type,
+    p_curvar out SYS_REFCURSOR,
+    p_curvar2 out SYS_REFCURSOR
 )
 is
     result_cur sys_refcursor;
+    result_cur2 sys_refcursor;
 begin
   open result_cur for 
         select * from members where id =p_id;
     p_curvar := result_cur;
+  open result_cur for 
+        select * from admins where aid =p_aid;
+    p_curvar2 := result_cur2;
 end;
 select*from members;
+select*from admins;
+alter table members add address3 varchar2(50);
+
 --회원가입
 create or replace procedure insertMemberttable(
     p_id IN members.id%type,
@@ -57,4 +66,29 @@ begin
  where id=p_id;
   commit;
 end;
+select*from admins;
+--- 어드민
+create or replace procedure getAdminttable(
+    p_id IN admins.aid%type,
+    p_curvar out SYS_REFCURSOR
+)
+is
+    result_cur sys_refcursor;
+begin
+  open result_cur for 
+        select * from admins where aid = p_id;
+        dbms_output.put_line(p_id);
+    p_curvar := result_cur;
+end;
 
+create or replace procedure getMembersList(
+    p_id IN members.id%type,
+    p_curvar out SYS_REFCURSOR
+)
+is
+    result_cur sys_refcursor;
+begin
+  open result_cur for 
+        select * from members where id =p_id;
+    p_curvar := result_cur;
+end;

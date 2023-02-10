@@ -67,6 +67,10 @@ public class MainController {
 		return "main/terms";
 	}
 	
+	@RequestMapping("/myPageView")
+	public String myPageView() {
+		return "mypage/mypage";
+	}
 	
 	
 	

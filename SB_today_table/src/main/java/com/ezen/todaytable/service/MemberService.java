@@ -16,17 +16,25 @@ public class MemberService {
 	@Autowired
 	IMemberDao mdao;
 
-	public void getMembersList(HashMap<String, Object> paramMap) {
-		mdao.getMembersList(paramMap);
-	}
+//	public void compareAdminOrMember(HashMap<String, Object> paramMap) {
+//		mdao.compareAdminOrMember( paramMap );
+//	}
 
-	public void insertMemberttable( MemberVO membervo) {
-		mdao.insertMemberttable(membervo);
+	public void insertMemberttable( HashMap<String, Object> paramMap) {
+		mdao.insertMemberttable(paramMap);
 	}
 
 	public void updateMemberttable(HashMap<String, Object> paramMap) {
 		mdao.updateMemberttable(paramMap);
 		
+	}
+
+	public void getAdminttable(HashMap<String, Object> paramMap) {
+		mdao.getAdminttable(paramMap);
+	}
+
+	public void getMembersList(HashMap<String, Object> paramMap) {
+		mdao.getMembersList(paramMap);
 	}
 	
 }

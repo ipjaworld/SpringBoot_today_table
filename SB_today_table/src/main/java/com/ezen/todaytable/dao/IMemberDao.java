@@ -11,11 +11,16 @@ import com.ezen.todaytable.dto.MemberVO;
 @Mapper
 public interface IMemberDao {
 
-	void getMembersList(HashMap<String, Object> paramMap);
-
-	void insertMemberttable(MemberVO membervo);
+	// void compareAdminOrMember(HashMap<String, Object> paramMap);
+	
+	void insertMemberttable(HashMap<String, Object> paramMap);
 
 	void updateMemberttable(HashMap<String, Object> paramMap);
+
+	void getAdminttable(HashMap<String, Object> paramMap);
+
+	void getMembersList(HashMap<String, Object> paramMap);
+
 	
 
 }

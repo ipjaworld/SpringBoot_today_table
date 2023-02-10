@@ -6,17 +6,18 @@
 <mapper namespace="com.ezen.todaytable.dao.IMemberDao">
 
 	<resultMap  id="memberMap" type="java.util.HashMap"></resultMap>
-	
-	<select id ="getMembersList" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<resultMap  id="memberMap2" type="java.util.HashMap"></resultMap>
+	<!-- <select id ="compareAdminOrMember" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
-			CALL  getMembersList (
-			#{id},
-			#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=memberMap }
+			CALL  compareAdminOrMember (
+			#{id},#{aid},
+			#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=memberMap },
+			#{loginStatus, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=memberMap2 }
 			)
 		}
 		
-	</select>
-	<insert id ="insertMemberttable" statementType="CALLABLE" parameterType="com.ezen.todaytable.dto.MemberVO">
+	</select> -->
+	<insert id ="insertMemberttable" statementType="CALLABLE" parameterType="java.util.HashMap">
 	{
 		CALL insertMemberttable(
 		#{id}, #{pwd},#{name},#{nick},#{email},#{phone},#{zip_num},#{address1},#{address2},#{address3},#{img}
@@ -27,11 +28,29 @@
 	<update id ="updateMemberttable" statementType="CALLABLE"  parameterType="java.util.HashMap">
 	{
 		CALL updateMemberttable(
-		#{id}, #{pwd},#{name},#{nick},#{email},#{phone},#{zip_num},#{address1},#{address2},#{address3},#{img}
+		#{ID}, #{PWD},#{NAME},#{NICK},#{EMAIL},#{PHONE},#{ZIP_NUM},#{ADDRESS1},#{ADDRESS2},#{ADDRESS3},#{IMG}
 		)
 	}
 	</update>
+	<select id ="getMembersList" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL  getMembersList (
+			#{id},
+			#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=memberMap }
+			)
+		}
+		
+	</select>
+	<select id ="getAdminttable" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL  getAdminttable (
+			#{aid},
+			#{loginStatus, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=memberMap2 }
+			)
+		}
+		
+	</select>
+			
 	
-
 
 </mapper>
