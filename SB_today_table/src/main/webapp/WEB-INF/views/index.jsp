@@ -50,7 +50,7 @@
 	      <div class="slide" id="slide0">
 	        <c:forEach items="${allList}" var="recipeVO" end="20">
 		      	<c:choose>
-		      		<c:when test="${loginUser.id == recipeVO.ID}">
+		      		<c:when test="${loginUser.ID == recipeVO.ID}">
 		      			<div class="item">
 				        	<a href="recipeDetailWithoutView?rnum=${recipeVO.RNUM}">
 				            	<img src="/${recipeVO.THUMBNAIL}" width=300 height=200>

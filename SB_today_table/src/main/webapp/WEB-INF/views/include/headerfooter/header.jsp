@@ -50,7 +50,7 @@
 						<button class="btn btn-dark" type="button" id="searchByKey" >검색</button>
 					</div>
 
-					<c:if test="${loginUser.id==null && loginAdmin.adminId==null}">
+					<c:if test="${loginUser.ID==null && loginAdmin.ADMINID==null}">
 						<div id="loginOrJoin" class="col-md-5 col-sm-12">
 							<input type="button" value="로그인" class="header-btn"
 							onClick="location.href='loginForm'" />
@@ -58,9 +58,9 @@
 							onClick="location.href='contract'" />
 						</div>
 					</c:if>
-					<c:if test="${loginUser.id!=null}">
+					<c:if test="${loginUser.ID!=null}">
 						<div id="loginOrJoin" class="col-5">
-							<b>${loginUser.name}(${loginUser.id})님<br>안녕하세요!</b>
+							<b>${loginUser.NAME}(${loginUser.ID})님<br>안녕하세요!</b>
 							<input type="button" value="마이페이지" class="header-btn" 
 								onClick="location.href='myPageView'"/>
 							<input type="button" value="로그아웃" class="header-btn"
@@ -69,9 +69,9 @@
 										src="/image/pensil1.png"></a></div>
 						</div>
 					</c:if>
-					<c:if test="${loginAdmin.adminId!=null}">
+					<c:if test="${loginAdmin.ADMINID!=null}">
 						<div id="loginOrJoin" class="col-5">
-							<b>${loginAdmin.adminId}님<br>안녕하세요!</b>
+							<b>${loginAdmin.ADMINID}님<br>안녕하세요!</b>
 							<input type="button" value="관리자페이지" class="header-btn"
 								onClick="location.href='admin'" />
 							<input type="button" value="로그아웃" class="header-btn"

@@ -69,7 +69,7 @@ public class MemberController {
 		      else if( mvo.get("PWD").equals(membervo.getPwd())) {
 		         HttpSession session = request.getSession();
 		         session.setAttribute("loginUser", mvo);
-		         url = "redirect:/";
+		         url = "index";
 		      }else if(mvo.get("USEYN").equals("N")) {
 		    	  model.addAttribute("message", "휴면 계정입니다. 휴면계정을 복구하려면 관리자에게 문의하세요");
 		      }
