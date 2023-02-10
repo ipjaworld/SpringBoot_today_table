@@ -114,6 +114,26 @@
 			CALL insertIng( #{param1}, #{param2}, #{param3} )
 		}
 	</insert> -->
+  
+  	<delete id="deleteReply">
+		delete from reply where replyseq = #{param1}
+	</delete>
+	
+	<select id="likeRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL likeRecipe(
+				#{id}, #{rnum} 
+			)
+		}
+	</select>
+	
+	<select id="reportRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL reportRecipe(
+				#{id}, #{rnum} 
+			)
+		}
+	</select>
 	
 	
 
