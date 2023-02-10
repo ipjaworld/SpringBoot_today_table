@@ -70,6 +70,12 @@
 		}
 	</select> -->
 	
+	<delete id="deleteRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL deleteRecipe( #{rnum} )
+		}
+	</delete>
+	
 	<update id="addReply">
 		{
 			CALL addReply(

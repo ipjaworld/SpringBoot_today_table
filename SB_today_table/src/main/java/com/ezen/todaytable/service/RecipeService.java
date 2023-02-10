@@ -38,6 +38,11 @@ public class RecipeService {
 	public void recipeDetailWithoutView(HashMap<String, Object> paramMap) {
 		rdao.getRecipe(paramMap);
 	}
+	
+	public void deleteRecipe(HashMap<String, Object> paramMap) {
+		rdao.deleteRecipe(paramMap);
+		
+	}
 
 	public void recipeFavoriteAndRec(HashMap<String, Object> paramMap) {
 		rdao.recipeFavoriteAndRec(paramMap);

@@ -14,6 +14,8 @@ public interface IRecipeDao {
 	void addRecipeView(HashMap<String, Object> paramMap);
 
 	void getRecipe(HashMap<String, Object> paramMap);
+	
+	void deleteRecipe(HashMap<String, Object> paramMap);
 
 	void recipeFavoriteAndRec(HashMap<String, Object> paramMap);
 

@@ -3,6 +3,9 @@ package com.ezen.todaytable.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -108,6 +111,18 @@ public class RecipeController {
 		return mav;
 		
 	}
+	
+	@RequestMapping("/deleteRecipe")
+	public String deleteRecipe(@RequestParam("rnum") int rnum, HttpServletRequest request) {
+		String url = "recipe/recipeList";
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginUser") == null) url = "member/loginForm";
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("rnum", rnum);
+		rs.deleteRecipe(paramMap);
+		return url;
+	}
+	
 	
 	
 	
