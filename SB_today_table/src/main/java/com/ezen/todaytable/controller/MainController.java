@@ -94,9 +94,10 @@ public class MainController {
 			paramMap.put("id",loginUser.get("ID") );
 			paramMap.put("request",request );
 			paramMap.put("ref_cursor", null);
+			paramMap.put("tableName", 1);
 
-			ms.getMyRecipeListttable(paramMap);
-
+			ms.getMIFListtable(paramMap);
+			
 			ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
 			mav.addObject("paging", (Paging) paramMap.get("paging"));
 			// mav.addObject("key", (String)paramMap.get("key"));
@@ -124,13 +125,45 @@ public class MainController {
 			paramMap.put("id",loginUser.get("ID") );
 			paramMap.put("request",request );
 			paramMap.put("ref_cursor", null);
+			paramMap.put("tableName", 2);
 
-			ms.getMyInterestttable(paramMap);
+			ms.getMIFListtable(paramMap);
 
 			ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
 			mav.addObject("paging", (Paging) paramMap.get("paging"));
 			// mav.addObject("key", (String)paramMap.get("key"));
-			mav.addObject("ylist;", list);
+			mav.addObject("ylist", list);
+
+			mav.setViewName("mypage/interest");
+		}
+
+		return mav;
+	}
+	
+	
+	
+	
+	@RequestMapping("/favoriteView")
+	public ModelAndView favoriteView(HttpServletRequest request,Model model,HttpSession session) {
+		
+		ModelAndView mav = new ModelAndView();
+		HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
+		if (loginUser == null) {
+			mav.setViewName("member/loginForm");
+		} else {
+
+			HashMap<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("id",loginUser.get("ID") );
+			paramMap.put("request",request );
+			paramMap.put("ref_cursor", null);
+			paramMap.put("tableName", 3);
+
+			ms.getMIFListtable(paramMap);
+
+			ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
+			mav.addObject("paging", (Paging) paramMap.get("paging"));
+			// mav.addObject("key", (String)paramMap.get("key"));
+			mav.addObject("ylist", list);
 
 			mav.setViewName("mypage/interest");
 		}

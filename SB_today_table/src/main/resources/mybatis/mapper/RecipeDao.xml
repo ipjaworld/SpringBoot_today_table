@@ -198,35 +198,22 @@
 	</select>
 	
 	
-	<select id="getMyRecipeCount" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<select id="getMIFAllCount" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
-			CALL getMyRecipeCount(
-				#{id}, 
+			CALL getMIFAllCount(
+				#{id}, #{tableName},
 				#{cnt, mode=OUT, jdbcType=INTEGER}
 			)
 		}
 	</select>
-	
-	
-	
-	<select id="getMyRecipeListttable" statementType="CALLABLE" parameterType="java.util.HashMap">
-		{
-			CALL getMyRecipeListttable(
-				#{id}, 
-				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap }
-			)
-		}
-	</select>
-	
-	
-	
-	<select id="getMyInterestttable" statementType="CALLABLE" parameterType="java.util.HashMap">
-		{
-			CALL getMyInterestttable(
-				#{id}, 
-				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap }
-			)
-		}
-	</select>
 
+
+<select id="getMIFListtable" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL getMIFListtable(
+				#{id}, #{tableName},
+				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap }
+			)
+		}
+	</select>
 </mapper>

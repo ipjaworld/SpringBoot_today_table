@@ -55,11 +55,15 @@ public interface IRecipeDao {
 
 	void getReplyCount(HashMap<String, Object> rvo);
 
-	void getMyRecipeCount(HashMap<String, Object> paramMap);
-
 	void getMyRecipeListttable(HashMap<String, Object> paramMap);
 
 	void getMyInterestttable(HashMap<String, Object> paramMap);
+
+	void getMIFAllCount(HashMap<String, Object> paramMap);
+
+	void getMyFavoritttable(HashMap<String, Object> paramMap);
+
+	void getMIFListtable(HashMap<String, Object> paramMap);
 
 
 }

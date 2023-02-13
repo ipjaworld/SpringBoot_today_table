@@ -5,7 +5,7 @@
    <form name="formm" method="post">
       <h2>내가 만든레시피</h2>
       <c:choose>
-         <c:when test="${rlist.size()==0 }">
+         <c:when test="${myRecipeList.size()==0 }">
             <h3 style="color: red; text-align: center;">내가 만든레시피가 비어있습니다</h3>
          </c:when>
          <c:otherwise>
@@ -20,27 +20,27 @@
                   <th width="200">작 성 일</th>
                   <th width="200">조 회</th>
                </tr>
-               <c:forEach items="${rlist}" var="myRecipeVO">
+               <c:forEach items="${myRecipeList}" var="myRecipeVO">
                   <tr>
                      <td>
-                        <input type="checkbox" name="rnum"   value="${myRecipeVO.rnum }"></td>
-                     <td>${myRecipeVO.rnum}</td>
+                        <input type="checkbox" name="rnum"   value="${myRecipeVO.RNUM }"></td>
+                     <td>${myRecipeVO.RNUM}</td>
                      <td width="300">
-                     <a href="recipe.do?command=recipeDetailWithoutView&rnum=${myRecipeVO.rnum}">   ${myRecipeVO.subject}</a></td>
+                     <a href="recipeDetailWithoutView?rnum=${myRecipeVO.RNUM}">   ${myRecipeVO.SUBJECT}</a></td>
                      <td width="200">
-                        <fmt:formatDate value="${myRecipeVO.indate}"   type="date" />
+                        <fmt:formatDate value="${myRecipeVO.INDATE}"   type="date" />
                      </td>
-                     <td width="200">${myRecipeVO.views}</td>
+                     <td width="200">${myRecipeVO.VIEWS}</td>
                </c:forEach>
                <tr>
                   <th colspan="3">
-                     <a href="#"   onClick="location.href='recipe.do?command=recipeForm'">작성하기</a>
+                     <a href="#"   onClick="location.href='recipeForm'">작성하기</a>
                   </th>
                     <th><a href="#" onClick="go_fmirecipe_delete('myRecipeDelete');">삭제하기</a></th>
                </tr>
             </table>
             <div id="myrecipe-list-paging">
-               <jsp:include page="../../paging/paging.jsp">
+               <jsp:include page="../../paging/paging">
                   <jsp:param name="command" value="myRecipeList"/>
                </jsp:include>
             </div>

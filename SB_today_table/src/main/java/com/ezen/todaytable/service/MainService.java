@@ -66,7 +66,7 @@ public class MainService {
 		paging.setPage(page);
 		paramMap.put("cnt", 0);
 //        paramMap.put("key", key);
-		rdao.getMyRecipeCount(paramMap);
+		rdao.getMIFAllCount(paramMap);
 		int count = Integer.parseInt(paramMap.get("cnt") + "");
 		paging.setTotalCount(count);
 		paging.paging();
@@ -109,7 +109,7 @@ public class MainService {
 		paging.setPage(page);
 		paramMap.put("cnt", 0);
 //        paramMap.put("key", key);
-		rdao.getMyRecipeCount(paramMap);
+		rdao.getMIFAllCount(paramMap);
 		int count = Integer.parseInt(paramMap.get("cnt") + "");
 		paging.setTotalCount(count);
 		paging.paging();
@@ -119,6 +119,93 @@ public class MainService {
 		paramMap.put("paging", paging);
 		rdao.getMyInterestttable(paramMap);
 	}
+
+
+
+	public void getMyFavoritettable(HashMap<String, Object> paramMap) {
+		HttpServletRequest request = (HttpServletRequest) paramMap.get("request");
+		HttpSession session = request.getSession();
+		if (request.getParameter("first") != null) {
+			session.removeAttribute("page");
+			session.removeAttribute("key");
+		}
+		int page = 1;
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+			session.setAttribute("page", page);
+		} else if (session.getAttribute("page") != null) {
+			page = (Integer) session.getAttribute("page");
+		} else {
+			session.removeAttribute("page");
+		}
+
+//        String key = "";
+//        if(request.getParameter("key")!=null) {
+//           session.setAttribute("key", request.getParameter("key"));
+//           key = request.getParameter("key");
+//        } else if (session.getAttribute("key")!=null){
+//        	key = (String)session.getAttribute("key");
+//        } else session.removeAttribute("key");
+
+		Paging paging = new Paging();
+		paging.setPage(page);
+		paramMap.put("cnt", 0);
+//        paramMap.put("key", key);
+		rdao.getMIFAllCount(paramMap);
+		int count = Integer.parseInt(paramMap.get("cnt") + "");
+		paging.setTotalCount(count);
+		paging.paging();
+
+		paramMap.put("startNum", paging.getStartNum());
+		paramMap.put("endNum", paging.getEndNum());
+		paramMap.put("paging", paging);
+		rdao.getMyFavoritttable(paramMap);
+	}
+
+
+
+	public void getMIFListtable(HashMap<String, Object> paramMap) {
+		HttpServletRequest request = (HttpServletRequest) paramMap.get("request");
+		HttpSession session = request.getSession();
+		if (request.getParameter("first") != null) {
+			session.removeAttribute("page");
+			session.removeAttribute("key");
+		}
+		int page = 1;
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+			session.setAttribute("page", page);
+		} else if (session.getAttribute("page") != null) {
+			page = (Integer) session.getAttribute("page");
+		} else {
+			session.removeAttribute("page");
+		}
+
+//        String key = "";
+//        if(request.getParameter("key")!=null) {
+//           session.setAttribute("key", request.getParameter("key"));
+//           key = request.getParameter("key");
+//        } else if (session.getAttribute("key")!=null){
+//        	key = (String)session.getAttribute("key");
+//        } else session.removeAttribute("key");
+
+		Paging paging = new Paging();
+		paging.setPage(page);
+		paramMap.put("cnt", 0);
+//        paramMap.put("key", key);
+		rdao.getMIFAllCount(paramMap);
+		int count = Integer.parseInt(paramMap.get("cnt") + "");
+		paging.setTotalCount(count);
+		paging.paging();
+
+		paramMap.put("startNum", paging.getStartNum());
+		paramMap.put("endNum", paging.getEndNum());
+		paramMap.put("paging", paging);
+		rdao.getMIFListtable(paramMap);
+	}
+
+
+
 		
 
 
