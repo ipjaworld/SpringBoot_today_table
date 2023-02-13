@@ -79,7 +79,6 @@ is
 begin
   open result_cur for 
         select * from admins where aid = p_id;
-        dbms_output.put_line(p_id);
     p_curvar := result_cur;
 end;
 
@@ -95,3 +94,56 @@ begin
     p_curvar := result_cur;
 end;
 select * from members;
+
+
+
+--- myrecipe 갯수 조회
+
+select*from recipe_page_view;
+
+create or replace procedure getMyRecipeCount(
+    p_id IN recipe_page_view.id%type,
+    p_count out number
+)
+is
+   v_cnt number;
+begin
+      select count(*) into v_cnt from recipe_page_view where id = p_id;
+        p_count:= v_cnt;
+end;
+
+
+
+
+
+
+create or replace procedure getMyRecipeListttable(
+    p_id IN recipe_page_view.id%type,
+    p_curvar out SYS_REFCURSOR
+)
+is
+  result_cur sys_refcursor;
+begin
+    open result_cur for
+      select * from recipe_page_view where id = p_id;
+       p_curvar := result_cur;
+       
+end;
+
+
+
+select*from recipe_page_view;
+select*from fi_view;
+
+create or replace procedure getMyInterestttable(
+    p_id IN recipe_page_view.id%type,
+    p_curvar out SYS_REFCURSOR
+)
+is
+  result_cur sys_refcursor;
+begin
+    open result_cur for
+      select * from recipe_page_view where id = p_id;
+       p_curvar := result_cur;
+       
+end;
