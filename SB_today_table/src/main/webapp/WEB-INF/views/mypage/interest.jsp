@@ -65,7 +65,7 @@
                      onClick="go_favoriteindel('changeFuseyn');">단골레시피 변환/해제</a></th>
             </table>
             <div id="myrecipe-list-paging">
-               <jsp:include page="/paging/paging.jsp">
+               <jsp:include page="/paging/paging">
                   <jsp:param name="command" value="interestView" />
                </jsp:include>
             </div>

@@ -22,21 +22,21 @@
 						<th width="200">작 성 일</th>
 						<th width="200">조 회</th>
 					</tr>
-					<c:forEach items="${rlist}" var="myRecipeVO" varStatus="status">
+					<c:forEach items="${myRecipeList}" var="myRecipeVO" varStatus="status">
 						<tr>
 							<td><input type="checkbox" name="rnum"
-								value="${myRecipeVO.rnum }"></td>
-							<td>${myRecipeVO.rnum}</td>
-							<td width="300"><a
-								href="recipeDetailWithoutView&rnum=${myRecipeVO.rnum}">
-									${myRecipeVO.subject}
+								value="${myRecipeVO.RNUM }"></td>
+							<td>${myRecipeVO.RNUM}</td>
+							 <td width="300"><a
+								href="recipeDetailWithoutView&rnum=${myRecipeVO.RNUM}">
+									${myRecipeVO.SUBJECT}<%-- 
 								<c:if test="${replyCountList[status.index] !=0}">
 									<span style="color: #445EDD; font-size: bold;">[${replyCountList[status.index]}]</span>
-								</c:if>
-									</a></td>
-							<td width="200"><fmt:formatDate value="${myRecipeVO.indate}"
+								</c:if>--%>
+									</a></td> 
+							<td width="200"><fmt:formatDate value="${myRecipeVO.INDATE}"
 									type="date" /></td>
-							<td width="200">${myRecipeVO.views}</td>
+							<td width="200">${myRecipeVO.VIEWS}</td>
 					</c:forEach>
 					<tr>
 						<th colspan="3"><a href="#"
@@ -46,7 +46,7 @@
 					</tr>
 				</table>
 				<div id="myrecipe-list-paging">
-					<jsp:include page="/paging/paging.jsp">
+					<jsp:include page="/paging/paging">
 						<jsp:param name="command" value="myRecipeList" />
 					</jsp:include>
 				</div>

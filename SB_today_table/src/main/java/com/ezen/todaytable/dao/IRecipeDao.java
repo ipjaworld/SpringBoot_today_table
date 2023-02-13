@@ -57,5 +57,9 @@ public interface IRecipeDao {
 
 	void getMyRecipeCount(HashMap<String, Object> paramMap);
 
+	void getMyRecipeListttable(HashMap<String, Object> paramMap);
+
+	void getMyInterestttable(HashMap<String, Object> paramMap);
+
 
 }
