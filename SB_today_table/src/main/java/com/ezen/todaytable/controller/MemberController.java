@@ -212,20 +212,7 @@ public class MemberController {
 		try {
 			MultipartRequest multi = new MultipartRequest(request, savepath, 5 * 1024 * 1024, "UTF-8",
 					new DefaultFileRenamePolicy());
-			System.out.println("id= "+ multi.getParameter("id"));	
-			System.out.println("pwd = "+multi.getParameter("pwd"));	
-			System.out.println("name = " + multi.getParameter("name"));	
-			System.out.println("nick=" + multi.getParameter("nick"));	
-			System.out.println("email = " + multi.getParameter("email"));	
-			System.out.println("phone =" + multi.getParameter("phone") );	
-			System.out.println("zip_num = "+ multi.getParameter("zip_num"));	
-			System.out.println("address1 = "+ multi.getParameter("address1"));	
-			System.out.println("address2 = " +multi.getParameter("address2"));	
-			System.out.println("address3 = " + multi.getParameter("address3"));	
-			System.out.println("img = " + multi.getFilesystemName("img"));	
-			System.out.println(oldImg);	
-			
-			
+				
 				paramMap.put("ID", multi.getParameter("id"));
 				paramMap.put("PWD", multi.getParameter("pwd"));
 				paramMap.put("NAME", multi.getParameter("name"));
@@ -236,6 +223,8 @@ public class MemberController {
 				paramMap.put("ADDRESS1", multi.getParameter("address1"));
 				paramMap.put("ADDRESS2", multi.getParameter("address2"));
 				paramMap.put("ADDRESS3", multi.getParameter("address3"));
+				paramMap.put("INDATE", multi.getParameter("indate"));
+				paramMap.put("USEYN", multi.getParameter("useyn"));
 
 				if (multi.getFilesystemName("img") == null) {
 					paramMap.put("IMG", oldImg);// 수정하려는 이미지가 없을 경우 이전 이미지 적용
@@ -254,4 +243,65 @@ public class MemberController {
 		}
 		return mav;
 	}
+//	@RequestMapping(value = "/memberUpdate", method = RequestMethod.POST)
+//	public ModelAndView memberUpdate(@ModelAttribute("dto") @Valid MemberVO membervo, BindingResult result,
+//			HttpServletRequest request, @RequestParam("oldImg") String oldImg,
+//			@RequestParam(value = "pwdCheck", required = false) String pwdCheck) {
+//		
+//		ModelAndView mav = new ModelAndView();
+//		
+//		 mav.addObject("oldImg", oldImg);
+//		
+//		System.out.println("img="+request.getParameter("img"));
+//		System.out.println("oldImg="+oldImg);
+//		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+//		
+//		 if (result.getFieldError("name") != null)
+//				mav.addObject("message", result.getFieldError("name").getDefaultMessage());
+//			else if (result.getFieldError("nickname") != null)
+//				mav.addObject("message", result.getFieldError("nick").getDefaultMessage());
+//			else if (result.getFieldError("pwd") != null)
+//				mav.addObject("message", result.getFieldError("pwd").getDefaultMessage());
+//			else if (result.getFieldError("email") != null)
+//				mav.addObject("message", result.getFieldError("email").getDefaultMessage());
+//			else if (result.getFieldError("phone") != null)
+//				mav.addObject("message", result.getFieldError("phone").getDefaultMessage());
+//			 else if (pwdCheck == null || (pwdCheck != null && !pwdCheck.equals(membervo.getPwd())))
+//				mav.addObject("message", "비밀번호 확인이 일치하지 않습니다.");
+//			else {
+//				
+//				   paramMap.put("ID", request.getParameter("id"));
+//				   paramMap.put("PWD", request.getParameter("pwd"));
+//				   paramMap.put("NAME", request.getParameter("name"));
+//				   paramMap.put("EMAIL", request.getParameter("email"));
+//				   paramMap.put("PHONE", request.getParameter("phone"));
+//				   paramMap.put("NICK", request.getParameter("nick"));
+//				   paramMap.put("ADDRESS1", request.getParameter("address1"));
+//				   paramMap.put("ADDRESS2", request.getParameter("address2"));
+//				   paramMap.put("ADDRESS3", request.getParameter("address3"));
+//				   paramMap.put("ZIP_NUM", request.getParameter("zip_num"));
+//				   paramMap.put("INDATE", request.getParameter("indate"));
+//				   paramMap.put("USEYN", request.getParameter("useyn"));
+//		
+//		
+//
+//				if (request.getParameter("img") == null) {
+//					paramMap.put("IMG", oldImg);// 수정하려는 이미지가 없을 경우 이전 이미지 적용
+//				} else {
+//					paramMap.put("IMG", request.getParameter("img"));
+//				}
+//				ms.updateMemberttable(paramMap);
+//				HttpSession session = request.getSession();
+//				session.setAttribute("loginUser", paramMap);
+//				
+//				mav.setViewName("redirect:/");
+//			}
+//
+//	
+//		return mav;
+//	}
+
+			
+			
+
 }

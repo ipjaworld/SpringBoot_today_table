@@ -62,7 +62,9 @@ create or replace procedure updateMemberttable(
 is
    
 begin
-  update members set pwd=p_pwd, name=p_name, email=p_email, phone=p_phone, zip_num=p_zip_num, address1=p_address1, address2=p_address2, address3=p_address3, img=p_img
+  update members set pwd=p_pwd, name=p_name,nick=p_nick, email=p_email,
+  phone=p_phone, zip_num=p_zip_num, address1=p_address1, address2=p_address2, 
+  address3=p_address3, img=p_img
  where id=p_id;
   commit;
 end;
@@ -92,3 +94,4 @@ begin
         select * from members where id =p_id;
     p_curvar := result_cur;
 end;
+select * from members;

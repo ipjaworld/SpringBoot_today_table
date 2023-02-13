@@ -75,7 +75,7 @@
 		    }
 		</script><br>
 <%--                 <div><label>프로필사진</label><input type="hidden" name="img" id="img" value="${loginUser.IMG }"><div id="filename"></div></div>
- --%>          <label>프로필사진</label><img src="/imageProfile/${loginUser.IMG}" width="200pt"><br>
+ --%>          <label>프로필사진</label><img src="${loginUser.IMG}" width="200pt"><br>
       <input type="file" name="img"> * 주의 : 이미지를 수정할때에만 선택해주세요
                 
                

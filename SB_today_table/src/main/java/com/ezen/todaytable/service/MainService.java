@@ -29,5 +29,11 @@ public class MainService {
 	public void getRecipeBanner(HashMap<String, Object> paramMap) {
 		rdao.getRecipeBannerList(paramMap);
 	}
+
+
+
+	public void getMyRecipeListttable(HashMap<String, Object> paramMap) {
+		// rdao.getMyRecipeListttable(paramMap);
+	}
 	
 }
