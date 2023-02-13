@@ -108,9 +108,9 @@
 <div id="recipe-button-area" class="container">
 	<c:if test="${recipeVO.ID.equals(loginUser.ID)}">
 		<input type="button" name="modify" value="수정하기" 
-			onclick="recipeUpdateForm?rnum=${recipeVO.RNUM}'"/>
+			onclick="location.href='recipeUpdateForm?rnum=${recipeVO.RNUM}'"/>
 		<input type="button" name="modify" value="삭제하기" 
-			onclick="deleteRecipe?rnum=${recipeVO.RNUM}'"/>
+			onclick="location.href='deleteRecipe?rnum=${recipeVO.RNUM}'"/>
 	</c:if>
 	<input type="button" name="modify" value="메인으로" 
 			onclick="location.href='/'"/>

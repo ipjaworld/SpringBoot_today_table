@@ -118,15 +118,12 @@ public class RecipeService {
 		// = 없다면 : 2) ingTag에 삽입 3) 방금 삽입한 태그 아이디 확인 4) recipeTag에 삽입
 		
 	}
-
-	public void insertProcessIng(HashMap<String, Object> paramMap) {
+	
+public void insertProcessIng(HashMap<String, Object> paramMap) {
 		
 		String checkIng = (String) paramMap.get("checkIng");
 		System.out.println("service로 전달된 checkIng : " + checkIng);
 		String [] ingredients = checkIng.split("\\s");
-		for(String str : ingredients) { // 확인용
-			System.out.println("ingredients 배열 : " + str);
-		}
 		ArrayList<String> ingArray = new ArrayList<String>();
 		ArrayList<String> qtyArray = new ArrayList<String>();
 		for(int i=0; i<ingredients.length; i++) {
@@ -136,13 +133,6 @@ public class RecipeService {
 			}else {
 				qtyArray.add(ingredients[i]);
 			}
-		}
-		
-		for(String str : ingArray) { // 확인용
-			System.out.println("ingArray 내용 : " + str);
-		}
-		for(String str : qtyArray) { // 확인용
-			System.out.println("qtyArray 내용 : " + str);
 		}
 		
 		int rnum = Integer.parseInt(String.valueOf(paramMap.get("max_rnum")));
@@ -161,16 +151,102 @@ public class RecipeService {
 		
 		for(int i=0; i<ingArray.size(); i++) {
 			HashMap<String, Object> ingMap = new HashMap<String, Object>();
-			ingMap.put("tag", ingArray.get(i));
+			ingMap.put("tag", (String) ingArray.get(i));
 			System.out.println("tag : " +  ingArray.get(i));
 			ingMap.put("rnum", rnum);
-			ingMap.put("quantity", qtyArray.get(i));
+			System.out.println("ing에서의 rnum : " + rnum);
+			ingMap.put("quantity", (String) qtyArray.get(i));
 			System.out.println("quantity : " +  qtyArray.get(i));
+			ingMap.put("cnt", null);
+			rdao.getTagCnt(ingMap);
 			// rdao.insertIng(ingArray.get(i), rnum, qtyArray.get(i));
-			rdao.insertIng(ingMap);
+			// rdao.insertIng(ingMap);
+			int cnt = Integer.parseInt(String.valueOf(ingMap.get("cnt")));
+			System.out.println("cnt : " + cnt);
+			if(cnt==0) {
+				rdao.insertTag(ingMap);
+				System.out.println("cnt가 0이므로 태그가 삽입됩니다.");
+			}
+			else {
+				rdao.insertRecipeTag(ingMap);
+				System.out.println("cnt가 0이 아니므로 레시피태그만 삽입됩니다.");
+			}
+			
+			
 		}
 		
 	}
+
+	public void updateRecipe(HashMap<String, Object> paramMap) {
+		
+		String checkIng = (String) paramMap.get("checkIng");
+		System.out.println("service로 전달된 checkIng : " + checkIng);
+		String [] ingredients = checkIng.split("\\s");
+		ArrayList<String> ingArray = new ArrayList<String>();
+		ArrayList<String> qtyArray = new ArrayList<String>();
+		for(int i=0; i<ingredients.length; i++) {
+			if(ingredients[i].startsWith("#")) {
+				String substr = ingredients[i].substring(1);
+				ingArray.add(substr);
+			}else {
+				qtyArray.add(ingredients[i]);
+			}
+		}
+		
+		for(String str : ingArray) { // 확인용
+			System.out.println("ingArray 내용 : " + str);
+		}
+		for(String str : qtyArray) { // 확인용
+			System.out.println("qtyArray 내용 : " + str);
+		}
+		
+		// 1) recipe 테이블 수정
+		rdao.updateRecipe(paramMap);
+		
+		int rnum = Integer.parseInt(String.valueOf(paramMap.get("rnum")));
+		
+		// 2) processImg 테이블과 recipeTag 테이블의 레코드 삭제
+		rdao.deleteProcess(paramMap);
+		
+		// 3) processImg 레코드 삽입
+		ArrayList<ProcessImgVO> processList = (ArrayList<ProcessImgVO>) paramMap.get("processList");
+		for(ProcessImgVO pvo : processList) {
+			HashMap<String, Object> pvoMap = new HashMap<String, Object>();
+			pvoMap.put("rnum", rnum);
+			pvoMap.put("iseq", pvo.getIseq());
+			pvoMap.put("links", pvo.getLinks());
+			pvoMap.put("description", pvo.getDescription());
+			rdao.insertProcess(pvoMap);
+		}
+		
+		// 4) 재료 레코드 삽입
+		
+		
+		for(int i=0; i<ingArray.size(); i++) {
+			HashMap<String, Object> ingMap = new HashMap<String, Object>();
+			ingMap.put("tag", (String) ingArray.get(i));
+			System.out.println("tag : " +  ingArray.get(i));
+			ingMap.put("rnum", rnum);
+			System.out.println("ing에서의 rnum : " + rnum);
+			ingMap.put("quantity", (String) qtyArray.get(i));
+			System.out.println("quantity : " +  qtyArray.get(i));
+			ingMap.put("cnt", null);
+			rdao.getTagCnt(ingMap);
+			int cnt = Integer.parseInt(String.valueOf(ingMap.get("cnt")));
+			System.out.println("cnt : " + cnt);
+			if(cnt==0) {
+				rdao.insertTag(ingMap);
+				System.out.println("cnt가 0이므로 태그가 삽입됩니다.");
+			}
+			else {
+				rdao.insertRecipeTag(ingMap);
+				System.out.println("cnt가 0이 아니므로 레시피태그만 삽입됩니다.");
+			}
+		}
+
+	}
+	
+	
 
 	
 	

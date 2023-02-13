@@ -36,8 +36,18 @@ public interface IRecipeDao {
 	void insertProcess(HashMap<String, Object> pvoMap);
 
 	// void insertIng(String ing, int rnum, String qty);
+	// void insertIng(HashMap<String, Object> ingMap);
+	
+	// 상단 insertIng의 과정 세분화
+	void getTagCnt(HashMap<String, Object> ingMap);
 
-	void insertIng(HashMap<String, Object> ingMap);
+	void insertTag(HashMap<String, Object> ingMap);
+
+	void insertRecipeTag(HashMap<String, Object> ingMap);
+
+	void updateRecipe(HashMap<String, Object> paramMap);
+
+	void deleteProcess(HashMap<String, Object> paramMap);
 
 
 }

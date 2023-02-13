@@ -52,7 +52,7 @@ $(function(){
 					alert("i : " + i);
 	            	$("#recipe-process").append(
 	            			"<div class='process' name='process"+i +"'>"+
-	            			"<img height='150' src='imageRecipe/"+data.FILENAME+"' />"+
+	            			"<img height='150' id='process"+i+"' src='imageRecipe/"+data.FILENAME+"' />"+
 	            			"<input type='hidden' name='processImg"+i+"' value='"+data.FILENAME+"'>"+
 	            			"<textarea name='processDetail"+i+"' rows='2' cols='50'></textarea>"+
 	                        "<input id='update-button' class='btn' type='button' value='이미지 수정' name='"+i+"'/>"+
@@ -64,6 +64,33 @@ $(function(){
 		});
 	});
 }); 
+
+$(document).on("click", '#editImgButton', function(event) {
+		let formselect = $("#ImgEditForm")[0];  
+		let formdata = new FormData(formselect);   
+		$.ajax({    
+			url:"<%=request.getContextPath() %>/editImg",
+			type:"POST",
+			enctype:"multipart/form-data",
+			async: false,
+			data: formdata,
+	    	timeout: 10000,
+	    	context:this,
+	    	contentType : false,
+	        processData : false,
+	        success : function( data ){
+	            if(data.STATUS == 1){
+	            	let num = $(this).attr('name');
+	            	alert('전달된 editImgButton의 num : ' + num);
+	            	$('#process'+num).attr('src', 'imageRecipe/'+data.FILENAME);
+	            	$('input[name="processImg'+num+'"]').val(data.FILENAME);
+	            	$(this).closest('div').remove();
+	            	alert("이미지 수정 후 삭제 완료");
+	            }
+	        },
+	        error: function(request,status,error) {	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);	}
+		});
+	});
 
 </script>
 

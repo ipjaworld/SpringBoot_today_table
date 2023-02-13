@@ -1,6 +1,7 @@
 package com.ezen.todaytable.dto;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -34,6 +35,6 @@ public class RecipeVO {
 		private int theme;
 		private int rec;
 		private int report;
-	
+		
 
 }

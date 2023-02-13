@@ -101,19 +101,58 @@
 		}
 	</insert>
 	
-	<insert id="insertIng" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<!-- <insert id="insertIng" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
 			CALL insertIng( 
 				#{tag}, #{rnum}, #{quantity} 
 			)
 		}
-	</insert>
+	</insert> -->
 	
 	<!-- <insert id="insertIng" statementType="CALLABLE">
 		{
 			CALL insertIng( #{param1}, #{param2}, #{param3} )
 		}
 	</insert> -->
+	
+	<select id="getTagCnt" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL getTagCnt(#{tag}, #{cnt, mode=OUT, jdbcType=INTEGER})
+		}
+	</select>
+	
+	<insert id="insertTag" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL insertTag(
+				#{tag}, #{rnum}, #{quantity}
+			)
+		}
+	</insert>
+	
+	<insert id="insertRecipeTag" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL insertRecipeTag(
+				#{tag}, #{rnum}, #{quantity}
+			)
+		}
+	</insert>
+	
+	<update id="updateRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL updateRecipe(
+				#{subject}, #{content}, #{thumbnail}, #{cookingtime}, #{type}, #{theme}, #{rnum} 
+			)
+		}
+	</update>
+	
+	<delete id="deleteProcess" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL deleteProcess(
+				#{rnum} 
+			)
+		}
+	</delete>
+	
   
   	<delete id="deleteReply">
 		delete from reply where replyseq = #{param1}

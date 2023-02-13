@@ -2,7 +2,7 @@
 $(function(){
 	$('#searchByKey').click(function(){
 		const selected = $('#condition option:selected').val();
-		/*alert("condition : " + selected);*/
+		alert("condition : " + selected);
 		let key = $('#key').val();
 		location.href = "recipe.do?command=recipeList&start='Y'&key="+ key + "&condition=" + selected;
 	});
@@ -72,7 +72,7 @@ function autoHypenPhone(str){
 const timerBtn = document.querySelector("#timerBtn");
 const timerspan = document.querySelector("#timerspan");
 let timeInterval;
-let pomoTime = 10;
+let pomoTime = 60;
 const certinoti = document.querySelector("#certinoti");
 const certi = document.querySelector('#certi');
 
@@ -168,7 +168,7 @@ $(function(){
 			$('form input, form textarea').each(function(){
 			if( $('input[name="subject"]').val() != '' && $('textarea[name="content"]').val() != '' 
 				&& $('input[name="checkIng"]').val() != '' && $('input[name="cookingTime"]').val() != ''
-				&& $('textarea[name="processDetail1"]').val() != '' && $('input[name="thumbnail"]').val() != ''
+				&& $('textarea[name="processDetail1"]').val() != '' // && $('div[name="thumbnailName"]').val() != ''
 				&& $('input[name="processImg1"]').val() != '' && $('input[name="ingredient"]').val() == ''
 				){
 					empty = false;
@@ -225,8 +225,10 @@ $(function(){
 });
 */
 
+
+
 function go_recipe(comm){
-	let divCount = $('.recipe-process').length;
+	let divCount = $('.process').length;
 	let checkIng = $('input[name="checkIng"]').val();
 	if(comm == 'updateRecipe'){
 		checkIng += $('.ex').text();
@@ -234,8 +236,8 @@ function go_recipe(comm){
 	}else{
 		checkIng = $('input[name="checkIng"]').val();
 	} 
-	/*alert("checkIng : " + checkIng + "divCount : " + divCount ); // 확인용*/ 
-	document.frm.action = "recipe.do?command="+comm + "&count="+ divCount;
+	alert("checkIng : " + checkIng + "divCount : " + divCount ); // 확인용 
+	document.frm.action = comm + "?count="+ divCount;
 	document.frm.submit();
 }
 
@@ -282,11 +284,12 @@ $(function(){
       });
 */
 
+// 사용 x
 $(function(){ // 레시피 쓰기/수정에서 '추가' 버튼 눌렀을 때
             $('#add-button').click(function(){
 			let name = $('.recipe-process').length;
 			let i = name + 1;
-			/*alert("name : " + name);*/
+			alert("name : " + name);
 			if( $('.recipe-update-form-process').length >= 1){ // 수정 폼이라면
 				$('div[name="' + name + '"]').after(`<div class="recipe-process" class="recipe-update-form-process"  
 					name="${i}">
@@ -305,19 +308,59 @@ $(function(){ // 레시피 쓰기/수정에서 '추가' 버튼 눌렀을 때
 		 });
       });
 
-$(function(){ 
+/*$(function(){ 
             $('#delete-button').click(function(){
-			// let delete_name = $('#add-button').prev('div').attr('name');
-			let delete_name = $('.recipe-process').length;
-			// let j = Number(delete_name);
+			alert("아무거나");
+			let delete_name = $(this).attr('name');
+			alert("delete_name : " + delete_name);
 			let j = delete_name;
 			console.log("삭제할 div 번호 : "  + j);
-            // $('#add-button').prev('div').remove();
-			$('div[name="'+j+'"]').remove();
+            // $('div[name="process'+j+'"]').remove();
+			$(this).parent('div').remove();
 			alert("삭제 완료");
 		 });
-      });
+      });*/
+      
+// 레시피 작성 중 이미지 수정 버튼을 눌렀을 때
+$(document).on("click", '#update-button', function(event) { 
+		alert("이미지 수정 div 생성");
+		let num = $(this).attr('name');
+		$('article').append(
+			"<div style='position:relative;  border:1px solid black; width:500px; margin:0 auto;'>" +
+			"<form name='ImgEditForm' id='ImgEditForm' method='post'  enctype='multipart/form-data' >" + 
+			"<input type='file' name='editImg'>" + 
+			"<input type='button' id='editImgButton' value='이미지 수정' name='" + num + "'>" + 
+			"</form>" +
+			"</div>");
+	});
 
+// 레시피 작성 중 div 삭제 버튼 눌렀을 때
+$(document).on("click", '#delete-button', function(event) { 
+	let delete_name = $(this).attr('name');
+	// alert("delete_name : " + delete_name);
+	let j = delete_name;
+	alert("삭제할 div 번호 : "  + j);
+    // $('div[name="process'+j+'"]').remove();
+    // let origin = $(this).parent('div').nextAll('.process').attr('name').substr(7);
+	/*
+	alert("origin-1 : " + origin-1);
+	$(this).parent('div').nextAll('.process').attr('name', 'process'+(origin-1));
+	*/
+	let next = $(this).parent('div').nextAll('.process')
+		$(next).each(function(){
+		let num = $(this).attr('name').substr(7);
+	   $(this).attr('name', 'process'+(num-1));
+	   $(this).children('img').attr('id', 'process'+(num-1));
+	   $(this).children('input[name="processImg'+num+'"]').attr('name', 'processImg'+(num-1));
+	   $(this).children('textarea[name="processDetail'+num+'"]').attr('name', 'processDetail'+(num-1));
+	   $(this).children('.btn').attr('name', (num-1));
+		});
+	$(this).parent('div').remove();
+	alert("삭제 완료");
+	
+});
+
+      
 
 
 /*
@@ -382,6 +425,68 @@ function deleteIng(index, btn){
 	button.remove();
 }
 
+// 썸네일 ajax 추가 버튼 눌렀을 때
+/*$(function(){
+	$('#thumbButton').click( function(){
+		
+		let formselect = $("#thumbnailForm")[0];   // 지목된 폼을 변수에 저장
+		let formdata = new FormData(formselect);   // 전송용 폼객에 다시 저장
+		$.ajax({    // 웹페이지 이동 또는 새로고침이 필요없는 request요청
+			url:"<%=request.getContextPath() %>/thumbnailUp",   // 해당 컨트롤러의 requestMapping 목적지 설정
+			type:"POST",
+			enctype:"multipart/form-data",
+			async: false,
+			data: formdata,
+	    	timeout: 10000,
+	    	contentType : false,
+	        processData : false,
+	        success : function( data ){
+	            if(data.STATUS == 1){  	//동적으로 div태그 달아주기.
+	            	$("#thumbname").append("<div>"+data.FILENAME+"</div>");
+	            	$("#thumbnail").val(data.FILENAME);
+	            	$("#thumbname").append("<img src='recipe_image/"+data.FILENAME+"' height='150'/>");
+	            	
+	            }
+	        },
+	        error: function(request,status,error) {				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);	}
+		});
+	});
+});
 
+$(function(){
+	$('#processImgButton').click( function(){
+		
+		let formselect = $("#processImgForm")[0];   // 지목된 폼을 변수에 저장
+		let formdata = new FormData(formselect);   // 전송용 폼객에 다시 저장
+		$.ajax({    // 웹페이지 이동 또는 새로고침이 필요없는 request요청
+			url:"<%=request.getContextPath() %>/processImgUp",   // 해당 컨트롤러의 requestMapping 목적지 설정
+			type:"POST",
+			enctype:"multipart/form-data",
+			async: false,
+			data: formdata,
+	    	timeout: 10000,
+	    	contentType : false,
+	        processData : false,
+	        success : function( data ){
+	            if(data.STATUS == 1){  	//동적으로 div태그 달아주기.
+	            	let name = $('.process').length;
+					let i = name + 1;
+					alert("i : " + i);
+	            	// $("#recipe-process").append("<div>"+data.FILENAME+"</div>");
+	            	// $("#recipe-process").append("<img src='recipe_image/"+data.FILENAME+"' height='150'/>");
+	            	// $("#recipe-process").append("<div class='process' name='process" + i + "'>" + "</div>");
+	            	$("#recipe-process").append(`<div class="process" name="process${i}">
+               		<img height="150" src="recipe_image/"+data.FILENAME />
+                   <input type="hidden" name="processImg${i}">
+                   <textarea name="processDetail${i}" rows="2" cols="50"></textarea>
+                   <input id="update-button" class="btn" type="button" value="이미지 수정" name="${i}"/>
+					<input id="delete-button" class="btn" type="button" value="삭제" name="${i}"/>
+               		</div>`);
+	            }
+	        },
+	        error: function(request,status,error) {				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);	}
+		});
+	});
+});*/
 
 

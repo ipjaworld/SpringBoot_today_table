@@ -6,6 +6,121 @@ select * from recipeTag;
 select * from ingTag;
 select * from processImg;
 
+-- recipe 테이블 업데이트
+CREATE OR REPLACE PROCEDURE updateRecipe(
+    p_subject IN recipe.subject%TYPE, 
+    p_content IN recipe.content%TYPE,
+    p_thumbnail IN recipe.thumbnail%TYPE,
+    p_time IN recipe.time%TYPE,
+    p_type IN recipe.type%TYPE,
+    p_theme IN recipe.theme%TYPE,
+    p_rnum IN recipe.rnum%TYPE
+)
+IS
+BEGIN
+    update recipe set subject=p_subject, content=p_content, thumbnail=p_thumbnail, time=p_time, type=p_type, theme=p_theme where rnum=p_rnum;
+    commit;
+END;
+
+-- recipeTag, processImg 테이블 레코드 삭제
+CREATE OR REPLACE PROCEDURE deleteProcess(
+     p_rnum IN recipe.rnum%TYPE
+)
+IS
+BEGIN
+    delete from recipeTag where rnum=p_rnum;
+    delete from processImg where rnum=p_rnum;
+    commit;
+    
+    EXCEPTION WHEN OTHERS THEN
+    ROLLBACK;
+END;
+
+
+-- recipe, recipe_page 테이블 삽입
+CREATE OR REPLACE PROCEDURE insertRecipe(
+    p_id IN recipe.id%TYPE,
+    p_subject IN recipe.subject%TYPE,
+    p_content IN recipe.content%TYPE,
+    p_thumbnail IN recipe.thumbnail%TYPE,
+    p_cookingtime IN recipe.time%TYPE,
+    p_type IN recipe.type%TYPE,
+    p_theme IN recipe.theme%TYPE,
+    rnum OUT recipe.rnum%TYPE
+)
+IS
+    max_rnum recipe.rnum%TYPE;
+BEGIN
+    insert into recipe(rnum, id, subject, content, thumbnail, time, type, theme) 
+    values(recipe_seq.nextVal, p_id, p_subject, p_content, p_thumbnail, p_cookingtime, p_type, p_theme);
+    select max(rnum) into max_rnum from recipe;
+    rnum := max_rnum;
+    insert into recipe_page(rnum) values(max_rnum);
+    commit;
+    
+    EXCEPTION WHEN OTHERS THEN
+    ROLLBACK;
+END;
+
+-- processImg 테이블 삽입
+CREATE OR REPLACE PROCEDURE insertProcess(
+    p_rnum IN processImg.rnum%TYPE,
+    p_iseq IN processImg.iseq%TYPE,
+    p_links IN processImg.links%TYPE,
+    p_description IN processImg.description%TYPE
+)
+IS
+BEGIN
+    insert into processImg(rnum, iseq, links, description) values(p_rnum, p_iseq, p_links, p_description);
+    commit;
+END;
+
+-- 기존 태그 조회해서 count 리턴
+CREATE OR REPLACE PROCEDURE getTagCnt(
+     p_tag IN ingTag.tag%TYPE,
+     p_cnt OUT NUMBER
+)
+IS
+    v_cnt NUMBER;
+BEGIN
+     select count(*) into v_cnt from ingTag where tag=p_tag;
+     p_cnt := v_cnt;
+END;
+
+-- 기존 태그가 없다면 ingTag, recipeTag 테이블에 레코드 삽입
+CREATE OR REPLACE PROCEDURE insertTag(
+     p_tag IN ingTag.tag%TYPE,
+    p_rnum IN recipeTag.rnum%TYPE,
+     p_qty IN recipeTag.quantity%TYPE
+)
+IS
+    lastTagId ingTag.tag_id%TYPE;
+BEGIN
+    insert into ingTag(tag_id, tag) values(ingTag_seq.nextVal, p_tag);
+    select max(tag_id) into lastTagId from ingTag;
+    insert into recipeTag(rnum, tag_id, quantity) values(p_rnum, lastTagId, p_qty); 
+    commit;
+    
+    EXCEPTION WHEN OTHERS THEN
+    ROLLBACK;
+END;
+
+-- 기존 태그가 있다면 recipeTag 레코드만 삽입
+CREATE OR REPLACE PROCEDURE insertRecipeTag(
+    p_tag IN ingTag.tag%TYPE,
+    p_rnum IN recipeTag.rnum%TYPE,
+     p_qty IN recipeTag.quantity%TYPE
+)
+IS
+    lastTagId ingTag.tag_id%TYPE;
+BEGIN
+    select tag_id into lastTagId from ingTag where tag=p_tag;
+    insert into recipeTag(rnum, tag_id, quantity) values(p_rnum, lastTagId, p_qty);
+    commit;
+END;
+
+
+
 -- 제약조건명 조회
 SELECT OWNER, CONSTRAINT_NAME, CONSTRAINT_TYPE, TABLE_NAME
 FROM USER_CONSTRAINTS;
