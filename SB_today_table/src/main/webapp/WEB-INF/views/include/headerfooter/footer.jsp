@@ -6,6 +6,13 @@
 	<footer class="pt-10 mt-5" style="background-color: #FFFFFF;">
  		<!-- #FFB937 -->
         <div class="container footer-upper-area">
+        	<!-- col 의 뜻은 한줄을 12개로 나누었을 때 비중을 얼마나 할당할지를 뜻합니다. -->
+        	<!-- 6개의 요소를 균일하게 담고 싶다면 col-2 이런 식으로 복붙을 해주면 됩니다. -->
+        	<!-- 중간에 있는 md와 sm의 뜻은 화면의 크기를 말합니다. -->
+        	<!-- 반응형으로 웹페이지를 설계할 때 필요한데, md는 화면 크기가 중간이거나 그 이상일 때, sm은 화면 크기가 작을 때(핸드폰 등의 화면)를 말합니다. -->
+        	<!-- col-md-2 col-sm-4 화면이 클때는 12/2=6개를 한줄에 배치하고, 화면이 작을 때는 12/4=3개를 한줄에 배치합니다. -->
+        	<!-- col의 숫자는 계속 달라도 상관 없으며, 12를 넘어가는 순간, 다음줄이 개행됩니다 -->
+        	<!-- 이 클래스는 부트스트랩을 연동했을 경우에만 적용됩니다. -->
 	        <div class="row footer-upper-left">
 	            <div class="footer-area-item col-md-2 col-sm-4"><a href="#" onclick="footer_go_to('ourstory')">회사 소개</a></div>
 	            <div class="footer-area-item col-md-2 col-sm-4"><a href="#" onclick="footer_go_to('announcement')">공지사항</a></div>

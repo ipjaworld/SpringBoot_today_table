@@ -3,40 +3,52 @@
 
 <nav class="">
 	<div class="container main-top-area">
-		<div class="main-page-card col-md-6 col-sm-12" id="main-total">
-			<a class="" href="recipeCategory?status=recipe&page=1">
-				<img src="/image/maintable.png" />
-			</a>
-			<div class="main-page-card-black-area"></div>
+		<div class="main-page-card col-md-4 col-sm-12" id="main-total">
+			<div class="card-inner">
+				<a class="" href="recipeCategory?status=recipe&page=1">
+					<img src="/image/maintable.png" />
+				</a>
+				<div class="main-page-card-black-area"></div>
+			</div>
 		</div>
-		<div class="main-page-card col-md-6 col-sm-12" id="main-type">
-			<a class="" href="recipeCategory?status=type&page=1">
-				<img src="/image/typerecipe.png" />
-			</a>
-			<div class="main-page-card-black-area"></div>
+		<div class="main-page-card col-md-4 col-sm-12" id="main-type">
+			<div class="card-inner">
+				<a class="" href="recipeCategory?status=type&page=1">
+					<img src="/image/typerecipe.png" />
+				</a>
+				<div class="main-page-card-black-area"></div>
+			</div>
 		</div>
-		<div class="main-page-card col-md-6 col-sm-12" id="main-theme">
-			<a class="" href="recipeCategory?status=theme&page=1">
-				<img src="/image/themerecipe.png" />
-			</a>
-			<div class="main-page-card-black-area"></div>
+		<div class="main-page-card col-md-4 col-sm-12" id="main-theme">
+			<div class="card-inner">
+				<a class="" href="recipeCategory?status=theme&page=1">
+					<img src="/image/themerecipe.png" />
+				</a>
+				<div class="main-page-card-black-area"></div>
+			</div>
 		</div>
-		<div class="main-page-card col-md-6 col-sm-12" id="main-ing">
-			<a class="" href="recipeCategory?status=ing&page=1">
-				<img src="/image/ingredientsrecipe.png" />
-			</a>
-			<div class="main-page-card-black-area"></div>
+		<div class="main-page-card col-md-4 col-sm-12" id="main-ing">
+			<div class="card-inner">
+				<a class="" href="recipeCategory?status=ing&page=1">
+					<img src="/image/ingredientsrecipe.png" />
+				</a>
+				<div class="main-page-card-black-area"></div>
+			</div>
 		</div>
 		
-		<div class="main-page-card" id="main-favorite">
-			<a class="" href="recipeFavoriteAndRec?page=1">
-				<img src="image/regularcustomerRecipe.png" />
-			</a>
-			<div class="main-page-card-black-area"></div>
+		<div class="main-page-card col-md-4 col-sm-12" id="main-favorite">
+			<div class="card-inner">
+				<a class="" href="recipeFavoriteAndRec?page=1">
+					<img src="image/regularcustomerRecipe.png" />
+				</a>
+				<div class="main-page-card-black-area"></div>
+			</div>
 		</div>
 		
-		<div class="main-page-card">
-			<a class="" href="recipe.do?command=index">사이트맵</a>
+		<div class="main-page-card  col-md-4 col-sm-12">
+			<div class="card-inner">
+				<a class="" href="recipe.do?command=index">사이트맵</a>
+			</div>
 		</div> 
 		
 	</div>

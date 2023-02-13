@@ -12,8 +12,11 @@
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 		crossorigin="anonymous">
 	<link  rel="stylesheet" href="/css/style.css">  
+	<!--#폰트어썸 임포트  -->
 	<script src="https://kit.fontawesome.com/74c64a7de1.js" crossorigin="anonymous"></script>
+	<!--#제이쿼리 임포트  -->
 	<script src="script/jquery-3.6.3.js" type="text/javascript"></script>
+	<!--#메인.js 임포트  -->
 	<script type="text/javascript" src="/script/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
 	<script type="text/javascript">
@@ -68,6 +71,7 @@
 <body>
 	<div id="wrap">
 		<header>
+			 <!-- container 속성은 부트스트랩의 내장 클래스이고, 좌우에 여백이 있는 큰 문서의 뼈대(가장 바깥쪽)에 무난하게 넣을 수 있는 클래스 입니다. -->
 			<div class="container">
 				<div class="boxFlexTop">
 					<div class="col-md-1 col-sm-12 header-title">
@@ -84,6 +88,7 @@
 						</select>
 						<input class="col-9 nav-search" type="search" placeholder="원하는 재료나 음식 이름을 입력해주세요."
 							aria-label="Search" name="key" id="key">
+						<!-- 부트스트랩에서 가져온 속성을 조합하거나 삭제하면서 효과를 조정할 수 있습니다. 같은 이름의 클래스로 CSS에서 작업하면 부트스트랩의 내용을 덮어씁니다. -->
 						<button class="btn btn-dark" type="button" id="searchByKey" >검색</button>
 					</div>
 
