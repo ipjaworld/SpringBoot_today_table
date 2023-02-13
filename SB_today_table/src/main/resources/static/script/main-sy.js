@@ -27,12 +27,12 @@ function loginCheck(){
 
 // 계정 찾기 폼 이동
 function find_account(){
-	location.href="recipe.do?command=findAccountForm";
+	location.href="findAccountForm";
 }
 
 // 아이디, 비번 찾기 폼 이동
 function findAccountBy( param){
-	let url = "recipe.do?command=findAccountBy&param=" + param;
+	let url = "findAccountBy?param=" + param;
 	let opt = "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=550, height=300, top=300, left=300";
 	window.open(url, param + " 찾기", opt);
 	
@@ -72,7 +72,7 @@ function autoHypenPhone(str){
 const timerBtn = document.querySelector("#timerBtn");
 const timerspan = document.querySelector("#timerspan");
 let timeInterval;
-let pomoTime = 60;
+let pomoTime = 30;
 const certinoti = document.querySelector("#certinoti");
 const certi = document.querySelector('#certi');
 
@@ -87,7 +87,7 @@ function timerStart() {
 		document.querySelector('input[name="certiNum"]').value= "";
 		timerBtn.disabled = true;
 		certinoti.innerHTML = "";
-		pomoTime = 60;
+		pomoTime = 30;
 		timer();
 		timeInterval = setInterval(timer, 1000);
 		certi.disabled= false;
@@ -127,13 +127,29 @@ function confirmNum(){
 // 아이디, 비밀번호 찾기
 
 function search(param){
-		document.frm.action = "recipe.do?command=findAccBy&param="+param;
+	if(document.frm.name.value == ""){  
+        alert("아이디는 필수 입력사항입니다.");
+        document.frm.id.focus(); 
+        return false;
+    }
+    else if(document.frm.phone.value == ""){  
+        alert("전화번호는 필수 입력사항입니다.");
+        document.frm.phone.focus(); 
+        return false;
+    }else if(document.frm.id.value == ""){  
+        alert("아이디는 필수 입력사항입니다.");
+        document.frm.id.focus(); 
+        return false;
+    }else{
+		document.frm.action = "findAccInfo?param="+param;
 		document.frm.submit();
+	}
+		
 }
 
 function updatePass(){
 	// 버튼 누르면 id, pwd 전송돼야 함 (비공개로/ submit으로)
-	document.frm.action = "recipe.do?command=makeNewPass";
+	document.frm.action = "makeNewPass";
 	document.frm.submit();
 	// window.opener.location.href = "recipe.do?command=loginForm"
 	// self.close(); 

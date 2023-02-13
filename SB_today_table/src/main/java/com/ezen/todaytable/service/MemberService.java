@@ -36,5 +36,15 @@ public class MemberService {
 	public void getMembersList(HashMap<String, Object> paramMap) {
 		mdao.getMembersList(paramMap);
 	}
+
+	public void findId(HashMap<String, Object> paramMap) {
+		mdao.findId(paramMap);
+		
+	}
+
+	public void updatePwd(HashMap<String, Object> paramMap) {
+		mdao.updatePwd(paramMap);
+		
+	}
 	
 }

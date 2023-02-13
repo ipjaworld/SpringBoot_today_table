@@ -21,6 +21,10 @@ public interface IMemberDao {
 
 	void getMembersList(HashMap<String, Object> paramMap);
 
+	void findId(HashMap<String, Object> paramMap);
+
+	void updatePwd(HashMap<String, Object> paramMap);
+
 	
 
 }

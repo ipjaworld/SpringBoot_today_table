@@ -51,6 +51,20 @@
 		
 	</select>
 			
+	<select id="findId" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL findId( 
+			#{name}, #{phone}, 
+			#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=memberMap} 
+			)
+		}
+	</select>
+	
+	<update id="updatePwd" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL updatePwd( #{id}, #{pwd}, #{result, mode=OUT, jdbcType=INTEGER})
+		}
+	</update>
 	
 
 </mapper>

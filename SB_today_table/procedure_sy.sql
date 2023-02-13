@@ -5,6 +5,36 @@ select * from reply;
 select * from recipeTag;
 select * from ingTag;
 select * from processImg;
+select * from members;
+
+-- ID 조회
+CREATE OR REPLACE PROCEDURE findId(
+    p_name IN members.name%TYPE,
+    p_phone IN members.phone%TYPE,
+    p_rc OUT SYS_REFCURSOR
+)
+IS
+BEGIN
+    OPEN p_rc FOR
+    select * from members where name=p_name and phone=p_phone;
+END;
+
+-- 비밀번호 수정
+CREATE OR REPLACE PROCEDURE updatePwd(
+    p_id IN members.id%TYPE,
+    p_pwd IN members.pwd%TYPE,
+    p_result OUT NUMBER
+)
+IS
+BEGIN
+    p_result := 1;
+    update members set pwd=p_pwd where id=p_id;
+    commit;
+    
+    EXCEPTION WHEN OTHERS THEN
+    p_result := 0;
+END;
+
 
 
 -- 댓글 달기

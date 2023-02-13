@@ -300,7 +300,78 @@ public class MemberController {
 //	
 //		return mav;
 //	}
-
+	
+	// 로그인 창에서 '계정 찾기' 버튼을 눌렀을 때
+		@RequestMapping("/findAccountForm")
+		public String findAccountForm() {
+			return "member/findAccountForm";
+		}
+		
+		// 아이디/비밀번호 중 선택했을 때
+		@RequestMapping("/findAccountBy")
+		public String findAccountByParam(HttpServletRequest request, @RequestParam("param") String param, Model model) {
+			model.addAttribute("param", param);
+			return "member/findAccountByForm";
+		}
+				
+		// 인증 후 계정 정보 조회
+		@RequestMapping(value="/findAccInfo", method=RequestMethod.POST)
+		public ModelAndView findAccInfo(@RequestParam("param") String param, 
+				@RequestParam("name") String name,
+				@RequestParam("phone") String phone, 
+				@RequestParam(value="id", required=false) String id) {
+			ModelAndView mav = new ModelAndView();
+			
+			HashMap<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("ref_cursor", null);
+			if(param.equals("id")){  // id 찾기를 눌렀을 때
+				paramMap.put("name", name);
+				paramMap.put("phone", phone);
+				ms.findId(paramMap); // id 검색 메서드
+			}
+			else if(param.equals("pwd")) { // 비밀번호 찾기를 눌렀을 때
+				// paramMap.put("name", name);
+				// paramMap.put("phone", phone);
+				// * 아이디는 중복값이 없으니 id만 보내서 검사(기존 메서드 활용 가능)
+				paramMap.put("id", id);
+				// ms.findPwd(paramMap); // 비밀번호 검색 메서드
+				ms.getMembersList(paramMap);
+			}
+			
+			ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
+			HashMap<String, Object> mvo = list.get(0);
+			if(mvo != null) {
+				// System.out.println("mvo가 null이 아니예요 " + mvo); // 확인용
+				mav.addObject("account", mvo);
+			}else {
+				mav.addObject("message", "등록된 정보가 없습니다.");
+			}
+			
+			mav.setViewName("member/findAccountByForm");
+			return mav;
+		}
+		
+		
+		// 아이디 인증 후 새 비밀번호 설정
+		@RequestMapping(value="/makeNewPass", method=RequestMethod.POST)
+		public String makeNewPass(@RequestParam("id") String id, @RequestParam("pwd") String pwd, Model model) {
+			// 기존 아이디와 새 비밀번호 값을 받아서 회원 정보 비밀번호 변경
+			// int result = mdao.updatePwd(id, pwd);
+			HashMap<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("id", id);
+			paramMap.put("pwd", pwd);
+			paramMap.put("result", 0);
+			ms.updatePwd(paramMap);
+			int result = Integer.parseInt(String.valueOf(paramMap.get("result")));
+			if( result == 0) {
+				model.addAttribute("message", "비밀번호 변경이 실패했습니다. 다시 시도하세요");
+				return "member/findAccountByForm";
+			}else {
+				model.addAttribute("message", "비밀번호 설정이 성공했습니다. 로그인하세요");
+			}
+			System.out.println("result : " + result); // 확인용
+			return "member/checkSuccess";
+		}
 			
 			
 
