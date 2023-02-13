@@ -206,3 +206,56 @@ function go_update_mypage( oldImg ){
        document.joinForm.submit();
    }
 }
+// mypage ----------------------------------------------------------------------------------------------------
+
+// 마이레시피 체크박스 변환
+function selectMyRecipeAll(selectAll)  {
+  const checkboxes 
+       = document.getElementsByName('rnum');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = selectAll.checked;
+  })
+}
+
+
+// 마이페이지에서 레시피 삭제하는 메서드
+function go_fmirecipe_delete(comm){
+   let count=0;
+   if(document.formm.rnum.length==undefined){
+      if(document.formm.rnum.checked==true){
+         count++;
+      }
+   }else{
+      for(let i=0; i<document.formm.rnum.length; i++){
+         if(document.formm.rnum[i].checked==true){
+            count++;
+         }
+      }
+   }
+   if(count==0){
+      alert("삭제할 항목을 선택하세요");
+   }else {
+      document.formm.action=comm;
+      document.formm.submit();
+   }
+}
+
+// 삭제시 비밀번호 체크란
+function withDrawal(id,pwd){
+	 let pwdcheck = prompt('비밀번호를 입력해주세요' , 'ex)1234');
+
+	if(pwd.valueOf()==pwdcheck.valueOf()){
+		 document.formm.action="withDrawal&id="+id;
+      document.formm.submit();
+	}else{
+		alert("비밀번호가 맞지 않습니다")
+		return;
+	}
+
+
+}
+
+
+
+
