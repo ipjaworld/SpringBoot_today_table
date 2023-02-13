@@ -364,8 +364,10 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 	public void getReplyCount(HashMap<String, Object> paramMap) {
 		ArrayList<HashMap<String, Object>> recipeList 
 		= (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
+		System.out.println("ref_cursor(0) : " + recipeList.get(0));
 		ArrayList<Integer> replyCountList = new ArrayList<Integer>();
 		for(HashMap<String, Object> rvo : recipeList) {
+			System.out.println("replycnt를 위해 들어가는 rnum : " + rvo.get("RNUM"));
 			rvo.put("replycnt", 0);
 			rdao.getReplyCount(rvo);
 			replyCountList.add(Integer.parseInt(String.valueOf(rvo.get("replycnt"))));

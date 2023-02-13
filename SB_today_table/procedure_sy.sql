@@ -6,18 +6,22 @@ select * from recipeTag;
 select * from ingTag;
 select * from processImg;
 
-select * from (
-			select * from (
-                select rownum as rn, r.* from (
-                    (select distinct rnum, id, subject, thumbnail, nick, img, likes, views, time 
-                from recipe_page_view
-            where subject like '%복숭아%' ) r ) 
-         ) where rn >=1
-        ) where rn <=5 ;
+
+-- 댓글 달기
+CREATE OR REPLACE PROCEDURE addReply(
+    p_id recipe.id%TYPE,
+    p_rnum recipe.rnum%TYPE,
+    p_reply reply.content%TYPE
+)
+IS
+BEGIN
+    insert into reply(replyseq, id, rnum, content) values(reply_seq.nextVal, p_id, p_rnum, p_reply);
+    commit;
+END;
 
 
 -- 검색 결과 count 리턴
-CREATE OR PROCEDURE getCountsByKey(
+CREATE OR REPLACE PROCEDURE getCountsByKey(
     p_table IN NUMBER,
     p_key IN VARCHAR2,
     p_cnt OUT NUMBER
@@ -34,6 +38,68 @@ BEGIN
     END IF;
     p_cnt := v_cnt;
 END;
+
+-- 검색 단어에 대한 레시피 리스트 리턴
+CREATE OR REPLACE PROCEDURE selectListByKey(
+    p_table IN NUMBER,
+    p_key IN recipe.content%TYPE,
+    p_startNum IN NUMBER,
+    p_endNum IN NUMBER,
+    p_rc OUT SYS_REFCURSOR
+)
+IS
+    v_cursor1 SYS_REFCURSOR;
+    v_cursor2 SYS_REFCURSOR;
+    v_cursor3 SYS_REFCURSOR;
+BEGIN
+    IF p_table = 1 THEN
+        OPEN v_cursor1 FOR
+        select * from (
+			select * from (
+				select rownum as rn, r.* from (
+                    (select distinct t.rnum, v.id, v.subject, v.thumbnail, v.nick, v.img, v.likes, v.views, v.time 
+                from recipeTag t, recipe_page_view v, ingTag i 
+            where t.rnum = v.rnum and t.tag_id = i.tag_id and i.tag like '%'||p_key||'%' ) r ) 
+         ) where rn >=p_startNum 
+		) where rn <= p_endNum ;
+        p_rc := v_cursor1;
+    ELSIF  p_table = 2 THEN
+        OPEN v_cursor2 FOR
+        select * from (
+			select * from (
+                select rownum as rn, r.* from (
+                    (select distinct rnum, id, subject, thumbnail, nick, img, likes, views, time 
+                from recipe_page_view
+            where subject like '%'||p_key||'%' ) r ) 
+         ) where rn >=p_startNum
+        ) where rn <=p_endNum ;
+         p_rc := v_cursor2;
+    ELSIF  p_table = 3 THEN
+        OPEN v_cursor3 FOR
+        select * from (
+			select * from (
+                select rownum as rn, r.* from (
+                    (select distinct rnum, id, subject, thumbnail, nick, img, likes, views, time 
+                from recipe_page_view
+            where content like '%'||p_key||'%' ) r ) 
+         ) where rn >=p_startNum
+        ) where rn <=p_endNum ;
+         p_rc := v_cursor3;
+    END IF;
+END;
+
+-- 각 레시피에 대한 댓글 갯수 리턴
+CREATE OR REPLACE PROCEDURE getReplyCount(
+    p_rnum IN recipe.rnum%TYPE,
+    p_replycnt OUT NUMBER
+)
+IS
+    v_cnt NUMBER;
+BEGIN
+    select count(*) into v_cnt from reply where rnum = p_rnum;
+    p_replycnt := v_cnt;
+END;
+
 
 -- recipe 테이블 업데이트
 CREATE OR REPLACE PROCEDURE updateRecipe(

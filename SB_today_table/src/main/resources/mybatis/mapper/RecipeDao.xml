@@ -76,10 +76,10 @@
 		}
 	</delete>
 	
-	<update id="addReply">
+	<update id="addReply" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
 			CALL addReply(
-				#{param1}, #{param2}
+				#{id}, #{rnum}, #{reply}
 			)
 		}
 	</update> 
@@ -164,7 +164,7 @@
 	<select id="selectListByKey" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
 			CALL selectListByKey(
-				{tableName}, #{key}, #{startNum}, #{endNum}, 
+				#{tableName}, #{key}, #{startNum}, #{endNum}, 
 				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap }
 			)
 		}
@@ -172,7 +172,7 @@
 	
 	<select id="getReplyCount" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
-			CALL getReplyCount( #{rnum}, #{replycnt , mode=OUT, jdbcType=INTEGER} )
+			CALL getReplyCount( #{RNUM}, #{replycnt , mode=OUT, jdbcType=INTEGER} )
 		}
 	</select>
 	

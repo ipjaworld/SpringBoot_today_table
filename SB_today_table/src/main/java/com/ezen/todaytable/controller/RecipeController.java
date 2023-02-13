@@ -457,26 +457,31 @@ public class RecipeController {
 	@RequestMapping("/recipeList")
 	public ModelAndView recipeList(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		String url = "recipe/recipeList.jsp";
-		
+			
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("ref_cursor", null);
 		paramMap.put("request", request);
 		rs.goRecipeList( paramMap );
 		
-		for(HashMap<String, Object> rvo: (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor")) { // 확인용
-			System.out.println("recipeList 확인용 : " + rvo.get("rnum"));
+		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
+		System.out.println("list.get(0) rnum 확인용 : " + list.get(0));
+		for(HashMap<String, Object> rvo: list) { // 확인용
+			
+			System.out.println("recipeList 확인용 : " + rvo.get("RNUM"));
 		}
 		
 		paramMap.put("replyCountList", null);
 		rs.getReplyCount(paramMap);
+		for(Integer replycnt : (ArrayList<Integer>) paramMap.get("replyCountList")) {
+			System.out.println("replycnt : " + replycnt);
+		}
 		mav.addObject("recipeList", (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor"));
 		mav.addObject("paging", (Paging) paramMap.get("paging"));
 		mav.addObject("key", (String) paramMap.get("key"));
 		mav.addObject("condition", (String) paramMap.get("condition"));
 		mav.addObject("total",  Integer.parseInt(String.valueOf(paramMap.get("total"))));
 		mav.addObject("replyCountList", (ArrayList<Integer>) paramMap.get("replyCountList"));
-		mav.setViewName(url);
+		mav.setViewName("recipe/recipeList");
 		return mav;
 	}
 	

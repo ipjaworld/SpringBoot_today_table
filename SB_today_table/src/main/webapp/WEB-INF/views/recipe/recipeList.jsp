@@ -3,7 +3,7 @@
 
 <article>
 	<div class="main-contents-list">
-		<div class="container"><b class="search-key">${KEY}</b>으로 검색한 결과가 <b class="search-answer">${TOTAL}</b>건 있습니다.</div>
+		<div class="container"><b class="search-key">${key}</b>으로 검색한 결과가 <b class="search-answer">${total}</b>건 있습니다.</div>
 		<br>
 		<div class="search-view">
 			<c:forEach items="${recipeList}" var="recipeVO" varStatus="status">
