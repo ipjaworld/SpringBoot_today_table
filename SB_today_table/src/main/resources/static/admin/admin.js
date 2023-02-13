@@ -40,31 +40,32 @@ function go_recommendgesi( comm ){
 
 
 
-function go_1recommend(rnum,gesi){
-
-	document.frm.action = "recipe.do?command=adminchangeRecommend&rnum="+rnum+"&gesi="+gesi;
+/*추천하기 
+버튼(rnum값)또는 체크박스형식에따라 콘트롤러 이동*/
+function go_recommendlist(rnum,gesi){
+	if(rnum!=0){
+	document.frm.action = "adminChangeRecommend?rnum="+rnum+"&gesi="+gesi;
 	document.frm.submit();
-}
-
-function go_recommendlist(gesi){
-	var count = 0;
-	if( document.frm.rnum.length == undefined ){
-		if( document.frm.rnum.checked==true ) count++;
-		
 	}else{
-		for( var i=0; i<document.frm.rnum.length; i++){
-			if( document.frm.rnum[i].checked==true){
-				count++;
+		var count = 0;
+		if( document.frm.rnum.length == undefined ){
+			if( document.frm.rnum.checked==true ) count++;
+			
+		}else{
+			for( var i=0; i<document.frm.rnum.length; i++){
+				if( document.frm.rnum[i].checked==true){
+					count++;
+				}
 			}
-		}
-	}	
-	if(count == 0) {
-		alert("추천할 게시물을 선택하세요");
-	}	
-	else{	
-		document.frm.action = "recipe.do?command=adminchangeRecommend&gesi="+gesi;
-	    document.frm.submit();    
-	}    
+		}	
+		if(count == 0) {
+			alert("추천할 게시물을 선택하세요");
+		}	
+		else{	
+			document.frm.action = "adminChangeRecommend?gesi="+gesi;
+		    document.frm.submit();    
+		}    
+	}
 }
 
 function go_adminRecipe_delete(){
