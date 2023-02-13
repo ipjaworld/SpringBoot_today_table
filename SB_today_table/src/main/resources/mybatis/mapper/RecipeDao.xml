@@ -198,5 +198,13 @@
 	</select>
 	
 	
+	<select id="getMyRecipeCount" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL getMyRecipeCount(
+				#{id}, #{rnum} 
+			)
+		}
+	</select>
+	
 
 </mapper>

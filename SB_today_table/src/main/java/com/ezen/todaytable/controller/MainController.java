@@ -97,11 +97,11 @@ public class MainController {
 		         paramMap.put("request",request );
 		         paramMap.put("ref_cursor", null);
 		         
-		        // ms.getMyRecipeListttable(paramMap);
+		         ms.getMyRecipeListttable(paramMap);
 		         
 		         ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
 		         mav.addObject("paging",(Paging)paramMap.get("paging"));
-		         mav.addObject("key", (String)paramMap.get("key"));
+		  //       mav.addObject("key", (String)paramMap.get("key"));
 		         mav.addObject("membersList", list);
 		         
 		         mav.setViewName("mypage/myRecipeList");         

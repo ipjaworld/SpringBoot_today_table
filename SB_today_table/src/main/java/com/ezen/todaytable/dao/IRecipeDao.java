@@ -55,5 +55,7 @@ public interface IRecipeDao {
 
 	void getReplyCount(HashMap<String, Object> rvo);
 
+	void getMyRecipeCount(HashMap<String, Object> paramMap);
+
 
 }

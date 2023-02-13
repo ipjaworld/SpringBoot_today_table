@@ -37,6 +37,7 @@ public class MainService {
 
 
 	public void getMyRecipeListttable(HashMap<String, Object> paramMap) {
+		
 		HttpServletRequest request = (HttpServletRequest)paramMap.get("request");
         HttpSession session = request.getSession();
         if(request.getParameter("first")!=null) {
@@ -53,26 +54,27 @@ public class MainService {
            session.removeAttribute("page");
         }
         
-        String key = "";
-        if(request.getParameter("key")!=null) {
-           session.setAttribute("key", request.getParameter("key"));
-           key = request.getParameter("key");
-        } else if (session.getAttribute("key")!=null){
-        	key = (String)session.getAttribute("key");
-        } else session.removeAttribute("key");
+//        String key = "";
+//        if(request.getParameter("key")!=null) {
+//           session.setAttribute("key", request.getParameter("key"));
+//           key = request.getParameter("key");
+//        } else if (session.getAttribute("key")!=null){
+//        	key = (String)session.getAttribute("key");
+//        } else session.removeAttribute("key");
         
         Paging paging = new Paging();
         paging.setPage(page);
         paramMap.put("cnt", 0);
-        paramMap.put("key", key);
-    //    rdao.adminGetAllCount(paramMap);
+//        paramMap.put("key", key);
+        rdao.getMyRecipeCount(paramMap);
         int count = Integer.parseInt( paramMap.get("cnt")+"" );
         paging.setTotalCount(count);
         paging.paging();
+        
         paramMap.put("startNum", paging.getStartNum());
         paramMap.put("endNum", paging.getEndNum());
         paramMap.put("paging", paging);
-	// rdao.getMyRecipeListttable(paramMap);
+       // rdao.getMyRecipeListttable(paramMap);
 	}
 	
 }

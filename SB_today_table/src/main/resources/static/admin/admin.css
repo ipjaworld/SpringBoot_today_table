@@ -308,3 +308,22 @@ td, tr, th{
 
 main{
 }
+
+.login{
+	font-weight: 900;
+	font-size: 400%;
+}
+#loginForm{
+	text-align: center;
+}
+#loginField{
+	padding: 30px 0;
+	transform: translateX(-7vh);
+}
+
+#buttons{
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	justify-content: center;
+}
