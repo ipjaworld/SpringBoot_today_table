@@ -49,5 +49,11 @@ public interface IRecipeDao {
 
 	void deleteProcess(HashMap<String, Object> paramMap);
 
+	void getCountsByKey(HashMap<String, Object> cntMap);
+
+	void selectListByKey(HashMap<String, Object> paramMap);
+
+	void getReplyCount(HashMap<String, Object> rvo);
+
 
 }

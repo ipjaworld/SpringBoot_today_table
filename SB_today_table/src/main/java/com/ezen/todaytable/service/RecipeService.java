@@ -3,10 +3,14 @@ package com.ezen.todaytable.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezen.todaytable.dao.IRecipeDao;
+import com.ezen.todaytable.dto.Paging;
 import com.ezen.todaytable.dto.ProcessImgVO;
 
 @Service
@@ -245,6 +249,132 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 		}
 
 	}
+
+	public void goRecipeList(HashMap<String, Object> paramMap) {
+		// header에서 검색 시 검색 결과를 반영한 레시피 리스트로 이동하는 액션입니다. 
+			HttpServletRequest request = (HttpServletRequest) paramMap.get("request");
+			HttpSession session = request.getSession();
+			
+			if(request.getParameter("start")!=null) {
+				session.removeAttribute("page");
+				session.removeAttribute("key");
+			}
+			int page = 1;
+			if(request.getParameter("page")!=null) {
+				page = Integer.parseInt(request.getParameter("page"));
+				session.setAttribute("page", page);
+			}else if(session.getAttribute("page")!=null) {
+				page = (Integer)session.getAttribute("page");
+			}else {
+				session.removeAttribute("page");
+			}
+			
+			String key = "";
+			if( request.getParameter("key") != null) {
+				key = request.getParameter("key");
+				session.setAttribute("key", key); 
+			}else if( session.getAttribute("key") != null) {
+				key = (String) session.getAttribute("key");
+			}else {
+				session.removeAttribute("key");
+			}
+			
+			Paging paging = new Paging();
+			paging.setDisplayPage(10);
+			paging.setDisplayRow(12);
+			paging.setPage(page);
+			
+			System.out.println("key 확인용 : " + key); // 확인용
+			
+			// ArrayList<HashMap<String, Object>> recipeList = new ArrayList<HashMap<String, Object>>();
+			
+			String condition = "";
+			if( request.getParameter("condition") != null) {
+				condition = request.getParameter("condition");
+				session.setAttribute("condition", condition); 
+			}else if( session.getAttribute("condition") != null) {
+				condition = (String) session.getAttribute("condition");
+			}else {
+				session.removeAttribute("condition");
+			}
+			paramMap.put("condition", condition);
+			
+			HashMap<String, Object> cntMap = new HashMap<String, Object>();
+			System.out.println("condition 확인용 : " + condition); // 확인용
+			
+			if(condition.equals("ing")) {
+				cntMap.put("cnt", 0);
+				// cntMap.put("tableName", "ingTag i, recipeTag r");
+				// cntMap.put("fieldName", "i.tag_id = r.tag_id and i.tag");
+				cntMap.put("tableName", 1);
+				cntMap.put("key", key);
+				rdao.getCountsByKey(cntMap); 
+				int count = Integer.parseInt(String.valueOf(cntMap.get("cnt")));
+				paging.setTotalCount(count);
+				paging.paging();
+				paramMap.put("total", count);
+				paramMap.put("tableName", 1);
+				paramMap.put("key", key);
+				paramMap.put("startNum", paging.getStartNum());
+				paramMap.put("endNum", paging.getEndNum());
+				// recipeList = rdao.selectListByIng( paging , key);
+				// rdao.selectListByIng( paramMap);
+				rdao.selectListByKey( paramMap);
+				paramMap.put("paging", paging);
+				
+			}else if(condition.equals("title")) {
+				cntMap.put("cnt", 0);
+				cntMap.put("tableName", 2);
+				// cntMap.put("fieldName", "subject");
+				cntMap.put("key", key);
+				rdao.getCountsByKey(cntMap); 
+				int count = Integer.parseInt(String.valueOf(cntMap.get("cnt")));
+				paging.setTotalCount(count);
+				paging.paging();
+				System.out.println("count(게시물 갯수) : " + count); // 확인용
+				paramMap.put("total", count);
+				paramMap.put("tableName", 2);
+				paramMap.put("key", key);
+				paramMap.put("startNum", paging.getStartNum());
+				paramMap.put("endNum", paging.getEndNum());
+				// rdao.selectListBySubCon( paramMap);
+				rdao.selectListByKey( paramMap);
+				paramMap.put("paging", paging);
+			}else {
+				cntMap.put("cnt", 0);
+				cntMap.put("tableName", 3);
+				// cntMap.put("fieldName", "content");
+				cntMap.put("key", key);
+				rdao.getCountsByKey(cntMap); 
+				int count = Integer.parseInt(String.valueOf(cntMap.get("cnt")));
+				paging.setTotalCount(count);
+				paging.paging();
+				paramMap.put("total", count);
+				paramMap.put("tableName", 3);
+				paramMap.put("key", key);
+				paramMap.put("startNum", paging.getStartNum());
+				paramMap.put("endNum", paging.getEndNum());
+				// rdao.selectListBySubCon( paramMap);
+				rdao.selectListByKey( paramMap);
+				paramMap.put("paging", paging);
+			}
+			
+	}
+
+	public void getReplyCount(HashMap<String, Object> paramMap) {
+		ArrayList<HashMap<String, Object>> recipeList 
+		= (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
+		ArrayList<Integer> replyCountList = new ArrayList<Integer>();
+		for(HashMap<String, Object> rvo : recipeList) {
+			rvo.put("replycnt", 0);
+			rdao.getReplyCount(rvo);
+			replyCountList.add(Integer.parseInt(String.valueOf(rvo.get("replycnt"))));
+		}
+		paramMap.put("replyCountList", replyCountList);
+		
+	}
+
+	
 	
 	
 

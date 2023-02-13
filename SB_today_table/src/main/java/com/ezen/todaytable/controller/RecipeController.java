@@ -14,13 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.todaytable.dto.Paging;
 import com.ezen.todaytable.dto.ProcessImgVO;
 import com.ezen.todaytable.dto.RecipeFormVO;
 import com.ezen.todaytable.service.RecipeService;
@@ -218,7 +218,7 @@ public class RecipeController {
 	}
 	*/
 	
-	@RequestMapping(value="writeRecipe", method=RequestMethod.POST)
+	@RequestMapping(value="/writeRecipe", method=RequestMethod.POST)
 	public ModelAndView writeRecipe(
 			@ModelAttribute("rvo") @Valid RecipeFormVO recipeformvo, BindingResult result, 
 			HttpServletRequest request, 
@@ -374,7 +374,7 @@ public class RecipeController {
 	}
 	*/
 	
-	@RequestMapping(value="updateRecipe", method=RequestMethod.POST)
+	@RequestMapping(value="/updateRecipe", method=RequestMethod.POST)
 	public ModelAndView updateRecipe(@ModelAttribute @Valid RecipeFormVO recipeformvo, BindingResult result, 
 			HttpServletRequest request, @RequestParam("count") int count) {
 		ModelAndView mav = new ModelAndView();
@@ -453,6 +453,34 @@ public class RecipeController {
 		}
 		return mav;
 	}
+	
+	@RequestMapping("/recipeList")
+	public ModelAndView recipeList(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String url = "recipe/recipeList.jsp";
+		
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("ref_cursor", null);
+		paramMap.put("request", request);
+		rs.goRecipeList( paramMap );
+		
+		for(HashMap<String, Object> rvo: (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor")) { // 확인용
+			System.out.println("recipeList 확인용 : " + rvo.get("rnum"));
+		}
+		
+		paramMap.put("replyCountList", null);
+		rs.getReplyCount(paramMap);
+		mav.addObject("recipeList", (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor"));
+		mav.addObject("paging", (Paging) paramMap.get("paging"));
+		mav.addObject("key", (String) paramMap.get("key"));
+		mav.addObject("condition", (String) paramMap.get("condition"));
+		mav.addObject("total",  Integer.parseInt(String.valueOf(paramMap.get("total"))));
+		mav.addObject("replyCountList", (ArrayList<Integer>) paramMap.get("replyCountList"));
+		mav.setViewName(url);
+		return mav;
+	}
+	
+	
 	
 	
 }

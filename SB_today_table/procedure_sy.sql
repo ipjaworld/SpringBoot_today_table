@@ -6,6 +6,35 @@ select * from recipeTag;
 select * from ingTag;
 select * from processImg;
 
+select * from (
+			select * from (
+                select rownum as rn, r.* from (
+                    (select distinct rnum, id, subject, thumbnail, nick, img, likes, views, time 
+                from recipe_page_view
+            where subject like '%복숭아%' ) r ) 
+         ) where rn >=1
+        ) where rn <=5 ;
+
+
+-- 검색 결과 count 리턴
+CREATE OR PROCEDURE getCountsByKey(
+    p_table IN NUMBER,
+    p_key IN VARCHAR2,
+    p_cnt OUT NUMBER
+)
+IS
+     v_cnt NUMBER;
+BEGIN
+    IF p_table = 1 THEN
+        SELECT COUNT(*) INTO v_cnt FROM ingTag i, recipeTag r WHERE i.tag_id = r.tag_id and i.tag LIKE '%'||p_key||'%';
+    ELSIF  p_table = 2 THEN
+        SELECT COUNT(*) INTO v_cnt FROM recipe WHERE subject LIKE '%'||p_key||'%';
+    ELSIF  p_table = 3 THEN
+        SELECT COUNT(*) INTO v_cnt FROM recipe WHERE content LIKE '%'||p_key||'%';
+    END IF;
+    p_cnt := v_cnt;
+END;
+
 -- recipe 테이블 업데이트
 CREATE OR REPLACE PROCEDURE updateRecipe(
     p_subject IN recipe.subject%TYPE, 

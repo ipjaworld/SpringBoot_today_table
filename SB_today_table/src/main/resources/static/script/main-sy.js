@@ -4,7 +4,7 @@ $(function(){
 		const selected = $('#condition option:selected').val();
 		alert("condition : " + selected);
 		let key = $('#key').val();
-		location.href = "recipe.do?command=recipeList&start='Y'&key="+ key + "&condition=" + selected;
+		location.href = "recipeList?start='Y'&key="+ key + "&condition=" + selected;
 	});
 });
 

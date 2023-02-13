@@ -153,6 +153,29 @@
 		}
 	</delete>
 	
+	<select id="getCountsByKey" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL getCountsByKey(
+				#{tableName}, #{key}, #{cnt , mode=OUT, jdbcType=INTEGER }
+			)
+		}
+	</select>
+	
+	<select id="selectListByKey" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL selectListByKey(
+				{tableName}, #{key}, #{startNum}, #{endNum}, 
+				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap }
+			)
+		}
+	</select>
+	
+	<select id="getReplyCount" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL getReplyCount( #{rnum}, #{replycnt , mode=OUT, jdbcType=INTEGER} )
+		}
+	</select>
+	
   
   	<delete id="deleteReply">
 		delete from reply where replyseq = #{param1}
