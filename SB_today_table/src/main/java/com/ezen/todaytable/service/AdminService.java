@@ -220,6 +220,113 @@ public class AdminService {
 		adao.adminDashList(paramMap);
 		
 	}
+	//레시피리스트
+	public void getAdminRecipeList(HashMap<String, Object> paramMap) {
+		HttpServletRequest request = (HttpServletRequest)paramMap.get("request");
+	      HttpSession session = request.getSession();   
+	      
+	      if(request.getParameter("first")!=null) {
+	         session.removeAttribute("page");
+	         session.removeAttribute("key");
+	      }
+	      
+	      int page = 1;
+	      if (request.getParameter("page") != null) {
+	         page = Integer.parseInt(request.getParameter("page"));
+	         session.setAttribute("page", page);
+	      } else if (session.getAttribute("page") != null) {
+	         page = (Integer) session.getAttribute("page");
+	      } else {
+	         session.removeAttribute("page");
+	      }
+	      
+	      String key="";
+	      if (request.getParameter("key") != null) {
+	         key = request.getParameter("key");
+	         session.setAttribute("key", key);
+	      } else if (session.getAttribute("key") != null) {
+	         key = (String) session.getAttribute("key");
+	      } else {
+	         session.removeAttribute("key");
+	      }
+	      
+	      // 페이징 객체 생성
+	      Paging paging = new Paging();
+	      paging.setPage(page);
+	      HashMap<String, Object> cntMap = new HashMap<String, Object>();
+	      cntMap.put("cnt", 0);
+	      cntMap.put("tableName", 1); 
+	      cntMap.put("key", key); 
+	      adao.adminGetAllCount(cntMap);
+	      int count = (Integer) cntMap.get("cnt"+""); 
+	      paging.setTotalCount(count);
+	      paging.paging();
+	      
+	      paramMap.put("key", key);
+	      paramMap.put("startNum", paging.getStartNum() );
+	      paramMap.put("endNum", paging.getEndNum() );
+	      adao.getAdminRecipeList(paramMap);
+	      
+	      paramMap.put("paging", paging);
+		
+	}
+	//어드민 추천기능 활성화
+	public void adminChangeRecommend(String[] rnum) {
+		for(String arnum : rnum) {
+			System.out.println(arnum);
+			adao.adminChangeRecommend(arnum);
+		}
+		
+	}
+	public void getAdminPickRecipeList(HashMap<String, Object> paramMap) {
+		HttpServletRequest request = (HttpServletRequest)paramMap.get("request");
+	      HttpSession session = request.getSession();   
+	      
+	      if(request.getParameter("first")!=null) {
+	         session.removeAttribute("page");
+	         session.removeAttribute("key");
+	      }
+	      
+	      int page = 1;
+	      if (request.getParameter("page") != null) {
+	         page = Integer.parseInt(request.getParameter("page"));
+	         session.setAttribute("page", page);
+	      } else if (session.getAttribute("page") != null) {
+	         page = (Integer) session.getAttribute("page");
+	      } else {
+	         session.removeAttribute("page");
+	      }
+	      
+	      String key="";
+	      if (request.getParameter("key") != null) {
+	         key = request.getParameter("key");
+	         session.setAttribute("key", key);
+	      } else if (session.getAttribute("key") != null) {
+	         key = (String) session.getAttribute("key");
+	      } else {
+	         session.removeAttribute("key");
+	      }
+	      
+	      // 페이징 객체 생성
+	      Paging paging = new Paging();
+	      paging.setPage(page);
+	      HashMap<String, Object> cntMap = new HashMap<String, Object>();
+	      cntMap.put("cnt", 0);
+	      cntMap.put("tableName", 5); 
+	      cntMap.put("key", key); 
+	      adao.adminGetAllCount(cntMap);
+	      int count = (Integer) cntMap.get("cnt"+""); 
+	      paging.setTotalCount(count);
+	      paging.paging();
+	      
+	      paramMap.put("key", key);
+	      paramMap.put("startNum", paging.getStartNum() );
+	      paramMap.put("endNum", paging.getEndNum() );
+	      adao.getAdminPickRecipeList(paramMap);
+	      
+	      paramMap.put("paging", paging);
+		
+	}
 	
 	
 	

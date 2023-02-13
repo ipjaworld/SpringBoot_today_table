@@ -32,5 +32,11 @@ public interface IAdminDao {
 	void getAdminList(HashMap<String, Object> paramMap);
 	//대쉬보드 (베스트 조회 레시피, 최근 댓글 (3개씩))
 	void adminDashList(HashMap<String, Object> paramMap);
+	//레시피리스트
+	void getAdminRecipeList(HashMap<String, Object> paramMap);
+	//레시피추천
+	void adminChangeRecommend(String rnum);
+	//추천레시피 리스트
+	void getAdminPickRecipeList(HashMap<String, Object> paramMap);
 	
 }
