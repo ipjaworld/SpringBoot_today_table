@@ -2,6 +2,7 @@
 <%@ include file="include/headerfooter/header.jsp" %> 
 
 <nav class="">
+	<!-- status 라는 param을 통해서 값을 주고 받을 수 있게 jsp에서부터 세팅 -->
 	<div class="container main-top-area">
 		<div class="main-page-card col-md-4 col-sm-12" id="main-total">
 			<div class="card-inner">
@@ -47,7 +48,8 @@
 		
 		<div class="main-page-card  col-md-4 col-sm-12">
 			<div class="card-inner">
-				<a class="" href="recipe.do?command=index">사이트맵</a>
+				<!-- 여기 여섯번째 칸은 다른 탭을 넣으셔도 되고 삭제하셔도 됩니다. -->
+				<a class="" href="#">사이트맵</a>
 			</div>
 		</div> 
 		
@@ -59,6 +61,7 @@
 	      <div class="subtitle mb-3">
 	        <h2>Recent Recipe</h2>
 	      </div>
+	      <!-- 캐러셀 컨테이너 -->
 	      <div class="slide" id="slide0">
 	        <c:forEach items="${allList}" var="recipeVO" end="20">
 		      	<c:choose>

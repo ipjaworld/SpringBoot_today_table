@@ -270,7 +270,7 @@ form fieldset legend{
 	/* width: 27vh; */
 	/* height: 27vh; */
 	min-width: 27vh;
-	min-height: 27vh;
+	min-height: 33vh;
 	transition: 1s;
 	/* overflow: hidden; */
 }
@@ -281,13 +281,13 @@ form fieldset legend{
 	transform: translateY(-31vh);
 }
 .main-page-card img{
-	 width:90%;
-    height:90%;
+	 width:80%;
+    height:80%;
     object-fit:cover;
 }
 .main-page-card img:nth-child(2){
-	width:110%;
-    height:110%;
+	width:100%;
+    height:100%;
 }
 .card-inner{
 	display: flex;
@@ -298,7 +298,17 @@ form fieldset legend{
 	width: 95%;
 	height: 95%;
 	box-shadow: 5px 2px 2px #464646;
+	padding-top: 3vh;
 }
+
+.card-inner a{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	width: 100%;
+	height: 100%;
+}
+
 /* .main-page-card-black-area{
 	opacity: 0.8;
 	background: black;
