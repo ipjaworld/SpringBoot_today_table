@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ezen.todaytable.dao.AdminVO;
+
 import com.ezen.todaytable.dto.MemberVO;
 import com.ezen.todaytable.service.MemberService;
 import com.oreilly.servlet.MultipartRequest;

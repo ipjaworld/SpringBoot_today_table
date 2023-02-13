@@ -5,14 +5,19 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.todaytable.dto.AdminVO;
 import com.ezen.todaytable.dto.Paging;
 import com.ezen.todaytable.service.AdminService;
 
@@ -22,8 +27,81 @@ public class AdminController {
 	@Autowired
 	AdminService as;
 	//어드민 대쉬보드 이동
+	
 	@RequestMapping("/admin")
-	public String admin() {
+	public String adminLogin(HttpSession session) {
+		if(session.getAttribute("loginAdmin")==null) return "admin/member/adminLogin";
+		return "redirect:/adminMain";
+	}
+	
+	@RequestMapping(value = "/adminlogin", method = RequestMethod.POST)
+	public String login(@ModelAttribute("dto") @Valid AdminVO adminvo, BindingResult result,
+			 HttpServletRequest request,Model model) {
+
+		  String url = "admin/member/adminLogin";
+	      
+	      if(result.getFieldError("aid") !=null ) {
+	         model.addAttribute("message",result.getFieldError("aid").getDefaultMessage());
+	      }else if(result.getFieldError("pwd") !=null ) {
+	         model.addAttribute("message",result.getFieldError("pwd").getDefaultMessage());
+	      }else {
+	         HashMap<String, Object> paramMap = new HashMap<String, Object>();
+	         paramMap.put("id",adminvo.getAid() );
+	         paramMap.put("ref_cursor", null);
+	         as.getAdminList(paramMap); 
+	         
+	            ArrayList<HashMap<String, Object>> list
+	               = (ArrayList<HashMap<String, Object>>)paramMap.get("ref_cursor");
+	            
+	            if( list.size() == 0) {
+	               model.addAttribute("message", "아이디가 없습니다");
+	               return "admin/member/adminLogin";
+	            }
+	            HashMap<String, Object> avo = list.get(0);
+	            if( avo.get("PWD") == null)
+	               model.addAttribute("message", "비밀번호 오류. 관리자에게 문의하세요");
+	            else if( !avo.get("PWD").equals(adminvo.getPwd()))
+	               model.addAttribute("message", "비밀번호가 맞지않습니다");
+	            else if( avo.get("PWD").equals(adminvo.getPwd())) {
+	               HttpSession session = request.getSession();
+	               session.setAttribute("loginAdmin", avo);
+	               url = "redirect:/adminMain";
+	            }
+	           
+	      }
+	       return url;
+	   }
+	
+	
+	@RequestMapping("/adminMain")
+	public String admin(HttpSession session, Model model) {
+		if(session.getAttribute("loginAdmin")==null) return "admin/member/adminLogin";
+		//카운트 목록조회
+		String[][] table= {{"recipe","recipe"},{"members","members"},{"reply","reply"}, {"qna","qna"}, 
+				{"membersno","members where useyn = 'N'"},{"qnarep","qna where rep = 2"},
+				{"adminrec","recipe_page_view where rec = 1"},{"viewcnt","recipe_page_view"}				
+		};
+		HashMap<String,Object> paramMap =new HashMap<String,Object>();	  
+		paramMap.put("result", 0);
+			
+		for(String [] t : table) {
+			paramMap.put("table", t[1]);
+			as.adminGetCounts(paramMap);
+			int count = Integer.parseInt(paramMap.get("result")+"");
+			model.addAttribute(t[0], count);
+		}
+		//최근 게시물 목록조회(상위 조회수 레시피,최근댓글)
+		String[][] table1= {{"bestViewList","recipe"},{"recentReplyList","reply"}};
+		HashMap<String,Object> paramMap1 =new HashMap<String,Object>();		
+		paramMap1.put("result", null);
+		for(String[] t :table1) {
+			paramMap.put("table", t[1]);
+			as.adminDashList(paramMap);			
+			ArrayList<HashMap<String, Object>> list
+            = (ArrayList<HashMap<String, Object>>)paramMap.get("result");
+			model.addAttribute(t[0], list);
+		}
+		
 		return "admin/adminMain";
 	}
 	
@@ -35,9 +113,9 @@ public class AdminController {
 	      ModelAndView mav = new ModelAndView();
 	      HttpSession session = request.getSession();
 	      
-	     // if(session.getAttribute("loginAdmin")==null) {
-	    //     mav.setViewName("admin/adminLoginForm");
-	     // }else {
+	      if(session.getAttribute("loginAdmin")==null) {
+	         mav.setViewName("admin/member/adminLogin");
+	      }else {
 	         
 	         HashMap<String,Object> paramMap =new HashMap<String,Object>();
 	         paramMap.put("request",request );
@@ -46,12 +124,13 @@ public class AdminController {
 	         as.getAdminMemberList(paramMap);
 	         
 	         ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
+
 	         mav.addObject("paging",(Paging)paramMap.get("paging"));
 	         mav.addObject("key", (String)paramMap.get("key"));
 	         mav.addObject("membersList", list);
 	         
 	         mav.setViewName("admin/member/adminMemList");         
-	   //   }
+	      }
 	      return mav;      
 	   }
 	
@@ -72,9 +151,9 @@ public class AdminController {
 	      ModelAndView mav = new ModelAndView();
 	      HttpSession session = request.getSession();
 	      
-	     // if(session.getAttribute("loginAdmin")==null) {
-	    //     mav.setViewName("admin/adminLoginForm");
-	     // }else {
+	      if(session.getAttribute("loginAdmin")==null) {
+	         mav.setViewName("admin/member/adminLogin");
+	      }else {
 	         
 	         HashMap<String,Object> paramMap =new HashMap<String,Object>();
 	         paramMap.put("id",id );
@@ -85,7 +164,7 @@ public class AdminController {
 	         mav.addObject("memberVO", list.get(0));
 	         
 	         mav.setViewName("admin/member/adminMemDetail");         
-	   //   }
+	      }
 	      return mav;      
 	   }
 	//qna리스트 이동
@@ -95,9 +174,9 @@ public class AdminController {
 		      ModelAndView mav = new ModelAndView();
 		      HttpSession session = request.getSession();
 		      
-		     // if(session.getAttribute("loginAdmin")==null) {
-		    //     mav.setViewName("admin/adminLoginForm");
-		     // }else {
+		      if(session.getAttribute("loginAdmin")==null) {
+		         mav.setViewName("admin/member/adminLogin");
+		      }else {
 		         
 		         HashMap<String,Object> paramMap =new HashMap<String,Object>();
 		         paramMap.put("request",request );
@@ -111,7 +190,7 @@ public class AdminController {
 		         mav.addObject("qnaList", list);
 		         
 		         mav.setViewName("admin/qna/adminQnaList");         
-		   //   }
+		      }
 		      return mav;      
 		   }
 		
@@ -132,9 +211,9 @@ public class AdminController {
 		      ModelAndView mav = new ModelAndView();
 		      HttpSession session = request.getSession();
 		      
-		     // if(session.getAttribute("loginAdmin")==null) {
-		    //     mav.setViewName("admin/adminLoginForm");
-		     // }else {
+		      if(session.getAttribute("loginAdmin")==null) {
+		         mav.setViewName("admin/member/adminLogin");
+		      }else {
 		         
 		         HashMap<String,Object> paramMap =new HashMap<String,Object>();
 		         paramMap.put("qseq",qseq );
@@ -146,7 +225,7 @@ public class AdminController {
 		         mav.addObject("qnaVO", list.get(0));
 		         
 		         mav.setViewName("admin/qna/adminQnaDetail");         
-		   //   }
+		      }
 		      return mav;      
 		   }
 		
@@ -168,9 +247,9 @@ public class AdminController {
 		      ModelAndView mav = new ModelAndView();
 		      HttpSession session = request.getSession();
 		      
-		     // if(session.getAttribute("loginAdmin")==null) {
-		    //     mav.setViewName("admin/adminLoginForm");
-		     // }else {
+		      if(session.getAttribute("loginAdmin")==null) {
+		         mav.setViewName("admin/member/adminLogin");
+		      }else {
 		         
 		         HashMap<String,Object> paramMap =new HashMap<String,Object>();
 		         paramMap.put("request",request );
@@ -184,7 +263,7 @@ public class AdminController {
 		         mav.addObject("replyList", list);
 		         
 		         mav.setViewName("admin/reply/adminReplyList");         
-		   //   }
+		      }
 		      return mav;      
 		   }
 		//댓글삭제

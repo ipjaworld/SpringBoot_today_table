@@ -1,5 +1,6 @@
 package com.ezen.todaytable.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -113,16 +114,14 @@ public class AdminService {
 	      // 페이징 객체 생성
 	      Paging paging = new Paging();
 	      paging.setPage(page);
-	      HashMap<String, Object> cntMap = new HashMap<String, Object>();
-	      cntMap.put("cnt", 0);
-	      cntMap.put("tableName", 4); 
-	      cntMap.put("key", key); 
-	      adao.adminGetAllCount(cntMap);
-	      int count = (Integer) cntMap.get("cnt"+""); 
+	      paramMap.put("cnt", 0);
+	      paramMap.put("tableName", 4); 
+	      paramMap.put("key", key); 
+	      adao.adminGetAllCount(paramMap);
+	      int count = (Integer) paramMap.get("cnt"+""); 
 	      paging.setTotalCount(count);
 	      paging.paging();
 	      
-	      paramMap.put("key", key);
 	      paramMap.put("startNum", paging.getStartNum() );
 	      paramMap.put("endNum", paging.getEndNum() );
 	      adao.getAdminQnaList(paramMap);
@@ -148,6 +147,7 @@ public class AdminService {
 		adao.adminSaveReply(qseq,replyQna);
 		
 	}
+	//댓글리스트
 	public void getAdminReplyList(HashMap<String, Object> paramMap) {
 		
 		HttpServletRequest request = (HttpServletRequest)paramMap.get("request");
@@ -198,6 +198,7 @@ public class AdminService {
 	      paramMap.put("paging", paging);
 		
 	}
+	//댓글삭제
 	public void adminDeleteReply(int[] num) {
 		
 		for(int replyseq: num) {
@@ -205,40 +206,58 @@ public class AdminService {
 		}
 		
 	}
+	//대쉬보드 카운트 목록조회(이중배열 값에 따라 반환값 틀림)
+	public void adminGetCounts(HashMap<String, Object> paramMap) {
+		adao.adminGetCounts(paramMap);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//어드민로그인(admins테이블 id로 조회한 행)
+	public void getAdminList(HashMap<String, Object> paramMap) {		
+		adao.getAdminList(paramMap);
+	}
+	//대쉬보드 (베스트 조회 레시피, 최근 댓글 (3개씩))
+	public void adminDashList(HashMap<String, Object> paramMap) {
+		adao.adminDashList(paramMap);
+		
+	}
 	
 	
 	
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+

@@ -26,5 +26,11 @@ public interface IAdminDao {
 	void getAdminReplyList(HashMap<String, Object> paramMap);
 	//댓글삭제
 	void adminDeleteReply(int replyseq);
-
+	//대쉬보드 getCount목록 
+	void adminGetCounts(HashMap<String, Object> paramMap);
+	//어드민 리스트 조회(id)
+	void getAdminList(HashMap<String, Object> paramMap);
+	//대쉬보드 (베스트 조회 레시피, 최근 댓글 (3개씩))
+	void adminDashList(HashMap<String, Object> paramMap);
+	
 }
