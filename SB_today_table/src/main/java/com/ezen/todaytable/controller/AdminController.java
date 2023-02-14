@@ -335,6 +335,14 @@ public class AdminController {
 		}
 		return mav;
 	}
+	//레시피 삭제
+	@RequestMapping("/adminDeleteRecipe")
+	public String adminDeleteRecipe(@RequestParam("rnum") int[] rnum) {
+
+		as.adminDeleteRecipe(rnum);
+
+		return "redirect:/adminRecipeList?first='1'";
+	}
 	
 	
 	

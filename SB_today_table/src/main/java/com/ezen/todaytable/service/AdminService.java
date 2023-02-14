@@ -327,6 +327,13 @@ public class AdminService {
 	      paramMap.put("paging", paging);
 		
 	}
+	public void adminDeleteRecipe(int[] rnum) {
+		
+		for(int rnum1: rnum) {
+			adao.adminDeleteRecipe(rnum1);
+		}
+		
+	}
 	
 	
 	

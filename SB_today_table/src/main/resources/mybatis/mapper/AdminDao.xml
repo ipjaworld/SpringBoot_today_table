@@ -143,5 +143,14 @@
          ) 
       }
 </select >
+
+<!--레시피 삭제  -->
+<delete id="adminDeleteRecipe">
+	{
+         CALL adminDeleteRecipe (
+         #{rnum1}
+         ) 
+      }
+</delete>
 	
 </mapper>

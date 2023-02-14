@@ -84,7 +84,7 @@ function go_adminRecipe_delete(){
 		alert("삭제할 게시물을 선택하세요");
 	}	
 	else{	
-		document.frm.action = "recipe.do?command=adminDeleteRecipe";
+		document.frm.action = "adminDeleteRecipe";
 	    document.frm.submit();    
 	}    
 }

@@ -38,5 +38,7 @@ public interface IAdminDao {
 	void adminChangeRecommend(String rnum);
 	//추천레시피 리스트
 	void getAdminPickRecipeList(HashMap<String, Object> paramMap);
+	//레시피 삭제
+	void adminDeleteRecipe(int rnum1);
 	
 }

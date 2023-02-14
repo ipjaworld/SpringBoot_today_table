@@ -7,15 +7,20 @@ CREATE OR REPLACE PROCEDURE adminGetAllCount(
 IS
 v_cnt number;
 BEGIN
-    if p_tableName =2 then
+    if p_tableName =1 then
+    select Count(*) into v_cnt from recipe where subject like '%'||p_key||'%' or content like '%'||p_key||'%';
+
+    elsif p_tableName =2 then
     select Count(*) into v_cnt from members where name like '%'||p_key||'%' ;
     
     elsif p_tableName =3 then
     select Count(*) into v_cnt from reply where id like '%'||p_key||'%';
     
-  elsif p_tableName =4 then
+    elsif p_tableName =4 then
     select Count(*) into v_cnt from qna where qsubject like '%'||p_key||'%' or qcontent like '%'||p_key||'%';
     
+    elsif p_tableName =5 then
+    select Count(*) into v_cnt from recipe_page_view where (subject like '%'||p_key||'%' or content like '%'||p_key||'%') and rec=1;
   end if;
   p_cnt:=v_cnt;
 END;
@@ -186,16 +191,74 @@ BEGIN
         select * from reply ORDER BY replydate desc  ;  
    end if;
 END;
+--레시피리스트 조회
+CREATE OR REPLACE PROCEDURE getAdminRecipeList(
+    r_startNum in number,
+    r_endNUm in number,
+    r_key in recipe.content%type,
+    r_rc out sys_refcursor
+)
+IS
+BEGIN
+    open r_rc for
+        select * from ( 
+        select * from ( 
+        select rownum as rn, r.*from (( select *from recipe_page_view where subject like '%'||r_key||'%' or content like '%'||r_key||'%' 
+        order by indate desc ) r)
+             ) where rn >=r_startNum 
+             ) where rn <=r_endNum; 
+END;
+--추천 변경
 
+CREATE OR REPLACE PROCEDURE adminChangeRecommend(
+    r_rnum in recipe_page.rnum%type
+)
+IS
+    v_rec varchar2(10);
+BEGIN
+    select rec into  v_rec from recipe_page where rnum=r_rnum;
+    
+    if v_rec=0 then
+    update recipe_page set rec=1 where rnum=r_rnum;
+    elsif v_rec=1 then
+    update recipe_page set rec=0 where rnum=r_rnum;
+    commit;
+end if;
+END;
+--추천 레시피리스트 조회
+CREATE OR REPLACE PROCEDURE getAdminPickRecipeList(
+    r_startNum in number,
+    r_endNUm in number,
+    r_key in recipe.content%type,
+    r_rc out sys_refcursor
+)
+IS
+BEGIN
+    open r_rc for
+        select * from ( 
+        select * from ( 
+        select rownum as rn, r.*from (( select *from recipe_page_view where (subject like '%'||r_key||'%' or content like '%'||r_key||'%') and rec=1 
+        order by indate desc ) r)
+             ) where rn >=r_startNum 
+             ) where rn <=r_endNum; 
+END;
 
-
+--레시피 삭제
+CREATE OR REPLACE PROCEDURE adminDeleteRecipe(
+    r_rnum in recipe.rnum%type
+)
+IS
+BEGIN
+    delete from recipe where rnum=r_rnum;
+    commit;
+END;
 
 
 
 
 select*from recipe_page;
 commit;
-select*from members;
+select*from recipe;
 
 
 
