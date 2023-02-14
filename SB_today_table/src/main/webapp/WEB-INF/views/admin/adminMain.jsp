@@ -77,13 +77,13 @@
 					<div class="main-btm-area-card">
 					<br><br>
 						<h3>QNA답변률</h3>
-						<div class="progress-bar" style="width:<fmt:formatNumber value="${qnarep/qna*100.0}" pattern=".00" type="percent"/>%;">           						
-   							<div class="progress"><fmt:formatNumber value="${qnarep/qna*100.0}" pattern=".00" type="percent"/>%</div>
+						<div class="progress-bar">           						
+   							<div class="progress" style="width:<fmt:formatNumber value="${qnarep/qna*100.0}" pattern=".00" type="percent"/>%;"><h4 style="color:white"><fmt:formatNumber value="${qnarep/qna*100.0}" pattern=".00" type="percent"/>%</h4></div>
 						</div>
 						<br><br>
-						<h3>QNA답변률</h3>
-						<div class="progress-bar" style="width:<fmt:formatNumber value="${qnarep/qna*100.0}" pattern=".00" type="percent"/>%;">           						
-   							<div class="progress"><h4 style="color:white"><fmt:formatNumber value="${qnarep/qna*100.0}" pattern=".00" type="percent"/>%</h4></div>
+						<h3>휴면회원 전환률</h3>
+						<div class="progress-bar">           						
+   							<div class="progress" style="width:<fmt:formatNumber value="${membersno/members*100.0}" pattern=".00" type="percent"/>%;"><h4 style="color:white"><fmt:formatNumber value="${membersno/members*100.0}" pattern=".00" type="percent"/>%</h4></div>
 						</div>							
 					</div>
 				</div>
