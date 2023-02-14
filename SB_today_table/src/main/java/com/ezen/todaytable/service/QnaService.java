@@ -55,8 +55,8 @@ public class QnaService {
 			
 		}
 
-		public void qnaupdate(HashMap<String, Object> paramMap) {
-			qdao.qnaupdate(paramMap);
+		public void qnaUpdate(HashMap<String, Object> paramMap) {
+			qdao.qnaUpdate(paramMap);
 			
 		}
 

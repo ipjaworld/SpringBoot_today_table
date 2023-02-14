@@ -15,6 +15,6 @@ public interface IQnaDao {
 
 	void insertQnas(HashMap<String, Object> paramMap);
 
-	void qnaupdate(HashMap<String, Object> paramMap);
+	void qnaUpdate(HashMap<String, Object> paramMap);
 
 }

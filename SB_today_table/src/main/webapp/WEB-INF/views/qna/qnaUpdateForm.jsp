@@ -16,7 +16,7 @@
 			</fieldset>
 			<div class="clear"></div>
 			<div id="buttons" style="float:right">
-				<input type="submit" value="글쓰기"  class="submit" onclick="location.href='update'">
+				<input type="submit" value="글쓰기"  class="submit">
 				<input type="reset" value="취소"  class="cancel">
 				<input type="button" value="레시피계속보기"  class="submit" onclick="location.href='/'">
 			</div>

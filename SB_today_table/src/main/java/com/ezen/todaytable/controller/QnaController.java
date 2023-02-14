@@ -154,23 +154,22 @@ public class QnaController {
 		}
 	
 	@RequestMapping(value="/qnaUpdate")
-	public ModelAndView qnaUpdate( @ModelAttribute("dto") @Valid QnaVO qnavo,
+	public String qnaUpdate( @ModelAttribute("dto") @Valid QnaVO qnavo,
 			BindingResult result,  HttpServletRequest request) {
+		System.out.println("ssss"+qnavo.getQseq());
 		
-		ModelAndView mav = new ModelAndView();
+		
 		//HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
-		//if ( loginUser == null) mav.setViewName("member/login");
+		//if ( loginUser == null) return "member/login";
 		//else{
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		
-		paramMap.put("qnavo", qnavo);
+		paramMap.put("qnaVO", qnavo);
 		
-		qs.qnaupdate(paramMap);
-	
-		mav.setViewName("qna/qnaDetail");
+		qs.qnaUpdate(paramMap);
 //}
 		
-		return mav;
+		return "redirect:/qnaDetail?qseq="+qnavo.getQseq();
 	}
 }
 	

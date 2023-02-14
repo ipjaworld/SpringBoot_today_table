@@ -41,10 +41,10 @@
 	   	}
    	</insert>
 	
-	<insert id="qnaupdate" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<insert id="qnaUpdate" statementType="CALLABLE" parameterType="java.util.HashMap">
 	   	{
-	   		CALL qnaupdate( 
-	   		#{qnavo.qseq},#{qnavo.qsubject},#{qnavo.qcontent}
+	   		CALL qnaUpdate( 
+	   		#{qnaVO.qseq},#{qnaVO.qsubject},#{qnaVO.qcontent}
 	   		)
 	   	}
    	</insert>
