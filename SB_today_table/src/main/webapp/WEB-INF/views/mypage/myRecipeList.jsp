@@ -27,26 +27,24 @@
 							<td><input type="checkbox" name="rnum"
 								value="${myRecipeVO.RNUM }"></td>
 							<td>${myRecipeVO.RNUM}</td>
-							 <td width="300"><a
-								href="recipeDetailWithoutView&rnum=${myRecipeVO.RNUM}">
-									${myRecipeVO.SUBJECT}<%-- 
+							  <td width="300"><a href="recipeDetailWithoutView?rnum=${myRecipeVO.RNUM}">
+									${myRecipeVO.SUBJECT}
 								<c:if test="${replyCountList[status.index] !=0}">
 									<span style="color: #445EDD; font-size: bold;">[${replyCountList[status.index]}]</span>
-								</c:if>--%>
-									</a></td> 
+								</c:if>
+									</a></td>  
 							<td width="200"><fmt:formatDate value="${myRecipeVO.INDATE}"
 									type="date" /></td>
 							<td width="200">${myRecipeVO.VIEWS}</td>
 					</c:forEach>
 					<tr>
-						<th colspan="3"><a href="#"
-							onClick="recipeForm'">작성하기</a></th>
+						<th colspan="3"><a href="#" onClick="recipeForm'">작성하기</a></th>
 						<th><a href="#"
 							onClick="go_fmirecipe_delete('myRecipeDelete');">삭제하기</a></th>
 					</tr>
 				</table>
 				<div id="myrecipe-list-paging">
-					<jsp:include page="/paging/paging">
+					<jsp:include page="../paging/paging.jsp">
 						<jsp:param name="command" value="myRecipeList" />
 					</jsp:include>
 				</div>

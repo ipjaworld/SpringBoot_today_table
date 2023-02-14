@@ -169,7 +169,7 @@ public class MainService {
 		HttpSession session = request.getSession();
 		if (request.getParameter("first") != null) {
 			session.removeAttribute("page");
-			session.removeAttribute("key");
+//			session.removeAttribute("key");
 		}
 		int page = 1;
 		if (request.getParameter("page") != null) {
@@ -190,13 +190,18 @@ public class MainService {
 //        } else session.removeAttribute("key");
 
 		Paging paging = new Paging();
+		paging.setDisplayPage(5);
+		paging.setDisplayRow(5);
 		paging.setPage(page);
 		paramMap.put("cnt", 0);
 //        paramMap.put("key", key);
 		rdao.getMIFAllCount(paramMap);
 		int count = Integer.parseInt(paramMap.get("cnt") + "");
+		System.out.println("cnt:"+count);
 		paging.setTotalCount(count);
 		paging.paging();
+		
+
 
 		paramMap.put("startNum", paging.getStartNum());
 		paramMap.put("endNum", paging.getEndNum());
@@ -204,6 +209,21 @@ public class MainService {
 		rdao.getMIFListtable(paramMap);
 	}
 
+
+
+	public void getFavoriteList(HashMap<String, Object> paramMap) {
+		rdao.getFavoriteList(paramMap);
+	}
+
+
+
+	public void changeFuseyn(HashMap<String, Object> paramMap) {
+		rdao.changeFuseyn(paramMap);
+	}
+
+
+
+	
 
 
 		

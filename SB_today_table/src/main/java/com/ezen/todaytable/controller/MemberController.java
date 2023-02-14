@@ -372,7 +372,5 @@ public class MemberController {
 			System.out.println("result : " + result); // 확인용
 			return "member/checkSuccess";
 		}
-			
-			
 
 }

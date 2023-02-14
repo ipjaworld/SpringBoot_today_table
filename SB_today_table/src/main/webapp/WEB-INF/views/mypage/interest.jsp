@@ -7,9 +7,9 @@
    <form name="formm" method="post">
       <h2>관심 레시피</h2>
 
-      <%-- <c:forEach items="${ilist}" var="interestRecipeVO" varStatus="status">
-         ${interestRecipeVO.rnum}
-         ${flist[status.index].fuseyn}
+      <%--  <c:forEach items="${ylist}" var="interestRecipeVO" varStatus="status">
+         ${interestRecipeVO.RNUM}
+         ${replyCountList}
       </c:forEach> --%>
 
       <c:choose>
@@ -30,42 +30,36 @@
                <c:forEach items="${ylist}" var="interestRecipeVO"
                   varStatus="status">
                   <tr>
-                     <td><input type="checkbox" name="rnum"
-                        value="${interestRecipeVO.rnum}"></td>
-                     <td width="100">${interestRecipeVO.rnum}</td>
+                     <td><input type="checkbox" name="rnum" value="${interestRecipeVO.RNUM}"></td>
+                     <td width="100">${interestRecipeVO.RNUM}</td>
                      <td width="300"><c:choose>
-                           <c:when
-                              test="${interestRecipeVO.id == interestRecipeVO.interestid }">
-                              <a
-                                 href="recipeDetailWithoutView&rnum=${interestRecipeVO.rnum}">${interestRecipeVO.subject}
+                           <c:when  test="${interestRecipeVO.ID== interestRecipeVO.INTERESTID}">
+                              <a  href="recipeDetailWithoutView?rnum=${interestRecipeVO.RNUM}">${interestRecipeVO.SUBJECT}
                                  <c:if test="${replyCountList[status.index] !=0}">
                                     <span style="color: #445EDD; font-size: bold;">[${replyCountList[status.index]}]</span>
-                                 </c:if> <c:if test="${interestRecipeVO.fuseyn=='Y'}">
+                                 </c:if> <c:if test="${interestRecipeVO.FUSEYN=='Y'}">
                                     <span style="color: red; font-size: bold;">(단골)</span>
                                  </c:if>
                               </a>
                            </c:when>
                            <c:otherwise>
-                              <a
-                                 href="recipeDetailView&rnum=${interestRecipeVO.rnum}">${interestRecipeVO.subject}
+                              <a href="recipeDetailView?rnum=${interestRecipeVO.RNUM}">${interestRecipeVO.SUBJECT}
                                  <c:if test="${replyCountList[status.index] !=0}">
                                     <span style="color: #445EDD; font-size: bold;">[${replyCountList[status.index]}]</span>
-                                 </c:if> <c:if test="${interestRecipeVO.fuseyn=='Y'}">
+                                 </c:if> <c:if test="${interestRecipeVO.FUSEYN=='Y'}">
                                     <span style="color: red; font-size: bold;">(단골)</span>
                                  </c:if>
                               </a>
                            </c:otherwise>
                         </c:choose></td>
-                     <td width="200"><fmt:formatDate
-                           value="${interestRecipeVO.indate}" type="date" /></td>
-                     <td width="200">${interestRecipeVO.views}</td>
+                     <td width="200"><fmt:formatDate  value="${interestRecipeVO.INDATE}" type="date" /></td>
+                     <td width="200">${interestRecipeVO.VIEWS}</td>
                </c:forEach>
                <tr>
-                  <th colspan="4"><a href="#"
-                     onClick="go_favoriteindel('changeFuseyn');">단골레시피 변환/해제</a></th>
+                  <th colspan="4"><a href="#"  onClick="go_favoriteindel('changeFuseyn');">단골레시피 변환/해제</a></th>
             </table>
             <div id="myrecipe-list-paging">
-               <jsp:include page="/paging/paging">
+               <jsp:include page="../paging/paging.jsp">
                   <jsp:param name="command" value="interestView" />
                </jsp:include>
             </div>

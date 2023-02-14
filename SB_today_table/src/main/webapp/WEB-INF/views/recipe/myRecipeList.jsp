@@ -34,7 +34,7 @@
                </c:forEach>
                <tr>
                   <th colspan="3">
-                     <a href="#"   onClick="location.href='recipeForm'">작성하기</a>
+                     <a href="#"   onClick="recipeForm">작성하기</a>
                   </th>
                     <th><a href="#" onClick="go_fmirecipe_delete('myRecipeDelete');">삭제하기</a></th>
                </tr>

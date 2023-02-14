@@ -65,5 +65,9 @@ public interface IRecipeDao {
 
 	void getMIFListtable(HashMap<String, Object> paramMap);
 
+	void getFavoriteList(HashMap<String, Object> paramMap);
+
+	void changeFuseyn(HashMap<String, Object> paramMap);
+
 
 }

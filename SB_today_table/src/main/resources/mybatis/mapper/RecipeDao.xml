@@ -211,9 +211,30 @@
 <select id="getMIFListtable" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
 			CALL getMIFListtable(
-				#{id}, #{tableName},
+				#{id}, #{tableName},#{startNum}, #{endNum},
 				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap }
 			)
 		}
 	</select>
+	
+	
+	
+	<select id="getFavoriteList" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL getFavoriteList(
+				#{id},
+				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap }
+			)
+		}
+	</select>
+	
+	
+		<update id="changeFuseyn" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL changeFuseyn(
+			#{id},#{tableName},#{rnum}
+			)
+		}
+	</update>
+	
 </mapper>

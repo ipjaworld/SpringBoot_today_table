@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../include/headerfooter/header.jsp" %>
+<%@ include file="../mypage/sub_menu_left.jsp"%>
+
 
 <article id="favorite-list-view">
 	<form name="formm" method="post">
@@ -18,12 +21,11 @@
 					</tr>
 					<c:forEach items="${fflist}" var="favoriteRecipeVO" varStatus="status">
 						<tr>
-							<td width="100">${favoriteRecipeVO.rnum}</td>
-							<td width="300"><c:choose>
-									<c:when
-										test="${favoriteRecipeVO.id == favoriteRecipeVO.favoriteid }">
-										<a         
-											href="recipeDetailWithoutView&rnum=${favoriteRecipeVO.rnum}">${favoriteRecipeVO.subject}
+							<td width="100">${favoriteRecipeVO.RNUM}</td>
+							<td width="300">
+							<c:choose>
+									<c:when test="${favoriteRecipeVO.ID == favoriteRecipeVO.FAVORITEID}">
+										<a  href="recipeDetailWithoutView?rnum=${favoriteRecipeVO.RNUM}">${favoriteRecipeVO.SUBJECT}
 											<c:if test="${replyCountList[status.index] !=0}">
 												<span style="color: #445EDD; font-size: bold;">[${replyCountList[status.index]}]</span>
 											</c:if>
@@ -31,20 +33,19 @@
 									</c:when>
 									<c:otherwise>
 										<a
-											href="recipeDetailView&rnum=${favoriteRecipeVO.rnum}">${favoriteRecipeVO.subject}
+											href="recipeDetailView?rnum=${favoriteRecipeVO.RNUM}">${favoriteRecipeVO.SUBJECT}
 											<c:if test="${replyCountList[status.index] !=0}">
 												<span style="color: #445EDD; font-size: bold;">[${replyCountList[status.index]}]</span>
 											</c:if>
 										</a>
 									</c:otherwise>
 								</c:choose></td>
-							<td width="200"><fmt:formatDate
-									value="${favoriteRecipeVO.indate}" type="date" /></td>
-							<td width="200">${favoriteRecipeVO.views}</td>
+							<td width="200"><fmt:formatDate value="${favoriteRecipeVO.INDATE}" type="date" /></td>
+							<td width="200">${favoriteRecipeVO.VIEWS}</td>
 					</c:forEach>
 				</table>
 				<div id="myrecipe-list-paging">
-					<jsp:include page="/paging/paging.jsp">
+					<jsp:include page="../paging/paging.jsp">
 						<jsp:param name="command" value="favoriteView" />
 					</jsp:include>
 				</div>
@@ -52,3 +53,5 @@
 		</c:choose>
 	</form>
 </article>
+
+<%@ include file="../include/headerfooter/footer.jsp" %>
