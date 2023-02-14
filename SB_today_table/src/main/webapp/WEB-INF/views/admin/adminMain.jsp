@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<div class="row main-btm-area">
-				<div class="main-btm-area-box col-md-8 col-sm-12">
+				<div class="main-btm-area-box col-md-6 col-sm-12">
 					<div class="main-btm-area-card" id="">
 						<div>
 							<h3>전체 댓글 수 : ${reply}</h3>
@@ -73,9 +73,18 @@
 						</div>
 					</div>
 				</div>
-				<div class="main-btm-area-box col-md-4 col-sm-12">
+				<div class="main-btm-area-box col-md-6 col-sm-12">
 					<div class="main-btm-area-card">
-						<h3></h3>
+					<br><br>
+						<h3>QNA답변률</h3>
+						<div class="progress-bar" style="width:<fmt:formatNumber value="${qnarep/qna*100.0}" pattern=".00" type="percent"/>%;">           						
+   							<div class="progress"><fmt:formatNumber value="${qnarep/qna*100.0}" pattern=".00" type="percent"/>%</div>
+						</div>
+						<br><br>
+						<h3>QNA답변률</h3>
+						<div class="progress-bar" style="width:<fmt:formatNumber value="${qnarep/qna*100.0}" pattern=".00" type="percent"/>%;">           						
+   							<div class="progress"><h4 style="color:white"><fmt:formatNumber value="${qnarep/qna*100.0}" pattern=".00" type="percent"/>%</h4></div>
+						</div>							
 					</div>
 				</div>
 			</div>
