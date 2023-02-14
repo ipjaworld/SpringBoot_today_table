@@ -29,10 +29,10 @@ function checkPass( qseq ){
 					<td>${qnaVO.QSEQ}</td>				
 					<c:choose>
 						<c:when test="${qnaVO.SECRET=='0'}">
-							<td><a href="qnaDetail?qseq=${qnaVO.QSEQ}">${qnaVO.QSUBJECT}</a></td>
+							<td><a href="qnaDetail?qseq=${qnaVO.QSEQ}&refer=q">${qnaVO.QSUBJECT}</a></td>
 						</c:when>
 						<c:otherwise>
-							<td><a href="#" onclick="qnaPwdCheck(${qnaVO.QNAPASS},${qnaVO.QSEQ})">${qnaVO.QSUBJECT}
+							<td><a href="#" onclick="pwdcheck(${qnaVO.QNAPASS},${qnaVO.QSEQ},'q')">${qnaVO.QSUBJECT}
 							<img src="image/key1.png" style="width:13px vertical-align:middle;"></a></td>
 						</c:otherwise>					
 					</c:choose>

@@ -26,10 +26,10 @@
 										
 					<c:choose>
 						<c:when test="${myqnaVO.SECRET=='0'}">
-							<td><a href="qnaDetail?qseq=${myqnaVO.QSEQ}">${myqnaVO.QSUBJECT}</a></td>
+							<td><a href="qnaDetail?qseq=${myqnaVO.QSEQ}&refer=m">${myqnaVO.QSUBJECT}</a></td>
 						</c:when>
 						<c:otherwise>
-							<td><a href="#" onclick="pwdcheck(${myqnaVO.QNAPASS},${myqnaVO.QSEQ})">${myqnaVO.QSUBJECT}
+							<td><a href="#" onclick="pwdcheck(${myqnaVO.QNAPASS},${myqnaVO.QSEQ},'m')">${myqnaVO.QSUBJECT}
 							<img src="image/key1.png" style="width:13px vertical-align:middle;"></a>	</td>
 						</c:otherwise>					
 					</c:choose>	

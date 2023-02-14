@@ -1,4 +1,3 @@
-
 -- 겟 올 카운트
 CREATE OR REPLACE PROCEDURE getAllCount(
     p_cnt OUT NUMBER
@@ -54,16 +53,20 @@ BEGIN
     commit;    
 END;
 
--- updateQna
-CREATE OR REPLACE PROCEDURE updateQnas(
-    p_qseq IN qna.qseq%TYPE,
-    p_rc   OUT     SYS_REFCURSOR 
-) 
+select * from qna order by qseq desc
+
+update qna set rep='1'
+
+
+CREATE OR REPLACE PROCEDURE qnaUpdate(
+    p_qseq  IN qna.qseq%TYPE,
+    p_qsubject  IN qna.qsubject%TYPE,
+    p_qcontent   IN qna.qcontent%TYPE
+)
 IS
 BEGIN
- OPEN p_rc FOR
-        SELECT * FROM qna WHERE qseq=p_qseq;
-    COMMIT;
+    update qna set qsubject=p_qsubject, qcontent=p_qcontent where qseq=p_qseq;
+    commit;    
 END;
 
 

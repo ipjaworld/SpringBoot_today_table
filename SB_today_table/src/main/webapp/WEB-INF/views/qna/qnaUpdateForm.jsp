@@ -8,9 +8,10 @@
 		<form name="formm" method="post" action="qnaUpdate">
 		
 			<input type="hidden" name="qseq" value="${qnaVO.QSEQ}">
+			<input type="hidden" name="refer" value="${refer}">
 			<fieldset>
 				<!-- <legend>문의하기</legend> -->
-				<div class="qna-update-table"><label>등록일</label><fmt:formatDate value="${qnaVO.QNADATE}" type="date"/><br></div>
+				<div class="qna-update-table"><label>등록일${refer}</label><fmt:formatDate value="${qnaVO.QNADATE}" type="date"/><br></div>
 				<div class="qna-update-table"><label>제목</label><input type="text" name="qsubject" size="60" value="${qnaVO.QSUBJECT}"><br></div>
 				<div class="qna-update-table"><label>내용</label><textarea rows="8" cols="65" name="qcontent" >${qnaVO.QCONTENT}</textarea></div>
 			</fieldset>

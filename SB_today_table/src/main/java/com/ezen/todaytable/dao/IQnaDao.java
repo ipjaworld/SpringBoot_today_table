@@ -17,4 +17,8 @@ public interface IQnaDao {
 
 	void qnaUpdate(HashMap<String, Object> paramMap);
 
+	void deleteQna(int qseq);
+
+	void mylistQna(HashMap<String, Object> paramMap);
+
 }

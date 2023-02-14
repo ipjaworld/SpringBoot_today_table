@@ -27,14 +27,22 @@ public class QnaController {
 	@Autowired
 	QnaService qs;
 	
+	// qna 리스트
 	@RequestMapping("/qnaList")
-	public ModelAndView qnaList(HttpServletRequest request, HttpSession session){
-
-	ModelAndView mav = new ModelAndView();
-	//HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
-	//if ( loginUser == null) mav.setViewName("member/login");
-	//else{
+	public ModelAndView qnaList(HttpServletRequest request, HttpSession session,
+			@RequestParam("refer") String refer){
+		
+		ModelAndView mav = new ModelAndView();
+		//HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
+		//if ( loginUser == null) mav.setViewName("member/login");
+		if(refer.equals("m")) {
+			mav.setViewName("redirect:/myqnaList");
+		}else {
+		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+				
+		//paramMap.put("id",loginUser.get("ID"));
+		paramMap.put("id","scott");
 		paramMap.put("request", request);
 		paramMap.put("ref_cursor",null);
 		qs.listQna(paramMap);
@@ -45,14 +53,16 @@ public class QnaController {
 		mav.addObject("qnaList",list);
 		mav.addObject("paging",(Paging)paramMap.get("paging"));
 		mav.setViewName("qna/qnaList");
-	
-//}
+		
+		}
 		return mav;
 	}
 	
+	// qna 게시글 보기
 	@RequestMapping("/qnaDetail")
 	public ModelAndView qnaDetail(HttpServletRequest request, HttpSession session,
-			@RequestParam("qseq") int qseq){
+			@RequestParam("qseq") int qseq,
+			@RequestParam("refer") String refer){
 
 		ModelAndView mav = new ModelAndView();
 		//HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
@@ -65,7 +75,7 @@ public class QnaController {
 			
 			ArrayList<HashMap<String,Object>> list
 			= (ArrayList<HashMap<String,Object>>)paramMap.get("ref_cursor");
-			
+			mav.addObject("refer", refer);
 			mav.addObject("qnaVO",list.get(0));
 			mav.setViewName("qna/qnaDetail");
 		
@@ -73,6 +83,7 @@ public class QnaController {
 			return mav;
 		}
 	
+	// 나의 qna list 보기
 	@RequestMapping("/myqnaList")
 	public ModelAndView myqnaList(HttpServletRequest request, HttpSession session){
 
@@ -81,21 +92,24 @@ public class QnaController {
 	//if ( loginUser == null) mav.setViewName("member/login");
 	//else{
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		//paramMap.put("id",loginUser.get("ID"));
+		paramMap.put("id","scott");
 		paramMap.put("request", request);
 		paramMap.put("ref_cursor",null);
-		qs.listQna(paramMap);
+		qs.mylistQna(paramMap);
 		
 		ArrayList<HashMap<String,Object>> list
 		= (ArrayList<HashMap<String,Object>>)paramMap.get("ref_cursor");
 		
-		mav.addObject("qnaList",list);
+		mav.addObject("myqnaList",list);
 		mav.addObject("paging",(Paging)paramMap.get("paging"));
-		mav.setViewName("qna/myqnaList");
+		mav.setViewName("qna/myQnaList");
 	
-//}
+	//}
 		return mav;
 	}
 	
+	// qna 글쓰기폼이동
 	@RequestMapping(value="/qnaWriteForm")
 	public String qna_writre_form( HttpServletRequest request) {
 		
@@ -107,6 +121,7 @@ public class QnaController {
 	    return "qna/qnaWriteForm";
 	}
 	
+	// qna 글쓰기
 	@RequestMapping("qnaWrite")
 	public ModelAndView qna_write( @ModelAttribute("dto") @Valid QnaVO qnavo,
 			BindingResult result,  HttpServletRequest request) {
@@ -131,9 +146,11 @@ public class QnaController {
 	    return mav;
 	}
 
+	// qna 업데이트 폼 이동
 	@RequestMapping(value="/qnaUpdateForm")
 	public ModelAndView qnaUpdateForm(HttpSession session,
-				@RequestParam("qseq") int qseq){
+				@RequestParam("qseq") int qseq,
+				@RequestParam("refer") String refer){
 	
 		ModelAndView mav = new ModelAndView();
 		//HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
@@ -147,16 +164,18 @@ public class QnaController {
 			ArrayList<HashMap<String,Object>> list
 			= (ArrayList<HashMap<String,Object>>)paramMap.get("ref_cursor");
 			
+			mav.addObject("refer",refer);
 			mav.addObject("qnaVO",list.get(0));
 			mav.setViewName("qna/qnaUpdateForm");
 	//}
 			return mav;
 		}
 	
+	// qna 수정 작업
 	@RequestMapping(value="/qnaUpdate")
 	public String qnaUpdate( @ModelAttribute("dto") @Valid QnaVO qnavo,
-			BindingResult result,  HttpServletRequest request) {
-		System.out.println("ssss"+qnavo.getQseq());
+			BindingResult result,  HttpServletRequest request,
+			@RequestParam("refer") String refer) {
 		
 		
 		//HashMap<String, Object> loginUser = (HashMap<String, Object>)session.getAttribute("loginUser");
@@ -169,8 +188,25 @@ public class QnaController {
 		qs.qnaUpdate(paramMap);
 //}
 		
-		return "redirect:/qnaDetail?qseq="+qnavo.getQseq();
+		return "redirect:/qnaDetail?qseq="+qnavo.getQseq()+"&refer="+refer;
 	}
+	
+	// qna게시글삭제
+	@RequestMapping("/deleteQna")
+	public String deleteQna(@RequestParam("qseq") int qseq,
+		@RequestParam("refer") String refer) {
+
+		String url="";
+		qs.deleteQna(qseq);
+		if(refer.equals("q")){
+			url= "redirect:/qnaList";			
+		}else {
+			url= "redirect:/myqnaList";		
+		}
+		
+		return url;
+	}
+	
 }
 	
 
