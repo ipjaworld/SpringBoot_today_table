@@ -97,53 +97,100 @@ select * from members;
 
 
 
---- myrecipe 갯수 조회
+--- myrecipe ,interest,favorite 갯수 조회
 
 select*from recipe_page_view;
 
-create or replace procedure getMyRecipeCount(
+create or replace procedure getMIFAllCount(
     p_id IN recipe_page_view.id%type,
+    p_tableName in number,
     p_count out number
 )
 is
    v_cnt number;
 begin
-      select count(*) into v_cnt from recipe_page_view where id = p_id;
-        p_count:= v_cnt;
+    if p_tableName =1 then
+        select Count(*) into v_cnt from recipe_page_view where id = p_id;
+    elsif p_tableName=2 then
+        select Count(*) into v_cnt from fi_view where interestid = p_id and likeyn='Y';
+    elsif p_tableName=3 then
+        select Count(*) into v_cnt from fi_view where favoriteid = p_id and fuseyn='Y' ;
+  end if;
+  p_count:=v_cnt;
+
 end;
 
 
-
-
-
-
-create or replace procedure getMyRecipeListttable(
+ --- myrecipe ,interest,favorite 조회
+create or replace procedure getMIFListtable(
     p_id IN recipe_page_view.id%type,
+    p_tableName number,
+    p_startNum in number,
+    p_endNUm in number,
     p_curvar out SYS_REFCURSOR
 )
 is
   result_cur sys_refcursor;
 begin
+    if p_tableName =1 then
     open result_cur for
-      select * from recipe_page_view where id = p_id;
-       p_curvar := result_cur;
-       
+        select * from ( 
+            select * from ( 
+                select rownum as rn, r.*from ((select * from recipe_page_view where id = p_id order by rnum desc) r)
+            ) where rn >=p_startNum 
+        ) where rn <=p_endNum;
+        
+    elsif p_tableName=2 then
+    open result_cur for
+        select * from ( 
+            select * from (
+             select rownum as rn, i.*from ((select * from fi_view where interestid = p_id and likeyn='Y' order by interestnum desc) i)
+            ) where rn >=p_startNum 
+        ) where rn <=p_endNum;
+        
+    elsif p_tableName=3 then
+    open result_cur for
+    select * from ( 
+        select * from (
+            select rownum as rn, f.*from ((select * from fi_view where favoriteid = p_id and fuseyn='Y'order by fnum desc ) f)
+            ) where rn >=p_startNum 
+        ) where rn <=p_endNum;
+
+  end if;
+  p_curvar:=result_cur;
+
 end;
+select*from favorite;
 
-
-
-select*from recipe_page_view;
-select*from fi_view;
-
-create or replace procedure getMyInterestttable(
-    p_id IN recipe_page_view.id%type,
+create or replace procedure getFavoriteList(
+    p_id IN favorite.id%type,
     p_curvar out SYS_REFCURSOR
 )
 is
-  result_cur sys_refcursor;
+    result_cur sys_refcursor;
 begin
-    open result_cur for
-      select * from recipe_page_view where id = p_id;
-       p_curvar := result_cur;
-       
+  open result_cur for 
+        select * from favorite where id = p_id;
+    p_curvar := result_cur;
 end;
+
+
+
+select*from favorite;
+
+create or replace procedure changeFuseyn(
+    p_id IN members.id%type,
+    p_tableName IN number,
+    p_rnum IN recipe.rnum%type
+)
+is
+   
+begin
+    if p_tableName =1 then
+        update favorite set fuseyn='Y' where rnum = p_rnum;
+    elsif p_tableName=2 then
+        update favorite set fuseyn='N' where rnum = p_rnum;
+    end if;
+    commit;
+end;
+
