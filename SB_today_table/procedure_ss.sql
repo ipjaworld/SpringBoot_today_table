@@ -161,6 +161,8 @@ begin
 
 end;
 select*from favorite;
+select*from fi_view;
+select*from interest;
 
 create or replace procedure getFavoriteList(
     p_id IN favorite.id%type,
@@ -177,20 +179,22 @@ end;
 
 
 select*from favorite;
+select*from fi_view;
 
-create or replace procedure changeFuseyn(
-    p_id IN members.id%type,
-    p_tableName IN number,
-    p_rnum IN recipe.rnum%type
+
+
+CREATE OR REPLACE PROCEDURE changeFuseyn(
+   p_rnum IN favorite.rnum%type
+
 )
-is
-   
-begin
-    if p_tableName =1 then
-        update favorite set fuseyn='Y' where rnum = p_rnum;
-    elsif p_tableName=2 then
-        update favorite set fuseyn='N' where rnum = p_rnum;
-    end if;
+IS
+    v_fuseyn varchar2(10);
+BEGIN
+    select fuseyn into v_fuseyn from favorite where rnum=p_rnum;
+    if v_fuseyn='Y' then
+    update favorite set fuseyn='N'where rnum=p_rnum;
+    elsif v_fuseyn='N'then
+    update favorite set fuseyn='Y' where rnum=p_rnum;
     commit;
-end;
-
+end if;
+END;
