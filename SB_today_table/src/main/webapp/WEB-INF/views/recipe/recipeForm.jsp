@@ -153,7 +153,19 @@ $(document).on("click", '#editImgButton', function(event) {
 				</td>
 			</tr>
 			<tr>
-				<th>재료</th>
+				<th>재료(대분류)</th>
+				<td colspan="5">
+					<select name="ing">
+						<option value="0">선택</option>
+						<option value="1">육류</option>
+						<option value="2">해산물</option>
+						<option value="3">과일/채소</option>
+						<option value="4">곡류</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>재료 상세</th>
 				<td>
 					<label>재료의 이름과 양을 입력한 후 엔터를 누르세요. </label><br>
 					<input type="text" name="ingredient" placeholder="재료 이름 입력" onPaste="return false"/>

@@ -34,15 +34,24 @@
 				#{recipekey},
 				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2},
 				#{startNum},
-				#{endNum}
+				#{endNum},
+				#{kind}
 			)
 		}
 	</select>
 	
-	<select id="getRecipeCounts" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<!-- <select id="getRecipeCounts" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
 			CALL getRecipeCounts(
 				#{recipekey}, #{cnt, mode=OUT, jdbcType=INTEGER}
+			)
+		}
+	</select> -->
+	
+	<select id="getRecipeCounts" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL getRecipeCounts(
+				#{recipekey}, #{kind}, #{cnt, mode=OUT, jdbcType=INTEGER}
 			)
 		}
 	</select>
@@ -59,7 +68,8 @@
 		{
 			CALL recipeFavoriteAndRec(
 				#{ref_cursor2, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2},
-				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap}
+				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap},
+				#{startNum}, #{endNum}
 			)
 		}
 	</select>
@@ -115,7 +125,7 @@
 	<insert id="insertRecipe" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
 			CALL insertRecipe(
-				#{id}, #{subject}, #{content}, #{thumbnail}, #{cookingtime}, #{type}, #{theme},
+				#{id}, #{subject}, #{content}, #{thumbnail}, #{cookingtime}, #{type}, #{theme}, #{ing}, 
 				#{max_rnum, mode=OUT, jdbcType=INTEGER}
 			)
 		}

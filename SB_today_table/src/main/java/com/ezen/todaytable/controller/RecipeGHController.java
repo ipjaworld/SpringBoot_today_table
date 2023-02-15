@@ -31,12 +31,21 @@ public class RecipeGHController {
 	@RequestMapping("/recipeCategory")
 	public ModelAndView recipeCategory(
 			@RequestParam("status") String status,
-			@RequestParam("page") int page,
+			// @RequestParam("page") int page,
+			@RequestParam(value="kind", required=false) String kind,
 			HttpServletRequest request
 			) {
-
+		System.out.println("컨트롤러에 도착한 kind : " + kind);
+		if(kind==null) kind= "0";
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> paramMap = new HashMap<>();
+		
+		/*
+		if(kind != null) // 카테고리 필터를 통해 전송된 값이 존재
+			paramMap.put("kind", kind);
+		*/
+		
+		paramMap.put("kind", Integer.parseInt(kind));
 		paramMap.put("ref_cursor", null);	// 카테고리에 해당하는 레시피vo 를 가져올 커서
 		paramMap.put("replyCountList", null);
 		paramMap.put("request", request);
@@ -61,6 +70,7 @@ public class RecipeGHController {
 		mav.addObject("paging", (Paging) paramMap.get("paging"));
 		
 		mav.setViewName("recipe/recipeCategory");
+		
 		return mav;
 		
 	}
@@ -68,13 +78,14 @@ public class RecipeGHController {
 	
 	@RequestMapping("/recipeFavoriteAndRec")
 	public ModelAndView recipeFavoriteAndRec(
-			@RequestParam("page") int page) {
+			@RequestParam("page") int page, HttpServletRequest request) {
 		
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> paramMap = new HashMap<>();
 		paramMap.put("ref_cursor2", null); // 관리자 추천
 		paramMap.put("ref_cursor", null); 	// 단골레시피 상위권
 		paramMap.put("replyCountList", null); // 댓글 갯수
+		paramMap.put("request", request);
 		
 		rs.recipeFavoriteAndRec( paramMap );
 		rs.getReplyCount(paramMap);
@@ -89,6 +100,7 @@ public class RecipeGHController {
 		mav.addObject("recommandList", recommandList);
 		mav.addObject("favoriteList", favoriteList);
 		mav.addObject("replyCountList", replyCountList);
+		mav.addObject("paging", (Paging) paramMap.get("paging"));
 		
 		mav.setViewName("recipe/recipeFavoriteAndRec");
 		return mav;

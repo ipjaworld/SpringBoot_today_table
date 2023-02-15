@@ -248,6 +248,8 @@ public class RecipeController {
 		paramMap.put("checkIng", recipeformvo.getCheckIng());
 		paramMap.put("type", recipeformvo.getType());
 		paramMap.put("theme", recipeformvo.getTheme());
+		paramMap.put("ing", recipeformvo.getIng());
+		System.out.println("컨트롤러로 도착한 ing : " + recipeformvo.getIng());
 		paramMap.put("count", count);
 		
 		// processImgs와 processDetail들의 수는 미정이어서 우선 request.getParameter 사용
@@ -425,7 +427,8 @@ public class RecipeController {
 		for(int i=0; i<count; i++) {
 			ProcessImgVO pvo = new ProcessImgVO();
 			String fileName = request.getParameter("processImg"+(i+1));
-			if(fileName==null || fileName.equals(""))
+			// if(fileName==null || fileName.equals(""))
+			if(fileName.equals("imageRecipe/null") || fileName.equals("imageRecipe/"))
 				pvo.setLinks("imageRecipe/cookingTimer.png");
 			else pvo.setLinks(fileName);
 			System.out.println("fileName : " + fileName);

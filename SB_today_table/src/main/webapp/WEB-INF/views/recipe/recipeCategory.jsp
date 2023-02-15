@@ -2,7 +2,6 @@
 <%@ include file="../include/headerfooter/header.jsp"%>
 
 
-
 <article class="" id="recipe-category-list">
 <div class="container">
 	<c:if test="${status.equals('recipe')}">
@@ -10,12 +9,32 @@
 	</c:if>
 	<c:if test="${status.equals('type')}">
 		<h2><b>종류별</b> 레시피 게시판 입니다~</h2>
+		<div>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');"  name="1">밥/죽</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');"  name="2">국/탕/찌개</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="3">반찬</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="4">원플레이트</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="5">음료</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');"name="6" >디저트</a>
+		</div>
 	</c:if>
 	<c:if test="${status.equals('theme')}">
 		<h2><b>테마별</b> 레시피 게시판 입니다~</h2>
+		<div>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="1">건강</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="2">홈베이킹/홈파티/홈카페</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="3">편의점 레시피</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="4">5분 레시피</a>
+		</div>
 	</c:if>
 	<c:if test="${status.equals('ing')}">
 		<h2><b>재료별</b> 레시피 게시판 입니다~</h2>
+		<div>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="1">육류</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="2">해산물</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="3">과일/채소</a>
+			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="4">곡류</a>
+		</div>
 	</c:if>
 </div>
 

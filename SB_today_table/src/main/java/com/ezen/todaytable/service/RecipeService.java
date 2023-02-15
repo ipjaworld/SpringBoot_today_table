@@ -49,7 +49,40 @@ public class RecipeService {
 	}
 
 	public void recipeFavoriteAndRec(HashMap<String, Object> paramMap) {
+		// 기존 : rdao.recipeFavoriteAndRec(paramMap);
+		HttpServletRequest request = (HttpServletRequest) paramMap.get("request");
+		HttpSession session = request.getSession();
+		
+		int page = 1;
+		if(request.getParameter("page")!=null) {
+			page = Integer.parseInt(request.getParameter("page"));
+			session.setAttribute("page", page);
+		}else if(session.getAttribute("page")!=null) {
+			page = (Integer)session.getAttribute("page");
+		}else {
+			session.removeAttribute("page");
+		}
+		
+		Paging paging = new Paging();
+		paging.setDisplayPage(10);
+		paging.setDisplayRow(12);
+		paging.setPage(page);
+		
+		// 초안 : favorites list만
+		HashMap<String, Object> cntMap = new HashMap<String, Object>();
+		cntMap.put("cnt", 0);
+		cntMap.put("recipekey", "favorite");
+		cntMap.put("kind", 0); // 임의의 값 넣어줌
+		rdao.getRecipeCounts(cntMap); 
+		int count = Integer.parseInt(String.valueOf(cntMap.get("cnt")));
+		paging.setTotalCount(count);
+		paging.paging();
+		System.out.println("count(게시물 갯수) : " + count); // 확인용
+		// paramMap.put("total", count);
+		paramMap.put("startNum", paging.getStartNum());
+		paramMap.put("endNum", paging.getEndNum());
 		rdao.recipeFavoriteAndRec(paramMap);
+		paramMap.put("paging", paging);
 	}
 
 	public void addReply(HashMap<String, Object> paramMap) {
@@ -399,6 +432,8 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 		HashMap<String, Object> cntMap = new HashMap<String, Object>();
 		cntMap.put("cnt", 0);
 		cntMap.put("recipekey", paramMap.get("recipekey"));
+		cntMap.put("kind", Integer.parseInt(String.valueOf(paramMap.get("kind"))));
+		System.out.println("service의 kind : " + paramMap.get("kind"));
 		rdao.getRecipeCounts(cntMap); 
 		int count = Integer.parseInt(String.valueOf(cntMap.get("cnt")));
 		paging.setTotalCount(count);

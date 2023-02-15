@@ -40,6 +40,7 @@ public class RecipeFormVO {
 	private int type;
 	private int theme;
 	private int rnum;
+	private int ing;
 	// private int count;
 	
 	// private ArrayList<HashMap<String, Object>> replyList;

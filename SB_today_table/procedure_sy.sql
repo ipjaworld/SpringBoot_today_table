@@ -17,6 +17,27 @@ alter table recipe_page add favorites number(10) default 0;
 alter table recipe_page drop column favorites;
 update recipe_page set favorites=30 where rnum in(1,2,3,4,5);
 update recipe_page set likes=30 where rnum in(1,2,3,4,5, 6, 7,8);
+update recipe set type=1 where rnum=60;
+update recipe_page set ing=3 where rnum=58;
+
+
+-- 수정 : recipeFavoriteAndRec에 페이징 추가
+CREATE OR REPLACE PROCEDURE recipeFavoriteAndRec(
+    p_cur OUT   SYS_REFCURSOR,
+    p_cur2 OUT   SYS_REFCURSOR,
+    p_startNum IN NUMBER,
+    p_endNum IN NUMBER
+)
+IS
+BEGIN
+    open p_cur for
+        select * from (select * from (select rownum as rn, r.* from ((select * from recipe_page_view where rec>0 order by rec desc) r)) where rn>=p_startNum) where rn<=p_endNum;
+    open p_cur2 for 
+        select * from (select * from (select rownum as rn, f.* from ((select * from recipe_page_view where favorites>0 order by favorites desc) f)) where rn>=p_startNum) where rn<=p_endNum;
+END;
+
+select * from recipe_page_view;
+
 
 -- 없는 사람만 실행
 create sequence report_seq increment by 1 start with 1;
@@ -43,12 +64,13 @@ ALTER TABLE recipe_report
 ;
 
 
--- 수정 : 페이징을 위해 레시피 카테고리와 count 프로시저 분리
+-- 수정 : 페이징을 위해 레시피 카테고리와 count 프로시저 분리, kind에 따라 분리
 create or replace procedure getCategory(
     p_recipekey IN varchar,
     p_cur OUT SYS_REFCURSOR,
     p_startNum IN NUMBER,
-    p_endNum IN NUMBER
+    p_endNum IN NUMBER,
+    p_kind IN NUMBER
 )
 is
 begin
@@ -57,31 +79,35 @@ begin
         select * from (select * from (select rownum as rn, r.* from ((select * from recipe_page_view) r)) where rn>=p_startNum) where rn<=p_endNum;
     elsif p_recipekey='type' then
         open p_cur FOR 
-        select * from (select * from (select rownum as rn, t.* from ((select * from type_page_view) t)) where rn>=p_startNum) where rn<=p_endNum;
+        select * from (select * from (select rownum as rn, t.* from ((select * from type_page_view where type=p_kind) t)) where rn>=p_startNum) where rn<=p_endNum;
     elsif p_recipekey='theme' then
         open p_cur FOR 
-        select * from (select * from (select rownum as rn, h.* from ((select * from theme_page_view) h)) where rn>=p_startNum) where rn<=p_endNum;
+        select * from (select * from (select rownum as rn, h.* from ((select * from theme_page_view where theme=p_kind) h)) where rn>=p_startNum) where rn<=p_endNum;
     elsif p_recipekey='ing' then
         open p_cur FOR 
-        select * from (select * from (select rownum as rn, i.* from ((select * from ing_page_view) i)) where rn>=p_startNum) where rn<=p_endNum;
+        select * from (select * from (select rownum as rn, i.* from ((select * from ing_page_view where ing=p_kind) i)) where rn>=p_startNum) where rn<=p_endNum;
     end if;
 
 end;
 
+-- 수정 : kind 값도 고려
 create or replace procedure getRecipeCounts(
     p_recipekey IN varchar,
+    p_kind IN NUMBER,
     p_cnt OUT NUMBER
 )
 is 
 begin
     if p_recipekey='recipe' then
-        select count(*) into p_cnt from recipe_page_view;
+         select count(*) into p_cnt from recipe_page_view;
     elsif p_recipekey='type' then
-        select count(*) into p_cnt from type_page_view;
+         select count(*) into p_cnt from type_page_view where type=p_kind;
     elsif p_recipekey='theme' then
-        select count(*) into p_cnt from theme_page_view;
+         select count(*) into p_cnt from theme_page_view where theme=p_kind;
     elsif p_recipekey='ing' then
-        select count(*) into p_cnt from ing_page_view;
+         select count(*) into p_cnt from ing_page_view where ing=p_kind;
+    elsif p_recipekey='favorite' then -- favorite에서는 kind값 안 들어오는 것 고려
+        select count(*) into p_cnt from recipe_page_view where favorites>0 order by favorites desc;
     end if;
 
 end;
@@ -242,7 +268,7 @@ BEGIN
 END;
 
 
--- recipe, recipe_page 테이블 삽입
+-- 수정본 : recipe, recipe_page 테이블 삽입
 CREATE OR REPLACE PROCEDURE insertRecipe(
     p_id IN recipe.id%TYPE,
     p_subject IN recipe.subject%TYPE,
@@ -251,6 +277,7 @@ CREATE OR REPLACE PROCEDURE insertRecipe(
     p_cookingtime IN recipe.time%TYPE,
     p_type IN recipe.type%TYPE,
     p_theme IN recipe.theme%TYPE,
+    p_ing IN recipe_page.ing%TYPE,
     rnum OUT recipe.rnum%TYPE
 )
 IS
@@ -258,9 +285,11 @@ IS
 BEGIN
     insert into recipe(rnum, id, subject, content, thumbnail, time, type, theme) 
     values(recipe_seq.nextVal, p_id, p_subject, p_content, p_thumbnail, p_cookingtime, p_type, p_theme);
+    -- insert into recipe_page(ing) values(p_ing);  -- 또는 recipe 테이블에 ing 필드 추가
+    commit;
     select max(rnum) into max_rnum from recipe;
     rnum := max_rnum;
-    insert into recipe_page(rnum) values(max_rnum);
+    insert into recipe_page(rnum, ing) values(max_rnum, p_ing);
     commit;
     
     EXCEPTION WHEN OTHERS THEN

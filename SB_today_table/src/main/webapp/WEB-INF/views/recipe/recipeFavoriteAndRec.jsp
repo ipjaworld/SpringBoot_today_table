@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../include/headerfooter/header.jsp"%>
 
+<article class="" id="recipe-category-list">
 	<div class="main-contents-list">
+		<div class="search-view">
 		<c:forEach items="${recommandList}" var="recRecipeVO" varStatus="status">
 		   	<div class="recipe-card">
 		   		<div class="item">
 			   		<c:choose>
-		      		<c:when test="${loginUser.ID == recRecipeVO.id}">
+		      		<c:when test="${loginUser.ID == recRecipeVO.ID}">
 		      			<a href="recipeDetailWithoutView?rnum=${recRecipeVO.RNUM}">
 				            	<img src="/${recRecipeVO.THUMBNAIL}" width=300 height=200>
 				         </a>
@@ -32,9 +34,11 @@
 		   		<div><h6>조리시간 : ${recRecipeVO.TIME}분</h6></div>
 		   	</div>
 		</c:forEach>
+		</div>
 	</div>
 <br><br><br><br>
 	<div class="main-contents-list">
+		<div class="search-view">
 		<c:forEach items="${favoriteList}" var="recipeVO" varStatus="status">
 		   	<div class="recipe-card">
 		   		<div class="item">
@@ -65,6 +69,8 @@
 		   		<div><h6>조리시간 : ${recipeVO.TIME}분</h6></div>
 		   	</div>
 		</c:forEach>
+		</div>
 	</div>
+</article>
 
 <%@ include file="../include/headerfooter/footer.jsp"%>
