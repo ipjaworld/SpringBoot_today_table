@@ -5,6 +5,13 @@ function go_admin( comm ){
 	document.frm.submit();
 }
 */
+function selectimg(){
+	var opt = "toolbar=no,menubar=no,resizable=no,width=450,height=200";
+	window.open( 'selectimg' , 'selectimg',  opt);
+}
+function selectedimage(){
+	document.frm.submit();
+}
 
 /*게시글 검색*/
 function go_search( comm ){

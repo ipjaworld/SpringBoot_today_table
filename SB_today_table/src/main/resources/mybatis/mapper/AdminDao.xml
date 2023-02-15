@@ -68,13 +68,13 @@
       }
 </select >
 <!--qna답변  -->
-<update id="adminSaveReply" statementType="CALLABLE">
+<insert id="adminSaveReply" statementType="CALLABLE">
 	{
          CALL adminSaveReply (
          #{param1}, #{param2}
          ) 
       }
-</update>
+</insert>
 <!-- 댓글리스트 -->
 <select id="getAdminReplyList" statementType="CALLABLE" parameterType="java.util.HashMap">
       {
@@ -152,5 +152,31 @@
          ) 
       }
 </delete>
+<!-- 공지사항  -->
+<select id="getnoticeList" statementType="CALLABLE" parameterType="java.util.HashMap">
+      {
+         CALL getnoticeList (
+         #{startNum}, #{endNum},#{key},
+         #{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=AdminMap}
+         ) 
+      }
+</select >
+<!--공지사항 디테일  -->
+<select id="getNoticeDetail" statementType="CALLABLE" parameterType="java.util.HashMap">
+      {
+         CALL getNoticeDetail (
+         #{aseq},
+         #{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=AdminMap}
+         ) 
+      }
+</select >
+
+<insert id="insertNotice" statementType="CALLABLE" parameterType="com.ezen.todaytable.dto.AdminVO">
+	{
+         CALL insertNotice (
+         #{aid}, #{asubject},#{acontent},#{aimage},#{pwd}
+         ) 
+      }
+</insert>
 	
 </mapper>

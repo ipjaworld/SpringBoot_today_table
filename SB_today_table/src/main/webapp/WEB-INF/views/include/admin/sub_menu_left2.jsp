@@ -21,22 +21,9 @@
 	</c:choose> --%>
 
 	<div class="smi_title">
-				<div><a href="adminRecipeList?first='1'">레시피 관리</a></div>
+				<div><a href="/">메인으로</a></div>
 			</div>
-    <div class="smi_title">
-        <div><a href="memberList?first='1'">회원 관리</a></div>
-    </div>
-
-    <div class="smi_title">
-        <div><a href="adminReplyList?first='1'">댓글 관리</a></div>
-    </div>
-
-    <div class="smi_title">
-        <div><a href="adminQnaList?first='1'">Q&amp;A 관리</a></div>
-    </div>
-    <div class="smi_title">
-        <div><a href="notice?first=1&refer=admin">공지사항</a></div>
-    </div>
+    
 </div>
 
 </nav>

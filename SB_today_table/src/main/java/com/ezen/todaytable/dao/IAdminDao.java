@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ezen.todaytable.dto.AdminVO;
+
 @Mapper
 public interface IAdminDao {
 	//페이징 카운트
@@ -40,5 +42,11 @@ public interface IAdminDao {
 	void getAdminPickRecipeList(HashMap<String, Object> paramMap);
 	//레시피 삭제
 	void adminDeleteRecipe(int rnum1);
+	//공지사항 리스트(어드민 테이블)
+	void getnoticeList(HashMap<String, Object> paramMap);
+	//공지사항 디테일
+	void getNoticeDetail(HashMap<String, Object> paramMap);
+	
+	void insertNotice(AdminVO adminvo);
 	
 }

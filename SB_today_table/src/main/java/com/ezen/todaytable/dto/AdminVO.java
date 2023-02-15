@@ -14,7 +14,17 @@ public class AdminVO {
 	@NotNull(message="비밀번호를 입력하세요")
 	@NotEmpty(message="비밀번호를 입력하세요")
 	private String pwd;
+	@NotNull(message="제목을 입력하세요")
+	@NotEmpty(message="제목을 입력하세요")
+	private String asubject;
+	@NotNull(message="글 내용을 입력하세요")
+	@NotEmpty(message="글 내용을 입력하세요")
+	private String acontent; 
 	
+	
+	private String adate; 
+	private String aimage;
+	private int aseq; 
 	private String phone;
 	
 }

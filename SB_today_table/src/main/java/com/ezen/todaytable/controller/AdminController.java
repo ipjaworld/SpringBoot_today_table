@@ -1,8 +1,10 @@
 package com.ezen.todaytable.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ezen.todaytable.dto.AdminVO;
 import com.ezen.todaytable.dto.Paging;
 import com.ezen.todaytable.service.AdminService;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 @Controller
 public class AdminController {
@@ -343,6 +347,123 @@ public class AdminController {
 
 		return "redirect:/adminRecipeList?first='1'";
 	}
+	
+	
+	// 공지사항 리스트 이동
+		@RequestMapping(value = "/notice")
+		public ModelAndView noticeList(HttpServletRequest request, Model model,
+				@RequestParam(value="refer",required=false) String refer ) {
+				HttpSession session = request.getSession();
+				
+				ModelAndView mav = new ModelAndView();
+				if (session.getAttribute("loginAdmin") == null) {
+					mav.setViewName("admin/member/adminLogin");
+				return mav;
+				}
+				
+				mav.addObject("adminUser",null);
+				
+				if (session.getAttribute("loginAdmin") != null) {
+					HashMap<String, Object> adminUser =(HashMap<String, Object>)session.getAttribute("loginAdmin");
+					mav.addObject("adminUser",adminUser.get("AID"));
+					System.out.println(adminUser.get("AID"));
+				}
+				
+				HashMap<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("request", request);
+				paramMap.put("ref_cursor", null);
+				
+				as.getnoticeList(paramMap);
+
+				ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
+				
+				
+				mav.addObject("paging", (Paging) paramMap.get("paging"));
+				mav.addObject("key", (String) paramMap.get("key"));
+				mav.addObject("noticeList", list);
+				mav.setViewName("admin/notice/noticeList");
+				String admin="admin";
+				if(admin.equals(refer)) {
+				mav.setViewName("admin/notice/adminNoticeList");	
+				}
+			
+			return mav;
+		}
+		
+		
+		//공지사항 디테일
+		@RequestMapping(value = "/noticeDetail")
+		public ModelAndView noticeDetail(HttpServletRequest request, Model model, @RequestParam("aseq") int aseq,
+				@RequestParam(value="refer",required=false) String refer) {
+			ModelAndView mav = new ModelAndView();
+			HttpSession session = request.getSession();
+
+			
+
+				HashMap<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("aseq", aseq);
+				paramMap.put("ref_cursor", null);
+
+				as.getNoticeDetail(paramMap);
+				ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
+				System.out.println("size :" + list.size());
+				mav.addObject("noticeVO", list.get(0));
+				
+				mav.setViewName("admin/notice/noticeDetail");
+				String admin="admin";
+				if(admin.equals(refer)) {
+					mav.setViewName("admin/notice/adminNoticeDetail");	
+				}
+			
+			return mav;
+		}
+		
+		@RequestMapping("/noticeWriteForm")
+		public String noticeWriteForm() {
+			return "admin/notice/noticeWriteForm";
+		}
+		
+		
+		
+		
+		@RequestMapping("/selectimg")
+		public String selectimg() {
+			return "admin/notice/selectimg";
+		}
+		
+		@Autowired
+		ServletContext context; // 파일 올릴때 필요
+		
+		@RequestMapping(value="/fileupload",method=RequestMethod.POST)
+		public String fileupload(Model model, HttpServletRequest request) throws IOException {
+			
+			String path = context.getRealPath("/imageNotice");
+			// static안에 있는 경로(가져오는폴더) , 부트에서는 이것만 있으면 안돼 따라서 webapp 폴더 안에 또 만들어야함(넣는 폴더)
+
+			MultipartRequest multi = new MultipartRequest(
+					request,path, 5*1024*1024,"UTF-8", new DefaultFileRenamePolicy()
+			);
+
+			model.addAttribute("image",multi.getFilesystemName("image"));
+			return "admin/notice/completupload";
+		}
+		
+		
+		@RequestMapping(value="/noticeWrite", method=RequestMethod.POST)
+		public String noticeWrite(@ModelAttribute("dto")@Valid AdminVO adminvo,BindingResult result, Model model) {	
+			String url ="admin/notice/noticeWriteForm";
+			if(result.getFieldError("asubject")!=null) {
+				model.addAttribute("message",result.getFieldError("asubject").getDefaultMessage());
+			}else if(result.getFieldError("acontent")!=null) {
+				model.addAttribute("message",result.getFieldError("acontent").getDefaultMessage());
+			}else {	
+				as.insertNotice(adminvo);
+				// Service와 Dao에 insertBoard를 제작해주세요
+				url="redirect:/notice?first=1&refer=admin";
+			}
+			return url;
+		}
+		
 	
 	
 	
