@@ -376,6 +376,44 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 		
 	}
 
+	public void getCategory(HashMap<String, Object> paramMap) {
+		
+		HttpServletRequest request = (HttpServletRequest) paramMap.get("request");
+		HttpSession session = request.getSession();
+		
+		int page = 1;
+		if(request.getParameter("page")!=null) {
+			page = Integer.parseInt(request.getParameter("page"));
+			session.setAttribute("page", page);
+		}else if(session.getAttribute("page")!=null) {
+			page = (Integer)session.getAttribute("page");
+		}else {
+			session.removeAttribute("page");
+		}
+		
+		Paging paging = new Paging();
+		paging.setDisplayPage(10);
+		paging.setDisplayRow(12);
+		paging.setPage(page);
+		
+		HashMap<String, Object> cntMap = new HashMap<String, Object>();
+		cntMap.put("cnt", 0);
+		cntMap.put("recipekey", paramMap.get("recipekey"));
+		rdao.getRecipeCounts(cntMap); 
+		int count = Integer.parseInt(String.valueOf(cntMap.get("cnt")));
+		paging.setTotalCount(count);
+		paging.paging();
+		System.out.println("count(게시물 갯수) : " + count); // 확인용
+		paramMap.put("total", count);
+		paramMap.put("startNum", paging.getStartNum());
+		paramMap.put("endNum", paging.getEndNum());
+		rdao.getCategory( paramMap);
+		paramMap.put("paging", paging);
+		
+		
+		
+	}
+
 	
 	
 	

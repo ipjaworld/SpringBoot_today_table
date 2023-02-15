@@ -346,8 +346,16 @@ $(document).on("click", '#update-button', function(event) {
 			"<form name='ImgEditForm' id='ImgEditForm' method='post'  enctype='multipart/form-data' >" + 
 			"<input type='file' name='editImg'>" + 
 			"<input type='button' id='editImgButton' value='이미지 수정' name='" + num + "'>" + 
+			"<input type='button' id='deleteEditForm' value='취소' name='delete" + num + "'>"+
 			"</form>" +
 			"</div>");
+	});
+
+// 이미지 수정을 취소할 때	
+$(document).on("click", '#deleteEditForm', function(event) { 
+		alert("이미지 수정 div 삭제");
+		let num = $(this).attr('name').substr(6);
+		$('input[name="delete'+num+'"').closest('div').remove();
 	});
 
 // 레시피 작성 중 div 삭제 버튼 눌렀을 때

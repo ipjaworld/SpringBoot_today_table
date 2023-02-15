@@ -54,6 +54,10 @@ public interface IRecipeDao {
 	void selectListByKey(HashMap<String, Object> paramMap);
 
 	void getReplyCount(HashMap<String, Object> rvo);
+	
+	void getCategory(HashMap<String, Object> paramMap);
+
+	void getRecipeCounts(HashMap<String, Object> cntMap);
 
 	void getMyRecipeListttable(HashMap<String, Object> paramMap);
 

@@ -6,7 +6,7 @@
 		   	<div class="recipe-card">
 		   		<div class="item">
 			   		<c:choose>
-		      		<c:when test="${loginUser.id == recRecipeVO.id}">
+		      		<c:when test="${loginUser.ID == recRecipeVO.id}">
 		      			<a href="recipeDetailWithoutView?rnum=${recRecipeVO.RNUM}">
 				            	<img src="/${recRecipeVO.THUMBNAIL}" width=300 height=200>
 				         </a>
@@ -39,7 +39,7 @@
 		   	<div class="recipe-card">
 		   		<div class="item">
 			   		<c:choose>
-		      		<c:when test="${loginUser.id == recipeVO.ID}">
+		      		<c:when test="${loginUser.ID == recipeVO.ID}">
 		      			<a href="recipeDetailWithoutView?rnum=${recipeVO.RNUM}">
 				            	<img src="/${recipeVO.THUMBNAIL}" width=300 height=200>
 				         </a>

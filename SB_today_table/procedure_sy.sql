@@ -1,11 +1,91 @@
-select * from recipe;
+select * from recipe order by rnum desc;
 select * from recipe_page;
 select * from recipe_page_view;
 select * from reply;
 select * from recipeTag;
 select * from ingTag;
-select * from processImg;
+select * from processImg order by rnum;
 select * from members;
+select * from interest;
+select * from favorite;
+
+-- 실행 x
+insert into recipe(rnum, id, subject, content, thumbnail, time)  
+values(recipe_seq.nextVal, 'scott', '국 8', '111', 'imageRecipe/9.jpg', 10);
+insert into recipe_page(rnum) values(60);
+alter table recipe_page add favorites number(10) default 0;
+alter table recipe_page drop column favorites;
+update recipe_page set favorites=30 where rnum in(1,2,3,4,5);
+update recipe_page set likes=30 where rnum in(1,2,3,4,5, 6, 7,8);
+
+-- 없는 사람만 실행
+create sequence report_seq increment by 1 start with 1;
+
+CREATE TABLE recipe_report
+(
+	reportseq number(5) NOT NULL,
+	id varchar2(50) NOT NULL,
+	rnum number(20) NOT NULL,
+	reportyn char(1) DEFAULT 'Y',
+	PRIMARY KEY (reportseq)
+);
+
+ALTER TABLE recipe_report
+	ADD FOREIGN KEY (rnum)
+	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
+;
+
+ALTER TABLE recipe_report
+	ADD FOREIGN KEY (id)
+	REFERENCES members (id)
+	ON DELETE CASCADE
+;
+
+
+-- 수정 : 페이징을 위해 레시피 카테고리와 count 프로시저 분리
+create or replace procedure getCategory(
+    p_recipekey IN varchar,
+    p_cur OUT SYS_REFCURSOR,
+    p_startNum IN NUMBER,
+    p_endNum IN NUMBER
+)
+is
+begin
+    if p_recipekey='recipe' then
+        open p_cur FOR 
+        select * from (select * from (select rownum as rn, r.* from ((select * from recipe_page_view) r)) where rn>=p_startNum) where rn<=p_endNum;
+    elsif p_recipekey='type' then
+        open p_cur FOR 
+        select * from (select * from (select rownum as rn, t.* from ((select * from type_page_view) t)) where rn>=p_startNum) where rn<=p_endNum;
+    elsif p_recipekey='theme' then
+        open p_cur FOR 
+        select * from (select * from (select rownum as rn, h.* from ((select * from theme_page_view) h)) where rn>=p_startNum) where rn<=p_endNum;
+    elsif p_recipekey='ing' then
+        open p_cur FOR 
+        select * from (select * from (select rownum as rn, i.* from ((select * from ing_page_view) i)) where rn>=p_startNum) where rn<=p_endNum;
+    end if;
+
+end;
+
+create or replace procedure getRecipeCounts(
+    p_recipekey IN varchar,
+    p_cnt OUT NUMBER
+)
+is 
+begin
+    if p_recipekey='recipe' then
+        select count(*) into p_cnt from recipe_page_view;
+    elsif p_recipekey='type' then
+        select count(*) into p_cnt from type_page_view;
+    elsif p_recipekey='theme' then
+        select count(*) into p_cnt from theme_page_view;
+    elsif p_recipekey='ing' then
+        select count(*) into p_cnt from ing_page_view;
+    end if;
+
+end;
+
 
 -- ID 조회
 CREATE OR REPLACE PROCEDURE findId(
@@ -250,7 +330,7 @@ END;
 SELECT OWNER, CONSTRAINT_NAME, CONSTRAINT_TYPE, TABLE_NAME
 FROM USER_CONSTRAINTS;
 -- recipe와 관련한 외래키 삭제 => 다시 생성
--- ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명
+-- ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명 (** 개인별로 제약조건명 다르니 조회 후 이름 변경)
 ALTER TABLE favorite DROP CONSTRAINT SYS_C007397;
 ALTER TABLE interest DROP CONSTRAINT SYS_C007398;
 ALTER TABLE processImg DROP CONSTRAINT SYS_C007399;

@@ -34,9 +34,9 @@ $(function(){
 $(function(){
 	$('#processImgButton').click( function(){
 		
-		let formselect = $("#processImgForm")[0];   // 지목된 폼을 변수에 저장
-		let formdata = new FormData(formselect);   // 전송용 폼객에 다시 저장
-		$.ajax({    // 웹페이지 이동 또는 새로고침이 필요없는 request요청
+		let formselect = $("#processImgForm")[0];   
+		let formdata = new FormData(formselect);   
+		$.ajax({    
 			url:"<%=request.getContextPath() %>/processImgUp",
 			type:"POST",
 			enctype:"multipart/form-data",
@@ -46,7 +46,7 @@ $(function(){
 	    	contentType : false,
 	        processData : false,
 	        success : function( data ){
-	            if(data.STATUS == 1){  	//동적으로 div태그 달아주기.
+	            if(data.STATUS == 1){  	
 	            	let name = $('.process').length;
 					let i = name + 1;
 					alert("i : " + i);

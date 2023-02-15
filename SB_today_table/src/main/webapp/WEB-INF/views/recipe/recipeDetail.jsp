@@ -1,6 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../include/headerfooter/header.jsp" %>
 
+
+<!-- <script type="text/javascript">
+
+/* function getContextPath() {
+	var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+	return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+};
+
+$(document).ready(function(){
+	let path = $("#recipeReplyAddForm").html( getContextPath() );
+}); */
+
+$(document).on("click", '#replyBtn', function(event) {
+		
+		
+		/* let contextPath = sessionStorage.getItem("contextpath");
+		alert(contextPath); */
+		/* if( document.recipeReplyAddForm.userid.value==null ){
+			alert("로그인 후 댓글 등록이 가능합니다.");
+			return;
+		}  */
+		let formselect = $("#recipeReplyAddForm")[0];  
+		let formdata = new FormData(formselect);   
+		$.ajax({   
+			// url: contextPath+"/addReply", 
+			// url: path+"/addReply",
+			url:  "${pageContext.request.contextPath}/addReply",
+			type:"POST",
+			// enctype:"multipart/form-data",
+			async: false,
+			data: formdata,
+	    	timeout: 10000,
+	    	// contentType : false,
+	    	processData : false,
+	        success :  function( data ){
+	            if(data.STATUS == 1){  	
+	            	// 댓글 표시 내용(기존 댓글 아래)
+	            	let today = new Date();
+					let dd = String(today.getDate()).padStart(2, '0');
+					let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+					let yyyy = today.getFullYear();
+					today = yyyy + '-' + mm + '-' + dd;
+	            	$('#reply_area').append(
+	            		"<tr><td>"+${loginUser.ID}+"</td>"+
+	            		"<td>"+data.CONTENT+"</td>"+
+	            		"<td>"+today+"</td>"+
+	            		"<input type='button' value='삭제' onclick='deleteThisReply("+data.REPLYSEQ+")' /></td>"+
+	            		"</tr>");
+	            }
+	        },
+	        error: function(request,status,error) {	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);	} 
+	       
+		}); 
+	}); 
+</script> -->
+
 <article class="container pb-5 mb-5">
 <div class="recipe-top-area">
 	<h1>${recipeVO.SUBJECT}</h1>
@@ -71,13 +127,13 @@
 
 <!-- 덧글 영역 -->
 <div id="recipe-reply-area" class="container">
-	<div class="recipe-reply-view">
+	<div class="recipe-reply-view" id="reply_area">
 		<c:choose>
 			<c:when test="${replyList.size()==0}">
 				<h5>작성된 덧글이 없습니다.</h5>
 			</c:when>
 			<c:otherwise>
-				<table>
+				<table >
 					<c:forEach items="${replyList}" var="replyVO">
 						<tr><td>${replyVO.ID}</td>
 						<td>${replyVO.CONTENT}</td>
@@ -91,14 +147,15 @@
 		</c:choose>
 	</div>
 	<div class="recipe-reply-input">
-		<form method="post" name="recipeReplyAddForm">
+		<form method="post" name="recipeReplyAddForm" id="recipeReplyAddForm">
 			<div>
 				<div>
 					<textarea name="reply" rows="3" cols="70"></textarea>
 					<input type="hidden" name="rnum" value="${recipeVO.RNUM}"/>
-				   	<!-- <input type="submit" value="저장" name="submit">onClick="recipeSaveReply()" -->
+					<!-- <input type="submit" value="저장" name="submit">onClick="recipeSaveReply()" -->
 			   	</div>
-			   	<div><a href="#" onClick="recipeSaveReply()">댓글 저장</a></div>
+			   	<div><a href="#" onClick="recipeSaveReply()" >댓글 저장</a></div>
+			   	<!-- <div><input type="button" id="replyBtn" value="댓글 저장"></div> -->
 		   	</div>
 	   	</form>
 	</div>

@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ezen.todaytable.dto.Paging;
 import com.ezen.todaytable.dto.ProcessImgVO;
 import com.ezen.todaytable.dto.RecipeFormVO;
+import com.ezen.todaytable.dto.ReplyVO;
 import com.ezen.todaytable.service.RecipeService;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -127,7 +128,7 @@ public class RecipeController {
 	
 	@RequestMapping("/deleteRecipe")
 	public String deleteRecipe(@RequestParam("rnum") int rnum, HttpServletRequest request) {
-		String url = "recipe/recipeList";
+		String url = "redirect:/recipeCategory?status=recipe&page=1";
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginUser") == null) url = "member/loginForm";
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
@@ -279,7 +280,7 @@ public class RecipeController {
 		rs.insertRecipe(paramMap);
 		rs.insertProcessIng(paramMap);
 		System.out.println("processIng 성공");
-		mav.setViewName("recipe/recipeList");
+		mav.setViewName("redirect:/recipeCategory?status=recipe&page=1");
 		}
 		return mav;
 	}
@@ -472,7 +473,7 @@ public class RecipeController {
 		
 		paramMap.put("replyCountList", null);
 		rs.getReplyCount(paramMap);
-		for(Integer replycnt : (ArrayList<Integer>) paramMap.get("replyCountList")) {
+		for(Integer replycnt : (ArrayList<Integer>) paramMap.get("replyCountList")) { // 확인용
 			System.out.println("replycnt : " + replycnt);
 		}
 		mav.addObject("recipeList", (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor"));
@@ -485,6 +486,52 @@ public class RecipeController {
 		return mav;
 	}
 	
+	/* 댓글 달기 ajax => 실패
+	@ResponseBody
+	@RequestMapping(value="/addReply", method=RequestMethod.POST)
+	public HashMap<String, Object> addreply(
+			@ModelAttribute("replyVO") @Valid ReplyVO replyVO, 	BindingResult result,
+			// @RequestParam("rnum") int rnum,
+			// @RequestParam("reply") String reply,
+			HttpServletRequest request, Model model
+			) {
+		
+			System.out.println("addReply 도착");
+			// 로그인 확인은 jsp에서(로그인되지 않은 유저는 alert("로그인 후 댓글 등록이 가능합니다.");)
+			HttpSession session = request.getSession();
+			HashMap<String, Object> loginUser 
+			= (HashMap<String, Object>)session.getAttribute("loginUser");
+			
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			
+			HashMap<String, Object> paramMap = new HashMap<String, Object>();
+			if(replyVO.getRnum()==null) System.out.println("rnum이 넘어오지 않았어요");
+			
+			String reply = request.getParameter("reply");
+			paramMap.put("id", loginUser.get("ID"));
+			paramMap.put("rnum", replyVO.getRnum());
+			paramMap.put("reply", reply );
+			paramMap.put("replyseq", 0); // 방금 넣은 댓글의 번호를 담아옴
+			
+			try {
+				rs.addReply( paramMap );
+				resultMap.put("STATUS", 1);
+				resultMap.put("ID", loginUser.get("ID"));
+				resultMap.put("CONTENT", reply);
+				// resultMap.put("replydate", ??);
+				// jsp에서 표시 : <jsp:useBean id="now" class="java.util.Date"/>    
+				// <fmt:formatDate value="${now}" dateStyle="long"/>
+				// <fmt:formatDate value="${now}" pattern="dd-MM-yyyy HH:mm:ss a z" />
+				
+				// jsp 표시 : id, content, replydate, 삭제 버튼
+				resultMap.put("REPLYSEQ", Integer.parseInt(String.valueOf(paramMap.get("replyseq"))));
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		return resultMap;
+	}
+	*/
 	
 	
 	
