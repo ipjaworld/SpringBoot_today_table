@@ -21,6 +21,9 @@ BEGIN
     
     elsif p_tableName =5 then
     select Count(*) into v_cnt from recipe_page_view where (subject like '%'||p_key||'%' or content like '%'||p_key||'%') and rec=1;
+    
+    elsif p_tableName =6 then
+    select Count(*) into v_cnt from admins where (asubject like '%'||p_key||'%' or acontent like '%'||p_key||'%');
   end if;
   p_cnt:=v_cnt;
 END;
@@ -253,6 +256,79 @@ BEGIN
     commit;
 END;
 
+--공지사항 리스트(어드민 테이블)
+CREATE OR REPLACE PROCEDURE getnoticeList(
+    r_startNum in number,
+    r_endNUm in number,
+    r_key in recipe.content%type,
+    r_rc out sys_refcursor
+)
+IS
+BEGIN
+    open r_rc for
+        select * from ( 
+        select * from ( 
+        select rownum as rn, a.*from (( select *from admins where asubject like '%'||r_key||'%' or acontent like '%'||r_key||'%' 
+        order by aseq desc ) a)
+             ) where rn >=r_startNum 
+             ) where rn <=r_endNum; 
+END;
+--공지사항 디테일
+
+CREATE OR REPLACE PROCEDURE getNoticeDetail(
+    a_aseq in admins.aseq%type,
+    a_rc out sys_refcursor
+)
+IS
+BEGIN
+    open a_rc for
+        select * from admins where aseq=a_aseq;
+END;
+
+--공지사항 입력
+CREATE OR REPLACE PROCEDURE insertNotice(
+    a_id in admins.aid%type,
+    a_subject in admins.asubject%type,
+    a_content  in admins.acontent%type,
+    a_image in admins.aimage%type,
+    a_pwd in admins.pwd%type
+    
+)
+IS
+BEGIN
+   insert into admins (aseq,aid,asubject,acontent,aimage,pwd) values(admin_seq.nextVal,a_id,a_subject,a_content,a_image,a_pwd);
+    commit;
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명
 ALTER TABLE favorite DROP CONSTRAINT SYS_C007581;
@@ -262,14 +338,89 @@ ALTER TABLE recipeTag DROP CONSTRAINT SYS_C007596;
 ALTER TABLE reply DROP CONSTRAINT SYS_C007586;
 ALTER TABLE recipe_page DROP CONSTRAINT SYS_C007585;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 select*from recipe_page;
 commit;
 select*from recipe;
 
 
+insert into qna(qseq, id, qsubject, qcontent)
+values(qseq_seq.nextval, 'scott', '문의가 있습니다 급합니다', '레시피를 올리려고 하는데 에러라고 진행이 되지 않습니다'
+);
+insert into qna(qseq, id, qsubject, qcontent)
+values(qseq_seq.nextval, 'somi', '좋아요 버튼이 눌리지 않아요ㅠㅠ', '레시피를 올리려고 하는데 에러라고 진행이 되지 않습니다'
+);
+insert into qna(qseq, id, qsubject, qcontent)
+values(qseq_seq.nextval, 'tom', '재료 추가 제안입니다', '레시피를 올리려고 하는데 에러라고 진행이 되지 않습니다'
+);
+insert into qna(qseq, id, qsubject, qcontent)
+values(qseq_seq.nextval, 'scott', '문의가 있습니다 급합니다', '레시피를 올리려고 하는데 에러라고 진행이 되지 않습니다'
+);
+insert into qna(qseq, id, qsubject, qcontent)
+values(qseq_seq.nextval, 'somi', '좋아요 버튼이 눌리지 않아요ㅠㅠ', '레시피를 올리려고 하는데 에러라고 진행이 되지 않습니다'
+);
+insert into qna(qseq, id, qsubject, qcontent)
+values(qseq_seq.nextval, 'tom', '재료 추가 제안입니다', '레시피를 올리려고 하는데 에러라고 진행이 되지 않습니다'
+);
+insert into qna(qseq, id, qsubject, qcontent)
+values(qseq_seq.nextval, 'scott', '문의가 있습니다 급합니다', '레시피를 올리려고 하는데 에러라고 진행이 되지 않습니다'
+);
+insert into qna(qseq, id, qsubject, qcontent)
+values(qseq_seq.nextval, 'somi', '좋아요 버튼이 눌리지 않아요ㅠㅠ', '레시피를 올리려고 하는데 에러라고 진행이 되지 않습니다'
+);
+insert into qna(qseq, id, qsubject, qcontent)
+values(qseq_seq.nextval, 'tom', '재료 추가 제안입니다', '레시피를 올리려고 하는데 에러라고 진행이 되지 않습니다'
+);
+commit;
 
 
 
-
+select*from recipe;
+insert into reply (replyseq,id,rnum,content) values(reply_seq.nextVal,'scott',37,'dddddd');
+commit;
 
 
