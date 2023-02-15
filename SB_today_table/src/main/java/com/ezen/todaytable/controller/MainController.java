@@ -184,44 +184,20 @@ public class MainController {
 	}
 	
 		@RequestMapping(value="/changeFuseyn")
-	public ModelAndView changeFuseyn(
-			@RequestParam("rnum") int []  rnum,
+	public String changeFuseyn(
+			@RequestParam("rnum") int [] rnum,
 			HttpServletRequest request) {
-			ModelAndView mav=new ModelAndView();
 		HttpSession session = request.getSession();
 		HashMap<String, Object> loginUser 
 		= (HashMap<String, Object>)session.getAttribute("loginUser");
-		String url ="member/login";
-		
+			
 		if( loginUser == null ) {
-			mav.setViewName(url); 
+			return "member/login"; 
 		}else {
-			
-						
-			HashMap<String, Object> paramMap = new HashMap<>();
-			paramMap.put("ref_cursor", null);
-			paramMap.put("id", loginUser.get("ID"));
-			ms.getFavoriteList(paramMap);
-			
-			ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
-			System.out.println(list.get(0).get("FUSEYN"));
-			
-			for(int i=0 ; i<rnum.length; i++) {
-				if(String.valueOf(list.get(i).get("FUSEYN")).equals("N") ) {
-					paramMap.put("tableName", 1);
-				}else {
-					paramMap.put("tableName", 2);
-				}
-			paramMap.put("rnum", rnum[i] );
-			
-			ms.changeFuseyn(paramMap);
-			url="mypage/interest";
-			mav.setViewName(url);
-			
-			}
-
+			System.out.println(loginUser.get("ID"));
+			ms.changeFuseyn(rnum);
 		}
-		return mav;
+		return "redirect:/interestView";
 	}
 	
 	

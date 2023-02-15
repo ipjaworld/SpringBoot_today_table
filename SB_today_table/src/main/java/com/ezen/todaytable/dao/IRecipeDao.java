@@ -71,7 +71,7 @@ public interface IRecipeDao {
 
 	void getFavoriteList(HashMap<String, Object> paramMap);
 
-	void changeFuseyn(HashMap<String, Object> paramMap);
+	void changeFuseyn(int rnum1);
 
 
 }
