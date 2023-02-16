@@ -12,8 +12,8 @@ public class QnaVO {
 
 	private int qseq;
 	private String id;
-	@NotNull(message="제목를 입력하세요")
-	@NotEmpty(message="제목를 입력하세요")
+	@NotNull(message="제목을 입력하세요")
+	@NotEmpty(message="제목을 입력하세요")
 	private String qsubject;
 	@NotNull(message="내용을 입력하세요")
 	@NotEmpty(message="내용을 입력하세요")

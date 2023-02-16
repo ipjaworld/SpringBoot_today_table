@@ -17,20 +17,12 @@
          <tr><th>답변 내용</th><td align="left" style="text-align:left;color:white;">${qnaVO.REPLYQNA}</tr>
       </table><div class="clear"></div>
       <div id="buttons" style="float:right">
-      <c:choose>
-      <c:when test="${loginUser.id==qnaVO.ID}">
-      <input type="button" value="수정하기" class="submit" onclick="qnaUpdateForm?qseq=${qnaVO.QSEQ}'">
-      <input type="button" value="삭제하기" class="submit" onclick="deleteQna('${qnaVO.QSEQ}','${refer}')">
-      <input type="button" value="목록보기" class="submit" onclick="location.href='/qnaList'">
+      <c:if test="${loginUser.ID==qnaVO.ID}">
+	      <input type="button" value="수정하기" class="submit" onclick="location.href='qnaUpdateForm?qseq=${qnaVO.QSEQ}'">
+	      <input type="button" value="삭제하기" class="submit" onclick="deleteQna('${qnaVO.QSEQ}')">
+      </c:if>
+      <input type="button" value="목록보기" class="submit" onclick="location.href='qnaList?refer=${refer}'">
       <input type="button" value="레시피 계속보기" class="cancel" onclick="location.href='/'">
-      </c:when>
-      <c:otherwise>
-      <input type="button" value="수정하기" class="submit" onclick="location.href='qnaUpdateForm?qseq=${qnaVO.QSEQ}&refer=${refer}'">
-      <input type="button" value="삭제하기" class="submit" onclick="deleteQna('${qnaVO.QSEQ}','${refer}')">
-      <input type="button" value="목록보기" class="submit" onclick="location.href='qnaList?page=1&refer=${refer}'">
-      <input type="button" value="레시피 계속보기" class="cancel" onclick="location.href='/'">
-      </c:otherwise>
-      </c:choose>
       </div>
    </form>
 </article>

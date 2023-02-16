@@ -10,7 +10,7 @@
 	<select id="getAllCount" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
 			CALL getAllCount( 
-			#{id},#{qnaName},
+			#{id},#{refer},
 			#{cnt, mode=OUT, jdbcType=INTEGER}
 			)
 		}
@@ -19,7 +19,7 @@
 		<select id="listQna" statementType="CALLABLE" parameterType="java.util.HashMap" >
    		{
 			CALL listQna( 
-			#{startNum},#{endNum},
+			#{id},#{refer},#{startNum},#{endNum},
 			#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=qnaMap}
 			)
 		}
@@ -58,14 +58,14 @@
 	   	}
    	</delete >
    	
-   	<select id="mylistQna" statementType="CALLABLE" parameterType="java.util.HashMap" >
+   	<!-- <select id="mylistQna" statementType="CALLABLE" parameterType="java.util.HashMap" >
    		{
 			CALL mylistQna( 
 			#{id},#{startNum},#{endNum},
 			#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=qnaMap}
 			)
 		}
-   </select>
+   </select> -->
 
 	
 </mapper>
