@@ -246,7 +246,7 @@ function withDrawal(id,pwd){
 	 let pwdcheck = prompt('비밀번호를 입력해주세요' , 'ex)1234');
 
 	if(pwd.valueOf()==pwdcheck.valueOf()){
-		 document.formm.action="withDrawal&id="+id;
+		 document.formm.action="withDrawal?id="+id;
       document.formm.submit();
 	}else{
 		alert("비밀번호가 맞지 않습니다")

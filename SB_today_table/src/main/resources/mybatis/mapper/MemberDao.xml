@@ -67,4 +67,7 @@
 	</update>
 	
 
+	<update id="withDrawal" >
+		update members set useyn='N' where id = #{param1}
+	</update>
 </mapper>

@@ -64,12 +64,13 @@ public class MemberController {
 	               model.addAttribute("message", "비밀번호 오류. 관리자에게 문의하세요");
 	            else if( !mvo.get("PWD").equals(membervo.getPwd()))
 	               model.addAttribute("message", "비밀번호가 맞지않습니다");
+	            else if(mvo.get("USEYN").equals("N")) {
+		               model.addAttribute("message", "휴면 계정입니다. 휴면계정을 복구하려면 관리자에게 문의하세요");
+		            }
 	            else if( mvo.get("PWD").equals(membervo.getPwd())) {
 	               HttpSession session = request.getSession();
 	               session.setAttribute("loginUser", mvo);
 	               url = "redirect:/";
-	            }else if(mvo.get("USEYN").equals("N")) {
-	               model.addAttribute("message", "휴면 계정입니다. 휴면계정을 복구하려면 관리자에게 문의하세요");
 	            }
 	           
 	      }
@@ -371,6 +372,21 @@ public class MemberController {
 			}
 			System.out.println("result : " + result); // 확인용
 			return "member/checkSuccess";
+		}
+		
+		@RequestMapping("/withDrawal")
+		public String withDrawal (HttpServletRequest request,HttpSession session,
+				@RequestParam("id") String id) {
+			HashMap<String,Object> loginUser = (HashMap<String, Object>) session.getAttribute("loginUser");
+			if(loginUser ==null) {
+				request.setAttribute("message", "로그인이 필요한 서비스입니다");
+				return "loginForm";
+			}else {
+				ms.withDrawal(id);
+				request.setAttribute("message", "탈퇴되었습니다. 탈퇴회원의 정보는 3개월간 보관되며 그 기간안에 별도의 가입없이 계정 복구가 가능합니다");
+				session.removeAttribute("loginUser");
+				return "redirect:/";
+			}
 		}
 
 }

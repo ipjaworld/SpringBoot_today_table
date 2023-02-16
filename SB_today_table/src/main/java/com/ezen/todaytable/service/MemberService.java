@@ -46,5 +46,9 @@ public class MemberService {
 		mdao.updatePwd(paramMap);
 		
 	}
+
+	public void withDrawal(String id) {
+		mdao.withDrawal(id);
+	}
 	
 }

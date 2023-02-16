@@ -25,6 +25,8 @@ public interface IMemberDao {
 
 	void updatePwd(HashMap<String, Object> paramMap);
 
+	void withDrawal(String id);
+
 	
 
 }
