@@ -82,6 +82,8 @@
 .very-dark-filter { color : #666; }
 .little-dark-filter { color : #777; }
 
+
+
 /* 기본 태그 및 시멘틱 태그 작업입니다.*/
 a{
 	text-decoration: none;
@@ -610,6 +612,16 @@ right: 0;
 }
 
 /* 레시피 카테고리 클래스 모음 */
+.recipe_category_top_area{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.recipe_category_filter a{
+    margin-left: 2vh;
+    margin-right: 2vh;
+}
 #recipe-reply-area, .recipe-top-area{
 	margin: 0 auto;
 	padding: 0;

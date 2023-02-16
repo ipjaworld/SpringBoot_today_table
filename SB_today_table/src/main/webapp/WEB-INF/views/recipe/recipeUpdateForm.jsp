@@ -97,7 +97,7 @@ $(document).on("click", '#editImgButton', function(event) {
 <article id="recipe-update-form">
 	<h1>레시피 수정</h1>
 	<!-- 썸네일 수정 폼  -->
-	<div style="position:relative;  border:1px solid black; width:500px; margin:0 auto;">
+	<div style="position:absolute;  border:1px solid black; width:500px; margin:0 auto; left: 30%; top: 20%;">
 		<form name="thumbnailForm" id="thumbnailForm" method="post"  enctype="multipart/form-data" >
 			<input type="file" name="timg" >
 			<input type="button" id="thumbButton" value="썸네일 변경">
@@ -115,7 +115,7 @@ $(document).on("click", '#editImgButton', function(event) {
 				<th>제목</th><td width="343" colspan="5">
 		       	<input type="text" name="subject" size="47" maxlength="100" value="${recipeVO.SUBJECT}"></td>
 		    </tr>
-		    <tr>
+		    <tr class="flex" style="height: 20vh; vertical-align: top;">
 				<th>작성자</th><td width="343" colspan="5">${loginUser.NICK}(${loginUser.ID})</td>
 		    </tr>
 		    <tr>
@@ -202,8 +202,6 @@ $(document).on("click", '#editImgButton', function(event) {
 					</div>
 				</td>
 			</tr> 
-			
-			
 		</table>
 		<div class="recipe-update-form-btn-area">
 			<!-- <input type="submit" value="수정" onClick="noenter();"/> -->
