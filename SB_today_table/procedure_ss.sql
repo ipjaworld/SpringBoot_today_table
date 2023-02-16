@@ -182,19 +182,22 @@ select*from favorite;
 select*from fi_view;
 
 
-
 CREATE OR REPLACE PROCEDURE changeFuseyn(
-   p_rnum IN favorite.rnum%type
+   p_rnum IN favorite.rnum%type,
+   p_id in favorite.id%type
 
 )
 IS
     v_fuseyn varchar2(10);
 BEGIN
-    select fuseyn into v_fuseyn from favorite where rnum=p_rnum;
+    select fuseyn into v_fuseyn from favorite where rnum=p_rnum and id=p_id;
+    
     if v_fuseyn='Y' then
-    update favorite set fuseyn='N'where rnum=p_rnum;
+    update favorite set fuseyn='N'where rnum=p_rnum and id=p_id;
     elsif v_fuseyn='N'then
-    update favorite set fuseyn='Y' where rnum=p_rnum;
+    update favorite set fuseyn='Y' where rnum=p_rnum and id=p_id;
     commit;
 end if;
 END;
+select*from favorite where id='scott';
+

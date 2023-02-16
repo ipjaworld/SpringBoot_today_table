@@ -30,7 +30,7 @@
                <c:forEach items="${ylist}" var="interestRecipeVO"
                   varStatus="status">
                   <tr>
-                     <td><input type="checkbox" name="rnum" value="${interestRecipeVO.RNUM}"></td>
+                     <td><input type="checkbox" name="rnum" value="${interestRecipeVO.RNUM}">
                      <td width="100">${interestRecipeVO.RNUM}</td>
                      <td width="300"><c:choose>
                            <c:when  test="${interestRecipeVO.ID== interestRecipeVO.INTERESTID}">

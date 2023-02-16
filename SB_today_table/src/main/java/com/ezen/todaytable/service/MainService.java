@@ -215,11 +215,18 @@ public class MainService {
 		rdao.getFavoriteList(paramMap);
 	}
 
-	public void changeFuseyn(int[] rnum) {
-		for(int rnum1 : rnum) {
-		rdao.changeFuseyn(rnum1);
-		}
+	public void changeFuseyn(int rnum, String id) {
+
+		rdao.changeFuseyn(rnum,id);
+		
 	}
+
+
+
+	public void changeFuseyn(HashMap<String, Object> paramMap) {
+		rdao.changeFuseyn(paramMap);	
+		}
+
 
 
 

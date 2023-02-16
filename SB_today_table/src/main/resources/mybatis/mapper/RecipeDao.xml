@@ -266,10 +266,11 @@
 		}
 	</select>
 	
-		<update id="changeFuseyn" >
+	
+	<update id="changeFuseyn" statementType="CALLABLE" parameterType="java.util.HashMap" >
 		{
 			CALL changeFuseyn(
-			#{rnum1}
+			#{rnum},#{id}
 			)
 		}
 	</update>

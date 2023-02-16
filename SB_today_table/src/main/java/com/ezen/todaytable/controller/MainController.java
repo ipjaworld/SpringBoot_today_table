@@ -194,10 +194,16 @@ public class MainController {
 		if( loginUser == null ) {
 			return "member/login"; 
 		}else {
-			System.out.println(loginUser.get("ID"));
-			ms.changeFuseyn(rnum);
+			HashMap<String, Object> paramMap = new HashMap<String, Object>();
+			for (int rnum1: rnum) {
+				paramMap.put("rnum", rnum1);
+				paramMap.put("id", loginUser.get("ID"));
+				ms.changeFuseyn(paramMap);
+			}
+
 		}
 		return "redirect:/interestView";
+		
 	}
 	
 	
