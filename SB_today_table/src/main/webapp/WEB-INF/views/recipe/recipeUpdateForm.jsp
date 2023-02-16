@@ -99,7 +99,7 @@ $(document).on("click", '#editImgButton', function(event) {
 	<!-- 썸네일 수정 폼  -->
 	<div style="position:relative;  border:1px solid black; width:500px; margin:0 auto;">
 		<form name="thumbnailForm" id="thumbnailForm" method="post"  enctype="multipart/form-data" >
-			<input type="file" name="thumbnail" required>
+			<input type="file" name="timg" >
 			<input type="button" id="thumbButton" value="썸네일 변경">
 		</form>
 	</div>
@@ -209,7 +209,8 @@ $(document).on("click", '#editImgButton', function(event) {
 			<!-- <input type="submit" value="수정" onClick="noenter();"/> -->
 			<input class="btn" type="button" value="수정" onClick="go_recipe('updateRecipe')" id="updateBtn" disabled="disabled">          
 			<!-- <input class="btn" type="button" value="목록" onClick="go_recipe(list)"> --> 
-			<input class="btn" type="button" value="목록" onClick="location.href='recipeCategory'">
+			<!-- <input class="btn" type="button" value="목록" onClick="location.href='recipeCategory'"> -->
+			<input class="btn" type="button" value="목록" onClick="history.go(-1);">
 		</div> 
 	</form> 
 	

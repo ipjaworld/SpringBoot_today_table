@@ -21,11 +21,13 @@ CREATE TABLE recipe_report
 ALTER TABLE recipe_report
 	ADD FOREIGN KEY (rnum)
 	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
 ;
 
 ALTER TABLE recipe_report
 	ADD FOREIGN KEY (id)
 	REFERENCES members (id)
+	ON DELETE CASCADE
 ;
 
 

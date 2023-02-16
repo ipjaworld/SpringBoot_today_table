@@ -31,7 +31,7 @@
 			   		<h5>조리시간 : ${recipeVO.TIME}분</h5>
 			   	</div>
 			</c:forEach>
-			<c:if test="${empty recipeList}">검색 결과가 없습니다</c:if>
+			<%-- <c:if test="${empty recipeList}">검색 결과가 없습니다</c:if> --%>
 		</div>
 	</div>
 	<jsp:include page="../paging/paging.jsp">

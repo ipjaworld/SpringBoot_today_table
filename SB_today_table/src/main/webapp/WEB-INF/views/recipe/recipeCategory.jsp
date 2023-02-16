@@ -9,7 +9,7 @@
 	</c:if>
 	<c:if test="${status.equals('type')}">
 		<h2><b>종류별</b> 레시피 게시판 입니다~</h2>
-		<div>
+		<div class="recipe_category_filter">
 			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');"  name="1">밥/죽</a>
 			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');"  name="2">국/탕/찌개</a>
 			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="3">반찬</a>
@@ -20,7 +20,7 @@
 	</c:if>
 	<c:if test="${status.equals('theme')}">
 		<h2><b>테마별</b> 레시피 게시판 입니다~</h2>
-		<div>
+		<div class="recipe_category_filter">
 			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="1">건강</a>
 			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="2">홈베이킹/홈파티/홈카페</a>
 			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="3">편의점 레시피</a>
@@ -29,7 +29,7 @@
 	</c:if>
 	<c:if test="${status.equals('ing')}">
 		<h2><b>재료별</b> 레시피 게시판 입니다~</h2>
-		<div>
+		<div class="recipe_category_filter">
 			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="1">육류</a>
 			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="2">해산물</a>
 			<a href="javascript:void(0);" onclick="goRecipeCate(this, '${status}');" name="3">과일/채소</a>
@@ -79,6 +79,7 @@
 		   		<div><h6>조리시간 : ${recipeVO.TIME}분</h6></div>
 		   	</div>
 		</c:forEach>
+		
 	</div>
 	<%-- <jsp:include page="../paging/paging.jsp">
 		<jsp:param name="command" value="recipeCategory?status=${status}" />

@@ -99,11 +99,12 @@ $(document).on("click", '#editImgButton', function(event) {
 	<!-- 썸네일 업로드 폼 -->
 	<div style="position:relative;  border:1px solid black; width:500px; margin:0 auto;">
 		<form name="thumbnailForm" id="thumbnailForm" method="post"  enctype="multipart/form-data" >
-			<input type="file" name="thumbnail" required>
+			<input type="file" name="timg">
+			<!-- <input type="file" name="thumbnail" required> -->
 			<input type="button" id="thumbButton" value="썸네일 추가">
 		</form>
 	</div> 
-	
+	${message}
 	<form name="frm" method="post">
 		<%-- <input type="hidden" name="id" value="${loginUser.ID}"/> --%>
 		<input type="hidden" name="nick" value="${loginUser.NICK}"/>
@@ -176,11 +177,11 @@ $(document).on("click", '#editImgButton', function(event) {
 			</tr> 
 			<tr>
 				<th>소요 시간</th>
-				<td width="70"><input type="text" name="cookingTime" size="11" placeholder="예시) 30" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onPaste="return false" value="${rvo.cookingtime}"> 분</td> 
+				<td width="70"><input type="text" name="cookingTime" size="11" placeholder="예시) 30" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onPaste="return false" value="${rvo.cookingTime}"> 분</td> 
 			</tr>
 			<tr>
 				<th>상세설명</th><td colspan="5">
-				<textarea name="content" rows="5" cols="40" placeholder="요리에 대한 간단한 소개나 짧은 이야기를 들려주세요 :)" value="${rvo.content}" ></textarea></td>
+				<textarea name="content" rows="5" cols="40" placeholder="요리에 대한 간단한 소개나 짧은 이야기를 들려주세요 :)" value="${rvo.content}" >${rvo.content}</textarea></td>
 			</tr>
 			<tr>
 			<!-- 요리 과정 : 프리뷰 + hidden image + 상세 과정 (모두 ajax에서 추가) -->
@@ -192,9 +193,8 @@ $(document).on("click", '#editImgButton', function(event) {
 				</td>
 				
 			</tr> 
-			
-			
 		</table>
+		
 		<div id="recipe-form-bottom-btn-area">
 			<input class="btn" type="button" value="등록" onClick="go_recipe('writeRecipe')"  id="writeBtn" disabled="disabled" /> 
 			<!-- <input class="btn" type="button" value="등록" id="writeBtn">   -->          

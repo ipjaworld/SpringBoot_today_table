@@ -1,3 +1,9 @@
+// 단골 최상위 리스트 or 관리자 추천 리스트
+function goFavOrRec(ths){
+	let kind=$(ths).attr('name');
+	location.href="recipeFavoriteAndRec?kind="+kind;
+}
+
 // 카테고리 필터를 통한 카테고리 이동
 function goRecipeCate(ths, status){
 	// let kind = $(ths).text();

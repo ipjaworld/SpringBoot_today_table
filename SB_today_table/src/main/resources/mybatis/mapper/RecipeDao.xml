@@ -67,9 +67,8 @@
 	<select id="recipeFavoriteAndRec" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{
 			CALL recipeFavoriteAndRec(
-				#{ref_cursor2, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2},
 				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap},
-				#{startNum}, #{endNum}
+				#{startNum}, #{endNum}, #{kind}
 			)
 		}
 	</select>
@@ -83,7 +82,22 @@
 				#{ref_cursor2, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2},
 				#{ref_cursor3, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap3},
 				#{ref_cursor4, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap4},
-				#{ref_cursor5, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap5}
+				#{ref_cursor5, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap5},
+				#{likeyn ,mode=OUT, jdbcType=VARCHAR, javaType=STRING},
+				#{reportyn, mode=OUT, jdbcType=VARCHAR, javaType=STRING},
+				#{id}
+			)
+		}
+	</select>
+	
+	<select id="getRecipeForUpdate" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			CALL getRecipeForUpdate(
+				#{rnum},
+				#{ref_cursor1, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap},
+				#{ref_cursor2, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap2},
+				#{ref_cursor3, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap3},
+				#{ref_cursor4, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=RecipeMap4}
 			)
 		}
 	</select>
