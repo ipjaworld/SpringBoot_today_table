@@ -53,14 +53,19 @@ public class RecipeGHController {
 		// 레시피 키라는 이름으로 웹페이지에서 status 라고 넘긴 값을 전송합니다. 이것을 이용해서 sql문에 접근합니다.
 		paramMap.put("recipekey", status);
 		rs.getCategory( paramMap );
+		System.out.println("getCategory까지 성공");
 		rs.getReplyCount(paramMap);
-		
+		System.out.println("getReplyCount까지 성공");
 		ArrayList<HashMap<String , Object>> recipeCategory
 		= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor");
 		ArrayList<HashMap<String, Object>> replyCountList
 		= (ArrayList<HashMap<String , Object>>) paramMap.get("replyCountList");
 		
 		//RecipeVO rvo = (RecipeVO)recipeCategory.get(0);
+		
+		for(HashMap<String, Object> recipe : recipeCategory) { // null 확인용
+			System.out.println(recipe);
+		}
 		
 		mav.addObject("RecipeCategory", recipeCategory);
 		mav.addObject("replyCountList", replyCountList);
@@ -78,29 +83,33 @@ public class RecipeGHController {
 	
 	@RequestMapping("/recipeFavoriteAndRec")
 	public ModelAndView recipeFavoriteAndRec(
-			@RequestParam("page") int page, HttpServletRequest request) {
+			// @RequestParam("page") int page,
+			HttpServletRequest request, 
+			@RequestParam("kind") int kind) {
 		
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> paramMap = new HashMap<>();
-		paramMap.put("ref_cursor2", null); // 관리자 추천
-		paramMap.put("ref_cursor", null); 	// 단골레시피 상위권
+		// paramMap.put("ref_cursor2", null); // 관리자 추천
+		// paramMap.put("ref_cursor", null); 	// 단골레시피 상위권
+		paramMap.put("rec_cursor", null);// 
+		paramMap.put("kind", kind);
 		paramMap.put("replyCountList", null); // 댓글 갯수
 		paramMap.put("request", request);
 		
 		rs.recipeFavoriteAndRec( paramMap );
 		rs.getReplyCount(paramMap);
 		
-		ArrayList<HashMap<String , Object>> recommandList
-			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor2");
-		ArrayList<HashMap<String , Object>> favoriteList
+		ArrayList<HashMap<String , Object>> recipeList
 			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor");
 		ArrayList<HashMap<String, Object>> replyCountList
 		= (ArrayList<HashMap<String , Object>>) paramMap.get("replyCountList");
 		
-		mav.addObject("recommandList", recommandList);
-		mav.addObject("favoriteList", favoriteList);
+		// mav.addObject("recommandList", recommandList);
+		// mav.addObject("favoriteList", favoriteList);
+		mav.addObject("recipeList", recipeList);
 		mav.addObject("replyCountList", replyCountList);
 		mav.addObject("paging", (Paging) paramMap.get("paging"));
+		mav.addObject("kind", kind);
 		
 		mav.setViewName("recipe/recipeFavoriteAndRec");
 		return mav;
@@ -191,7 +200,7 @@ public class RecipeGHController {
 			paramMap.put("id", loginUser.get("ID"));
 			paramMap.put("rnum", rnum );
 			rs.reportRecipe(paramMap);
-			System.out.println("recipe report를 했대요");
+			System.out.println("레시피 신고 또는 신고 취소 완료");
 			url = "redirect:/recipeDetailWithoutView?rnum="+rnum;
 		}
 		

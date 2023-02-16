@@ -114,11 +114,28 @@ $(document).on("click", '#replyBtn', function(event) {
 	</table>
 	<div>
 		<div id="like-btn">
-			<a href="#" onClick="ILikeThis(${recipeVO.RNUM});"><img src="image/likeBtn1.png"/></a>
-			좋아요 : ${recipeVO.LIKES}
+			<c:choose>
+				<c:when test="${likeyn=='N'}">
+					<a href="#" onClick="ILikeThis(${recipeVO.RNUM});"><img src="image/likeBtn1.png"/></a>
+					좋아요 (현재 좋아요 : ${recipeVO.LIKES})
+				</c:when>
+				<c:otherwise>
+					<a href="#" onClick="ILikeThis(${recipeVO.RNUM});"><img src="image/likeBtn1.png"/></a>
+					좋아요 취소 (현재 좋아요 : ${recipeVO.LIKES} )
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div id="like-btn">
-			<a href="#" onClick="IReportThis(${recipeVO.RNUM});">신고하기</a>
+			<c:choose>
+				<c:when test="${reportyn=='N'}">
+					<a href="#" onClick="IReportThis(${recipeVO.RNUM});"><img src="image/reportBtn.png"/></a>
+					신고하기
+				</c:when>
+				<c:otherwise>
+					<a href="#" onClick="IReportThis(${recipeVO.RNUM});"><img src="image/reportBtn.png"/></a>
+					신고 취소
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 </div>

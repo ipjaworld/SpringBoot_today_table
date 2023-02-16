@@ -8,6 +8,10 @@ select * from processImg order by rnum;
 select * from members;
 select * from interest;
 select * from favorite;
+select * from RECIPE_REPORT;
+select * from ing_view order by rnum desc;
+select * from recipeTag order by rnum;
+select * from ingTag;
 
 -- 실행 x
 insert into recipe(rnum, id, subject, content, thumbnail, time)  
@@ -18,26 +22,40 @@ alter table recipe_page drop column favorites;
 update recipe_page set favorites=30 where rnum in(1,2,3,4,5);
 update recipe_page set likes=30 where rnum in(1,2,3,4,5, 6, 7,8);
 update recipe set type=1 where rnum=60;
-update recipe_page set ing=3 where rnum=58;
+update recipe_page set ing=1 where rnum=60;
+update recipe set theme=3 where rnum=57;
+select likeyn from interest where rnum=1 and id='scott';
+select reportyn from recipe_report where rnum=1 and id='scott';
+update recipe_page_view set rec=1 where rnum in(6,7,8,9,10,11,12,13,14,15);
+select * from recipe_page_view where rec=1;
+select * from ing_view where rnum=73;
+select quantity from recipeTag where rnum=73;
 
+alter table recipeTag add rtseq number(100) primary key;
+create or replace rtseq_seq start with 
 
 -- 수정 : recipeFavoriteAndRec에 페이징 추가
 CREATE OR REPLACE PROCEDURE recipeFavoriteAndRec(
     p_cur OUT   SYS_REFCURSOR,
-    p_cur2 OUT   SYS_REFCURSOR,
     p_startNum IN NUMBER,
-    p_endNum IN NUMBER
+    p_endNum IN NUMBER,
+    p_kind IN NUMBER
 )
 IS
 BEGIN
-    open p_cur for
-        select * from (select * from (select rownum as rn, r.* from ((select * from recipe_page_view where rec>0 order by rec desc) r)) where rn>=p_startNum) where rn<=p_endNum;
-    open p_cur2 for 
+    IF p_kind=1 THEN
+        OPEN p_cur FOR
+        select * from (select * from (select rownum as rn, r.* from ((select * from recipe_page_view where rec>0 order by rnum desc) r)) where rn>=p_startNum) where rn<=p_endNum;
+    ELSE 
+        OPEN p_cur FOR
         select * from (select * from (select rownum as rn, f.* from ((select * from recipe_page_view where favorites>0 order by favorites desc) f)) where rn>=p_startNum) where rn<=p_endNum;
+    END IF;       
 END;
 
-select * from recipe_page_view;
 
+select * from recipe_page_view;
+select * from recipe_report;
+select * from interest;
 
 -- 없는 사람만 실행
 create sequence report_seq increment by 1 start with 1;
@@ -107,7 +125,9 @@ begin
     elsif p_recipekey='ing' then
          select count(*) into p_cnt from ing_page_view where ing=p_kind;
     elsif p_recipekey='favorite' then -- favorite에서는 kind값 안 들어오는 것 고려
-        select count(*) into p_cnt from recipe_page_view where favorites>0 order by favorites desc;
+        select count(*) into p_cnt from recipe_page_view where favorites>0;
+    elsif p_recipekey='adminRec' then 
+        select count(*) into p_cnt from recipe_page_view where rec>0;
     end if;
 
 end;
@@ -444,27 +464,67 @@ BEGIN
     commit;
 END;
 
--- 레시피 디테일 불러오기
-CREATE OR REPLACE PROCEDURE getRecipe(
+
+-- 최종 getRecipe(레시피 불러오기)
+create or replace PROCEDURE getRecipe(
     p_rnum IN recipe.rnum%TYPE,
     p_cur1 OUT SYS_REFCURSOR,
     p_cur2 OUT SYS_REFCURSOR,
     p_cur3 OUT SYS_REFCURSOR,
     p_cur4 OUT SYS_REFCURSOR,
-    p_cur5 OUT SYS_REFCURSOR
+    p_cur5 OUT SYS_REFCURSOR,
+    p_likeyn OUT VARCHAR,
+    p_reportyn OUT VARCHAR,
+    p_id IN recipe.id%TYPE
 )
-IS
+IS  
+    v_likeyn VARCHAR(1);
+    v_reportyn VARCHAR(1);
 BEGIN
     OPEN p_cur1 FOR 
         select * from recipe_page_view where rnum=p_rnum;
     OPEN p_cur2 FOR
-        select tag from ing_view where rnum=p_rnum;
+        -- select tag from ing_view where rnum=p_rnum;
+        select * from (select rownum as rn, t.* from ((select tag from ing_view where rnum=p_rnum) t)) order by rn;
     OPEN p_cur3 FOR
-        select quantity from recipeTag where rnum=p_rnum;
+        -- select quantity from recipeTag where rnum=p_rnum;
+        select * from (select rownum as rn, q.* from ((select quantity from recipeTag where rnum=p_rnum) q)) order by rn;
     OPEN p_cur4 FOR
         select * from processImg where rnum=p_rnum order by iseq;
     OPEN p_cur5 FOR
         select * from reply where rnum=p_rnum;
+    BEGIN
+        select likeyn into v_likeyn from interest where rnum=p_rnum and id=p_id;
+        EXCEPTION WHEN NO_DATA_FOUND then v_likeyn := 'N'; 
+    END;
+    p_likeyn := v_likeyn;
+    BEGIN
+        select reportyn into v_reportyn from recipe_report where rnum=p_rnum and id=p_id;
+       EXCEPTION WHEN NO_DATA_FOUND then v_reportyn := 'N';
+    END;
+    p_reportyn := v_reportyn;
+END;
+
+-- 수정을 위해 recipe 불러오기
+create or replace PROCEDURE getRecipeForUpdate(
+    p_rnum IN recipe.rnum%TYPE,
+    p_cur1 OUT SYS_REFCURSOR,
+    p_cur2 OUT SYS_REFCURSOR,
+    p_cur3 OUT SYS_REFCURSOR,
+    p_cur4 OUT SYS_REFCURSOR
+)
+IS  
+BEGIN
+    OPEN p_cur1 FOR 
+        select * from recipe_page_view where rnum=p_rnum;
+    OPEN p_cur2 FOR
+        -- select tag from ing_view where rnum=p_rnum;
+        select * from (select rownum as rn, t.* from ((select tag from ing_view where rnum=p_rnum) t)) order by rn;
+    OPEN p_cur3 FOR
+        -- select quantity from recipeTag where rnum=p_rnum;
+        select * from (select rownum as rn, q.* from ((select quantity from recipeTag where rnum=p_rnum) q)) order by rn;
+    OPEN p_cur4 FOR
+        select * from processImg where rnum=p_rnum order by iseq;
 END;
 
 

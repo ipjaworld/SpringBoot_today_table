@@ -36,11 +36,15 @@ public class RecipeController {
 	
 	
 	@RequestMapping("/recipeDetailView")
-	public ModelAndView recipeDetailView(@RequestParam("rnum") int rnum) {
+	public ModelAndView recipeDetailView(@RequestParam("rnum") int rnum, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		
+		HttpSession session = request.getSession();
+		HashMap<String, Object> loginUser = (HashMap<String, Object>) session.getAttribute("loginUser");
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("rnum", rnum);
+		if(session.getAttribute("loginUser") == null) paramMap.put("id", "none");
+		else paramMap.put("id", (String) loginUser.get("ID"));
+		// System.out.println("id : " + (String) paramMap.get("ID"));
 		
 		
 		// 1. recipe 전달받는 cursor
@@ -52,6 +56,10 @@ public class RecipeController {
 		paramMap.put("ref_cursor4", null);
 		// 4. 댓글 리스트
 		paramMap.put("ref_cursor5", null);
+		// 5. 좋아요 여부
+		paramMap.put("likeyn", null);
+		// 6. 신고 여부
+		paramMap.put("reportyn", null);
 		
 		
 		/*
@@ -68,9 +76,13 @@ public class RecipeController {
 		
 		rs.recipeDetailView(paramMap);
 		
+		System.out.println("likeyn : " + paramMap.get("likeyn"));
+		System.out.println("reportyn : " + paramMap.get("reportyn"));
+		
 		ArrayList<HashMap<String, Object>> ingArray = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor2"); 
 		System.out.println("전달된 paramMap의 ingArray : " + paramMap.get("ref_cursor2"));
 		ArrayList<HashMap<String, Object>> qtyArray = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor3"); 
+		System.out.println("전달된 paramMap의 qtyArray : " + paramMap.get("ref_cursor3"));
 		/*
 		ArrayList<String> exArray = new ArrayList<String>();
 		String str = "";
@@ -93,16 +105,24 @@ public class RecipeController {
 		System.out.println("processImgs : " + (ArrayList<HashMap<String, Object>>)paramMap.get("ref_cursor4"));
 		mav.addObject("replyList", (ArrayList<HashMap<String, Object>>)paramMap.get("ref_cursor5"));
 		mav.addObject("rnum", paramMap.get("rnum"));
+		mav.addObject("likeyn", paramMap.get("likeyn"));
+		mav.addObject("reportyn", paramMap.get("reportyn"));
 		mav.setViewName("recipe/recipeDetail");
 		return mav;
 	}
 	
 	@RequestMapping("/recipeDetailWithoutView")
-	public ModelAndView recipeDetailWithoutView(@RequestParam("rnum") int rnum) {
+	public ModelAndView recipeDetailWithoutView(@RequestParam("rnum") int rnum, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		
+		HttpSession session = request.getSession();
+		HashMap<String, Object> loginUser = (HashMap<String, Object>) session.getAttribute("loginUser");
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("rnum", rnum);
+		System.out.println("loginUser : " + loginUser);
+		if(session.getAttribute("loginUser") == null) paramMap.put("id", "none");
+		else paramMap.put("id", (String) loginUser.get("ID"));
+		System.out.println("id : " + (String) loginUser.get("ID"));
+		
 		// 1. recipe 전달받는 cursor
 		paramMap.put("ref_cursor1", null);
 		// 2. 재료 정보
@@ -112,8 +132,15 @@ public class RecipeController {
 		paramMap.put("ref_cursor4", null);
 		// 4. 댓글 리스트
 		paramMap.put("ref_cursor5", null);
+		// 5. 좋아요 여부
+		paramMap.put("likeyn", null);
+		// 6. 신고 여부
+		paramMap.put("reportyn", null);
+		
 		rs.recipeDetailWithoutView(paramMap);
 		
+		System.out.println("likeyn : " + paramMap.get("likeyn"));
+		System.out.println("reportyn : " + paramMap.get("reportyn"));
 		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor1");
 		mav.addObject("recipeVO", list.get(0));
 		mav.addObject("ingArray", (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor2"));
@@ -121,6 +148,8 @@ public class RecipeController {
 		mav.addObject("processImgs", (ArrayList<HashMap<String, Object>>)paramMap.get("ref_cursor4"));
 		mav.addObject("replyList", (ArrayList<HashMap<String, Object>>)paramMap.get("ref_cursor5"));
 		mav.addObject("rnum", paramMap.get("rnum"));
+		mav.addObject("likeyn", paramMap.get("likeyn"));
+		mav.addObject("reportyn", paramMap.get("reportyn"));
 		mav.setViewName("recipe/recipeDetail");
 		return mav;
 		
@@ -159,8 +188,8 @@ public class RecipeController {
 					request, path, 5*1024*1024, "UTF-8", new DefaultFileRenamePolicy()
 			);
 			result.put("STATUS", 1);
-			result.put("FILENAME", multi.getFilesystemName("thumbnail") );
-			System.out.println("thumbnail의 이름 : " + multi.getFilesystemName("thumbnail") );
+			result.put("FILENAME", multi.getFilesystemName("timg") );
+			System.out.println("thumbnail의 이름 : " + multi.getFilesystemName("timg") );
 		} catch (IOException e) { e.printStackTrace();
 		}
 		
@@ -227,23 +256,30 @@ public class RecipeController {
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		System.out.println("writeRecipe 도착");
-		
+		mav.setViewName("recipe/recipeForm");
 		if(result.getFieldError("subject") != null) {
 			mav.addObject("message", result.getFieldError("subject").getDefaultMessage());
 			System.out.println("message : " + result.getFieldError("subject").getDefaultMessage());
 		}
 		else if(result.getFieldError("content") != null)
 			mav.addObject("message", result.getFieldError("content").getDefaultMessage());
-		else if(result.getFieldError("thumbnail") != null)
+		else if(result.getFieldError("thumbnail") != null) {
+			System.out.println(result.getFieldError("thumbnail").getDefaultMessage());
 			mav.addObject("message", result.getFieldError("thumbnail").getDefaultMessage());
+		}
 		else if(result.getFieldError("checkIng") != null)
 			mav.addObject("message", result.getFieldError("checkIng").getDefaultMessage());
+		else if(result.getFieldError("processDetail1") != null)
+			mav.addObject("message", result.getFieldError("processDetail1").getDefaultMessage());
 		else {
 		paramMap.put("id", recipeformvo.getId());
 		// paramMap.put("nick", recipeformvo.getNick());
 		paramMap.put("subject", recipeformvo.getSubject());
 		paramMap.put("content", recipeformvo.getContent());
 		paramMap.put("cookingtime", recipeformvo.getCookingTime());
+		if(recipeformvo.getThumbnail() == null || recipeformvo.getThumbnail().equals("null"))
+			paramMap.put("thumbnail", "imageRecipe/emptyTimg.jpg");
+		else
 		paramMap.put("thumbnail", "imageRecipe/"+recipeformvo.getThumbnail());
 		paramMap.put("checkIng", recipeformvo.getCheckIng());
 		paramMap.put("type", recipeformvo.getType());
@@ -257,10 +293,11 @@ public class RecipeController {
 		for(int i=0; i<count; i++) {
 			ProcessImgVO pvo = new ProcessImgVO();
 			String fileName = request.getParameter("processImg"+(i+1));
-			if(fileName==null || fileName.equals(""))
-				pvo.setLinks("imageRecipe/cookingTimer.png");
-			else pvo.setLinks("imageRecipe/" + fileName);
 			System.out.println("fileName : " + fileName);
+			if( (fileName==null) || (fileName.equals("")) || (fileName.equals("null"))) 
+				pvo.setLinks("imageRecipe/cookingTimer.png");
+			else 
+				pvo.setLinks("imageRecipe/" + fileName);
 			pvo.setIseq(i+1);
 			String detail = request.getParameter("processDetail"+ (i+1));
 			if(detail == null || detail.equals("")) {
@@ -304,9 +341,8 @@ public class RecipeController {
 			paramMap.put("ref_cursor3", null);
 			// 3. processImages 
 			paramMap.put("ref_cursor4", null);
-			// 4. 댓글 리스트(받아오지만 전송 X)
-			paramMap.put("ref_cursor5", null);
-			rs.recipeDetailWithoutView(paramMap);
+			
+			rs.getRecipeForUpdate(paramMap);
 			
 			ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor1");
 			mav.addObject("recipeVO", list.get(0));
@@ -468,7 +504,7 @@ public class RecipeController {
 		rs.goRecipeList( paramMap );
 		
 		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
-		System.out.println("list.get(0) rnum 확인용 : " + list.get(0));
+		// System.out.println("list.get(0) rnum 확인용 : " + list.get(0));
 		for(HashMap<String, Object> rvo: list) { // 확인용
 			
 			System.out.println("recipeList 확인용 : " + rvo.get("RNUM"));

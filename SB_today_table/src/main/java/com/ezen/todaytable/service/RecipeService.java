@@ -71,7 +71,9 @@ public class RecipeService {
 		// 초안 : favorites list만
 		HashMap<String, Object> cntMap = new HashMap<String, Object>();
 		cntMap.put("cnt", 0);
-		cntMap.put("recipekey", "favorite");
+		if(Integer.parseInt(String.valueOf(paramMap.get("kind")))==1) // 관리자 리스트를 선택했다면
+			cntMap.put("recipekey", "adminRec");
+		else cntMap.put("recipekey", "favorite");
 		cntMap.put("kind", 0); // 임의의 값 넣어줌
 		rdao.getRecipeCounts(cntMap); 
 		int count = Integer.parseInt(String.valueOf(cntMap.get("cnt")));
@@ -397,7 +399,7 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 	public void getReplyCount(HashMap<String, Object> paramMap) {
 		ArrayList<HashMap<String, Object>> recipeList 
 		= (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
-		System.out.println("ref_cursor(0) : " + recipeList.get(0));
+		// System.out.println("ref_cursor(0) : " + recipeList.get(0)); // 확인용
 		ArrayList<Integer> replyCountList = new ArrayList<Integer>();
 		for(HashMap<String, Object> rvo : recipeList) {
 			System.out.println("replycnt를 위해 들어가는 rnum : " + rvo.get("RNUM"));
@@ -446,6 +448,11 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 		paramMap.put("paging", paging);
 		
 		
+		
+	}
+
+	public void getRecipeForUpdate(HashMap<String, Object> paramMap) {
+		rdao.getRecipeForUpdate(paramMap);
 		
 	}
 

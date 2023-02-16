@@ -75,5 +75,7 @@ public interface IRecipeDao {
 
 	void changeFuseyn(HashMap<String, Object> paramMap);
 
+	void getRecipeForUpdate(HashMap<String, Object> paramMap);
+
 
 }
