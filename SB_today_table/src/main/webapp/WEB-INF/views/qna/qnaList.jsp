@@ -3,7 +3,6 @@
 <%@ include file="qna_sub_menu_left.jsp" %>
 
 <script>
-
 function checkPass( qseq ){
 	var url = "qtest.do?command=passForm&qseq=" + qseq;
 	var opt = "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=500, height=300";

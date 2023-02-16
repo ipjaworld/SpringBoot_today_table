@@ -16,6 +16,7 @@
             <pre>${qnaVO.QCONTENT}</pre></td></tr>
          <tr><th>답변 내용</th><td align="left" style="text-align:left;color:white;">${qnaVO.REPLYQNA}</tr>
       </table><div class="clear"></div>
+      
       <div id="buttons" style="float:right">
       <c:if test="${loginUser.ID==qnaVO.ID}">
 	      <input type="button" value="수정하기" class="submit" onclick="location.href='qnaUpdateForm?qseq=${qnaVO.QSEQ}'">

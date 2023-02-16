@@ -14,6 +14,7 @@
         	<!-- col의 숫자는 계속 달라도 상관 없으며, 12를 넘어가는 순간, 다음줄이 개행됩니다 -->
         	<!-- 이 클래스는 부트스트랩을 연동했을 경우에만 적용됩니다. -->
 	        <div class="row footer-upper-left">
+	        
 	            <div class="footer-area-item col-md-2 col-sm-4"><a href="#" onclick="footer_go_to('ourstory')">회사 소개</a></div>
 	            <div class="footer-area-item col-md-2 col-sm-4"><a href="notice?first='1'">공지사항</a></div>
 	            <div class="footer-area-item col-md-2 col-sm-4"><a href="#" onclick="footer_go_to('terms')">이용약관</a></div>

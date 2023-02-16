@@ -16,7 +16,8 @@ public class QnaService {
 
 	@Autowired
 	IQnaDao qdao;
-
+	
+	// --
 	public void listQna(HashMap<String, Object> paramMap) {
 		HttpServletRequest request = (HttpServletRequest)paramMap.get("request");
 		HttpSession session = request.getSession();

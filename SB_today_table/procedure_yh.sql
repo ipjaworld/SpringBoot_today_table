@@ -85,7 +85,7 @@ BEGIN
     commit;    
 END;
 
--- qna 삭제
+-- qna 삭제 --
 CREATE OR REPLACE PROCEDURE deleteQna(
     p_qseq  IN qna.qseq%TYPE
 )

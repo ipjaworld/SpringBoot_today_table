@@ -23,6 +23,7 @@
 			<input type="submit" value="글쓰기"  class="submit" class="submit">
 			<input type="reset" value="취소"  class="cancel">
 			<input type="button" value="레시피계속보기"  class="submit" onclick="location.href='/'">
+		
 		</div>
 	</form>
 </article>

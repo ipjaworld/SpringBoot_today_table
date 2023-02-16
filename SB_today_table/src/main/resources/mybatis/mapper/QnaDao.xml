@@ -48,6 +48,7 @@
 	   		#{qnaVO.qseq},#{qnaVO.qsubject},#{qnaVO.qcontent}
 	   		)
 	   	}
+	   	
    	</insert>
    	
    	<delete id="deleteQna">

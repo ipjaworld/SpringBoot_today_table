@@ -154,7 +154,7 @@ public class QnaController {
 			return mav;
 		}
 	
-	// qna 수정 작업
+	// qna 수정 작업 --
 	@RequestMapping(value="/qnaUpdate")
 	public String qnaUpdate( @Valid QnaVO qnavo,
 			BindingResult result, HttpSession session, Model model){

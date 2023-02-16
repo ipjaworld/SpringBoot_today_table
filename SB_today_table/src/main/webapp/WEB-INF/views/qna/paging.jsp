@@ -20,6 +20,7 @@
 		<c:choose>
         	<c:when test="${paging.page==index}">
         		<span style="color:red;font-weight:bold">${index}&nbsp;</span>
+        		
         	</c:when>
 	        <c:otherwise>
 				<a href="${action}&page=${index}">${index}</a>&nbsp;
