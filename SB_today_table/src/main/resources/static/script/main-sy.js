@@ -355,8 +355,9 @@ $(function(){ // 레시피 쓰기/수정에서 '추가' 버튼 눌렀을 때
 $(document).on("click", '#update-button', function(event) { 
 		alert("이미지 수정 div 생성");
 		let num = $(this).attr('name');
-		$('article').append(
-			"<div style='position:relative;  border:1px solid black; width:500px; margin:0 auto;'>" +
+		$('.recipe_process_edit_area').append(
+			`<Strong>${num}번 이미지 수정</Strong>`+
+			"<div class='prs_add_btn mb-5' style='position:relative;  border:1px solid black; width:500px; margin:0 auto;'>" +
 			"<form name='ImgEditForm' id='ImgEditForm' method='post'  enctype='multipart/form-data' >" + 
 			"<input type='file' name='editImg'>" + 
 			"<input type='button' id='editImgButton' value='이미지 수정' name='" + num + "'>" + 

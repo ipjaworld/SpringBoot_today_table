@@ -155,6 +155,15 @@ form fieldset legend{
 클래스의 css 요소들 작업입니다.
   */
 /* 마진 0 auto 공통 적용 */
+.flex{
+	display: flex;
+	flex-direction: row; 
+}
+.pif_add{
+	position: absolute;
+	bottom: 47px;
+}
+
 .search-view{
 	width: 100%;
 	display: flex;
@@ -761,6 +770,16 @@ right: 0;
 }
 .recipe-process tr td{
 	text-align: center;
+}
+.prs_add_btn{
+	
+}
+.recipe_process_edit_area{
+	position: fixed;
+	right: 0;
+	bottom: 20%;
+	width: 30%;
+	height: 60%; 
 }
 .recipe-reply-view{
 	min-height: 30vh;

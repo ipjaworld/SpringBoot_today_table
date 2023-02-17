@@ -94,9 +94,7 @@ $(document).on("click", '#editImgButton', function(event) {
 
 </script>
 
-<article id="recipe-update">
-	<h1>레시피&nbsp;&nbsp;작성&nbsp;/&nbsp;등록</h1>
-	<!-- 썸네일 업로드 폼 -->
+<div class="recipe_process_edit_area">
 	<div style="position:relative;  border:1px solid black; width:500px; margin:0 auto;">
 		<form name="thumbnailForm" id="thumbnailForm" method="post"  enctype="multipart/form-data" >
 			<input type="file" name="timg">
@@ -105,6 +103,13 @@ $(document).on("click", '#editImgButton', function(event) {
 		</form>
 	</div> 
 	${message}
+
+</div>
+
+<article id="recipe-update">
+	<h1>레시피&nbsp;&nbsp;작성&nbsp;/&nbsp;등록</h1>
+	<!-- 썸네일 업로드 폼 -->
+	
 	<form name="frm" method="post">
 		<%-- <input type="hidden" name="id" value="${loginUser.ID}"/> --%>
 		<input type="hidden" name="nick" value="${loginUser.NICK}"/>
@@ -183,17 +188,15 @@ $(document).on("click", '#editImgButton', function(event) {
 				<th>상세설명</th><td colspan="5">
 				<textarea name="content" rows="5" cols="40" placeholder="요리에 대한 간단한 소개나 짧은 이야기를 들려주세요 :)" value="${rvo.content}" >${rvo.content}</textarea></td>
 			</tr>
-			<tr>
-			<!-- 요리 과정 : 프리뷰 + hidden image + 상세 과정 (모두 ajax에서 추가) -->
-				<th>요리과정</th>
-				<td colspan="5" style="vertical-align:top;">
-					<div class="recipe-process" id="recipe-process">
-						<!-- ajax에서 파일 업로드 시 프리뷰 + hidden input(파일 이름 전달) + 상세 과정 textarea 추가  -->
-					</div>
-				</td>
-				
-			</tr> 
 		</table>
+		
+		<div class="flex">
+			<div>요리과정</div>
+			<div class="recipe-process" id="recipe-process">
+				
+			</div>
+			
+		</div>
 		
 		<div id="recipe-form-bottom-btn-area">
 			<input class="btn" type="button" value="등록" onClick="go_recipe('writeRecipe')"  id="writeBtn" disabled="disabled" /> 
@@ -202,13 +205,15 @@ $(document).on("click", '#editImgButton', function(event) {
 		</div>
 	</form>
 	
-	<div style="position:relative;  border:1px solid black; width:500px; margin:0 auto;">
+	<div class="pif_add" style="position:relative;  border:1px solid black; width:500px; margin:0 auto;">
 		<form name="processImgForm" id="processImgForm" method="post"  enctype="multipart/form-data" >
 			<input type="file" name="processImg">
 			<input type="button" id="processImgButton" value="상세과정 추가">
 		</form>
 	</div>
+	
 </article>
+	
 
 
 <!-- 썸네일 폼, 이미지 업로드 폼 따로 만드는 경우 -->
