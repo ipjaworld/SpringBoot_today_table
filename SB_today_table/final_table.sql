@@ -61,7 +61,7 @@ CREATE SEQUENCE fnum_seq INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE interestnum_seq INCREMENT BY 1 START WITH 1;
 create sequence ingTag_seq start with 132 increment by 1; -- 숫자 수정 (recipeTag 테이블 채운 후)
 create sequence report_seq increment by 1 start with 1;
-
+create sequence tt_banner_seq start with 1;
 
 /* Create Tables */
 
@@ -112,6 +112,7 @@ CREATE TABLE members
 	nick varchar2(50) NOT NULL,
 	address1 varchar2(100) NOT NULL,
 	address2 varchar2(100),
+	address3 varchar2(100),
 	zip_num varchar2(20) NOT NULL,
 	indate date DEFAULT sysdate,
 	img varchar2(1000),
@@ -200,6 +201,15 @@ CREATE TABLE recipe_report
 );
 
 
+create table recipebanner(
+    bseq number(5) primary key,
+    name varchar2(100),
+    order_seq number(1),
+    image varchar2(50),
+    useyn char(1) default 'y',
+    indate date default sysdate
+);
+
 
 
 /* Create Foreign Keys */
@@ -243,46 +253,54 @@ ALTER TABLE reply
 ALTER TABLE favorite
 	ADD FOREIGN KEY (rnum)
 	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
 ;
 
 
 ALTER TABLE interest
 	ADD FOREIGN KEY (rnum)
 	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
 ;
 
 
 ALTER TABLE processImg
 	ADD FOREIGN KEY (rnum)
 	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
 ;
 
 
 ALTER TABLE recipeTag
 	ADD FOREIGN KEY (rnum)
 	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
 ;
 
 
 ALTER TABLE recipe_page
 	ADD FOREIGN KEY (rnum)
 	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
 ;
 
 
 ALTER TABLE reply
 	ADD FOREIGN KEY (rnum)
 	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
 ;
 
 ALTER TABLE recipe_report
 	ADD FOREIGN KEY (rnum)
 	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
 ;
 
 ALTER TABLE recipe_report
 	ADD FOREIGN KEY (id)
 	REFERENCES members (id)
+	ON DELETE CASCADE
 ;
 
 

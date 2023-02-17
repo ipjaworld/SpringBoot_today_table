@@ -1,7 +1,7 @@
 // 단골 최상위 리스트 or 관리자 추천 리스트
 function goFavOrRec(ths){
 	let kind=$(ths).attr('name');
-	location.href="recipeFavoriteAndRec?kind="+kind;
+	location.href="recipeFavoriteAndRec?kind="+kind+"&page=1";
 }
 
 // 카테고리 필터를 통한 카테고리 이동
@@ -9,7 +9,7 @@ function goRecipeCate(ths, status){
 	// let kind = $(ths).text();
 	let kind=$(ths).attr('name');
 	alert("kind : " + kind);
-	location.href="recipeCategory?kind="+kind+"&status="+status;
+	location.href="recipeCategory?kind="+kind+"&status="+status+"&page=1";
 }
 
 // 레시피 검색 후 결과 페이지 이동

@@ -13,7 +13,7 @@ select * from ing_view order by rnum desc;
 select * from recipeTag order by rnum;
 select * from ingTag;
 
--- 실행 x
+-- 실행 x (개인 용도)
 insert into recipe(rnum, id, subject, content, thumbnail, time)  
 values(recipe_seq.nextVal, 'scott', '국 8', '111', 'imageRecipe/9.jpg', 10);
 insert into recipe_page(rnum) values(60);
@@ -28,11 +28,18 @@ select likeyn from interest where rnum=1 and id='scott';
 select reportyn from recipe_report where rnum=1 and id='scott';
 update recipe_page_view set rec=1 where rnum in(6,7,8,9,10,11,12,13,14,15);
 select * from recipe_page_view where rec=1;
+select * from recipe where type=4;
 select * from ing_view where rnum=73;
 select quantity from recipeTag where rnum=73;
-
-alter table recipeTag add rtseq number(100) primary key;
-create or replace rtseq_seq start with 
+-- alter table recipeTag add rtseq number(100) primary key;
+-- create or replace rtseq_seq start with 
+alter table members add address3 varchar2(100);
+alter table admins add aseq number(5,0);
+alter table admins add asubject varchar2(20);
+alter table admins add acontent varchar2(100);
+alter table admins add adate varchar2(20) default sysdate;
+alter table admins add aimage varchar2(50);
+alter table admins add mustread varchar2(20);
 
 -- 수정 : recipeFavoriteAndRec에 페이징 추가
 CREATE OR REPLACE PROCEDURE recipeFavoriteAndRec(

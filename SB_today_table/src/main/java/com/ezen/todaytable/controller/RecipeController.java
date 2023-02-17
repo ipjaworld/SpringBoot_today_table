@@ -61,19 +61,6 @@ public class RecipeController {
 		// 6. 신고 여부
 		paramMap.put("reportyn", null);
 		
-		
-		/*
-		// 1. recipe 전달받는 cursor
-		paramMap.put("ref_cursor1", null);
-		// 2. 재료 정보 (service에서 배열 합친 후 controller로 하나의 배열로 전달) (또는 controller에서 작업)
-		paramMap.put("ing", null);
-		
-		// 3. processImages 
-		paramMap.put("ref_cursor2", null);
-		// 4. 댓글 리스트
-		paramMap.put("ref_cursor3", null);
-		*/
-		
 		rs.recipeDetailView(paramMap);
 		
 		System.out.println("likeyn : " + paramMap.get("likeyn"));
@@ -83,18 +70,6 @@ public class RecipeController {
 		System.out.println("전달된 paramMap의 ingArray : " + paramMap.get("ref_cursor2"));
 		ArrayList<HashMap<String, Object>> qtyArray = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor3"); 
 		System.out.println("전달된 paramMap의 qtyArray : " + paramMap.get("ref_cursor3"));
-		/*
-		ArrayList<String> exArray = new ArrayList<String>();
-		String str = "";
-		for(int i=0; i<ingArray.size(); i++) { // tag + quantity를 하나의 문자열로
-			System.out.println("ingArray.get(i) : " + ingArray.get(i));
-			System.out.println("qtyArray.get(i) : " + qtyArray.get(i));
-			str = (ingArray.get(i) + " " + qtyArray.get(i) + " ");
-			exArray.add(i, str);
-		}
-		System.out.println("exArray : " + exArray);
-		paramMap.put("exArray", exArray);
-		*/
 		
 		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor1");
 		mav.addObject("recipeVO", list.get(0));
@@ -234,19 +209,6 @@ public class RecipeController {
 		
 		return result;
 	}
-
-	/*
-	@RequestMapping(value="writeRecipe", method=RequestMethod.POST)
-	public ModelAndView writeRecipe( HttpServletRequest request,
-			@RequestParam("") String 
-	 	) {
-		ModelAndView mav = new ModelAndView();
-		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-		
-		
-		return mav;
-	}
-	*/
 	
 	@RequestMapping(value="/writeRecipe", method=RequestMethod.POST)
 	public ModelAndView writeRecipe(
@@ -356,63 +318,6 @@ public class RecipeController {
 		return mav;
 	}
 	
-	/*
-	@RequestMapping(value="updateRecipe", method=RequestMethod.POST)
-	public ModelAndView updateRecipe(@RequestParam(value="id", required=false) String id, @RequestParam("count") int count, @RequestParam(value="rnum", required=false) int rnum, 
-			@RequestParam("subject") String subject, @RequestParam(value="thumbnail", required=false) String thumbnail, @RequestParam("type") int type, @RequestParam("theme") String theme, 
-			@RequestParam("checkIng") String checkIng, @RequestParam("cookingTime") int cookingTime, @RequestParam("content") String content, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		
-		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-		System.out.println("id : " + id + "rnum : " + rnum + "thumbnail : " + thumbnail);
-		System.out.println("updateRecipe 도착");
-		paramMap.put("id", id);
-		paramMap.put("subject", subject);
-		paramMap.put("content", content);
-		paramMap.put("time", cookingTime);
-		paramMap.put("thumbnail", "imageRecipe/"+thumbnail);
-		paramMap.put("checkIng", checkIng);
-		paramMap.put("type", type);
-		paramMap.put("theme", theme);
-		paramMap.put("count", count);
-		paramMap.put("rnum", rnum);
-		
-		// processImgs와 processDetail들의 수는 미정이어서 우선 request.getParameter 사용
-		ArrayList<ProcessImgVO> processList = new ArrayList<ProcessImgVO>();
-		for(int i=0; i<count; i++) {
-			ProcessImgVO pvo = new ProcessImgVO();
-			String fileName = request.getParameter("processImg"+(i+1));
-			if(fileName==null || fileName.equals(""))
-				pvo.setLinks("imageRecipe/cookingTimer.png");
-			else pvo.setLinks(fileName);
-			System.out.println("fileName : " + fileName);
-			pvo.setIseq(i+1);
-			String detail = request.getParameter("processDetail"+ (i+1));
-			if(detail == null || detail.equals("")) {
-				System.out.println("detail이 null인 경우 : " + detail);
-				pvo.setDescription("요리 과정을 입력하지 않았어요.");
-			}
-			else {
-				System.out.println(detail);
-				pvo.setDescription(detail);
-			}
-			processList.add(pvo);
-		}
-		
-		paramMap.put("processList", processList);
-		// paramMap.put("max_rnum", null);
-		
-		// paramMap.put("lastTagId", 0);
-		rs.updateRecipe(paramMap);
-		// rs.updateProcessIng(paramMap);
-		System.out.println("processIng 성공");
-		mav.setViewName("redirect:/recipeDetailWithoutView?rnum="+rnum);
-		
-		
-		return mav;
-	}
-	*/
-	
 	@RequestMapping(value="/updateRecipe", method=RequestMethod.POST)
 	public ModelAndView updateRecipe(@ModelAttribute @Valid RecipeFormVO recipeformvo, BindingResult result, 
 			HttpServletRequest request, @RequestParam("count") int count) {
@@ -422,20 +327,7 @@ public class RecipeController {
 		System.out.println("updateRecipe 도착");
 		System.out.println("request.getParameter : " + request.getParameter("id"));
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-		/*
-		System.out.println("id : " + id + "rnum : " + rnum + "thumbnail : " + thumbnail);
-		System.out.println("updateRecipe 도착");
-		paramMap.put("id", id);
-		paramMap.put("subject", subject);
-		paramMap.put("content", content);
-		paramMap.put("time", cookingTime);
-		paramMap.put("thumbnail", "imageRecipe/"+thumbnail);
-		paramMap.put("checkIng", checkIng);
-		paramMap.put("type", type);
-		paramMap.put("theme", theme);
-		paramMap.put("count", count);
-		paramMap.put("rnum", rnum);
-		*/
+		
 		if(result.getFieldError("subject") != null) {
 			mav.addObject("message", result.getFieldError("subject").getDefaultMessage());
 			System.out.println("message : " + result.getFieldError("subject").getDefaultMessage());
@@ -571,6 +463,186 @@ public class RecipeController {
 		return resultMap;
 	}
 	*/
+	
+	@RequestMapping("/recipeCategory")
+	public ModelAndView recipeCategory(
+			@RequestParam("status") String status,
+			// @RequestParam("page") int page,
+			@RequestParam(value="kind", required=false) String kind,
+			HttpServletRequest request
+			) {
+		System.out.println("컨트롤러에 도착한 kind : " + kind);
+		if(kind==null) kind= "0";
+		ModelAndView mav = new ModelAndView();
+		HashMap<String, Object> paramMap = new HashMap<>();
+		
+		/*
+		if(kind != null) // 카테고리 필터를 통해 전송된 값이 존재
+			paramMap.put("kind", kind);
+		*/
+		
+		paramMap.put("kind", Integer.parseInt(kind));
+		paramMap.put("ref_cursor", null);	// 카테고리에 해당하는 레시피vo 를 가져올 커서
+		paramMap.put("replyCountList", null);
+		paramMap.put("request", request);
+		
+		// 레시피 키라는 이름으로 웹페이지에서 status 라고 넘긴 값을 전송합니다. 이것을 이용해서 sql문에 접근합니다.
+		paramMap.put("recipekey", status);
+		rs.getCategory( paramMap );
+		System.out.println("getCategory까지 성공");
+		rs.getReplyCount(paramMap);
+		System.out.println("getReplyCount까지 성공");
+		ArrayList<HashMap<String , Object>> recipeCategory
+		= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor");
+		ArrayList<HashMap<String, Object>> replyCountList
+		= (ArrayList<HashMap<String , Object>>) paramMap.get("replyCountList");
+		
+		//RecipeVO rvo = (RecipeVO)recipeCategory.get(0);
+		
+		for(HashMap<String, Object> recipe : recipeCategory) { // null 확인용
+			System.out.println(recipe);
+		}
+		
+		mav.addObject("RecipeCategory", recipeCategory);
+		mav.addObject("replyCountList", replyCountList);
+		// mav.addObject("total", recipeCategory.size());
+		mav.addObject("total", Integer.parseInt(String.valueOf(paramMap.get("total"))));
+		mav.addObject("status", status);
+		mav.addObject("paging", (Paging) paramMap.get("paging"));
+		mav.addObject("kind", kind);
+		
+		mav.setViewName("recipe/recipeCategory");
+		
+		return mav;
+		
+	}
+	
+	
+	@RequestMapping("/recipeFavoriteAndRec")
+	public ModelAndView recipeFavoriteAndRec(
+			// @RequestParam("page") int page,
+			HttpServletRequest request, 
+			@RequestParam("kind") int kind) {
+		
+		ModelAndView mav = new ModelAndView();
+		HashMap<String, Object> paramMap = new HashMap<>();
+		// paramMap.put("ref_cursor2", null); // 관리자 추천
+		// paramMap.put("ref_cursor", null); 	// 단골레시피 상위권
+		paramMap.put("rec_cursor", null);// 
+		paramMap.put("kind", kind);
+		paramMap.put("replyCountList", null); // 댓글 갯수
+		paramMap.put("request", request);
+		
+		rs.recipeFavoriteAndRec( paramMap );
+		rs.getReplyCount(paramMap);
+		
+		ArrayList<HashMap<String , Object>> recipeList
+			= (ArrayList<HashMap<String , Object>>) paramMap.get("ref_cursor");
+		ArrayList<HashMap<String, Object>> replyCountList
+		= (ArrayList<HashMap<String , Object>>) paramMap.get("replyCountList");
+		
+		// mav.addObject("recommandList", recommandList);
+		// mav.addObject("favoriteList", favoriteList);
+		mav.addObject("recipeList", recipeList);
+		mav.addObject("replyCountList", replyCountList);
+		mav.addObject("paging", (Paging) paramMap.get("paging"));
+		mav.addObject("kind", kind);
+		
+		mav.setViewName("recipe/recipeFavoriteAndRec");
+		return mav;
+	}
+	
+	
+	@RequestMapping("/addReply")
+	public ModelAndView addreply(
+			@ModelAttribute("replyVO") @Valid ReplyVO replyVO, 	BindingResult result,
+			@RequestParam("rnum") int rnum,
+			@RequestParam("reply") String reply,
+			HttpServletRequest request
+			) {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		HashMap<String, Object> loginUser 
+		= (HashMap<String, Object>)session.getAttribute("loginUser");
+		if( loginUser == null ) {
+			mav.setViewName("member/login");
+		}else {
+			HashMap<String, Object> paramMap = new HashMap<>();
+			paramMap.put("id", loginUser.get("ID"));
+			paramMap.put("rnum", rnum );
+			paramMap.put("reply", reply );
+			
+			rs.addReply( paramMap );
+			mav.setViewName("redirect:/recipeDetailWithoutView?rnum="+rnum);
+		}
+		return mav;
+	}
+	
+	/** 덧글 삭제 버튼이 로그인을 했을 때, 덧글 작성자의 아이디와 같을 때만 뜨기 때문에 
+	 * 로그인을 했는지, 로그인한 아이디와 덧글 작성자의 아이디가 같은지 유효성 검사는 넘겨도 된다.
+	 * */
+	
+	@RequestMapping("/deleteReply")
+	public String deleteReply(
+			@RequestParam("rnum") int rnum,
+			@RequestParam("replyseq") int replyseq
+			) {
+		rs.deleteReply(replyseq);
+		return "redirect:/recipeDetailWithoutView?rnum="+rnum;
+	}
+	
+	@RequestMapping("/likeRecipe")
+	public String likeRecipe(
+			@RequestParam("rnum") int rnum,
+			HttpServletRequest request
+			) {
+		
+		HttpSession session = request.getSession();
+		HashMap<String, Object> loginUser 
+		= (HashMap<String, Object>)session.getAttribute("loginUser");
+		if( loginUser == null ) {
+			return "member/login";
+		}else {
+			
+			// 좋아요 세팅에 필요한건 rnum과 id
+			// 우선 좋아요를 누른 사람이 이 게시물에 좋아요를 누른적이 있는지 없는지 검사해야함.
+			// 분기가 완전히 갈리는데,
+			// 그 게시물에 좋아요를 한적이 없는 유저라면 Like는 Y로, Favorite는 N으로 insert가 이루어져야한다.
+			// 좋아요를 한적이 있는 유저라면 그때부터는 like, favorite Y, N 바꾸기만 하면 된다.
+			// 전부 데이터베이스에서만 왔다갔다 하기 때문에 아웃변수를 잡아줄 필요는 없다.
+			
+			// 위의 작업이 다 끝난 후에 recipe-page에 해당 rnum의 총 좋아요 갯수를 업데이트한다.
+			HashMap<String, Object> paramMap = new HashMap<>();
+			paramMap.put("id", loginUser.get("ID"));
+			paramMap.put("rnum", rnum );
+			rs.likeRecipe(paramMap);
+		}
+		return "redirect:/recipeDetailWithoutView?rnum="+rnum;
+	}
+	
+	@RequestMapping("/reportRecipe")
+	public String reportRecipe(
+			@RequestParam("rnum") int rnum,
+			HttpServletRequest request
+			) {
+		String url = "";
+		HttpSession session = request.getSession();
+		HashMap<String, Object> loginUser 
+		= (HashMap<String, Object>)session.getAttribute("loginUser");
+		if( loginUser == null ) {
+			url = "member/login";
+			
+		}else {
+			HashMap<String, Object> paramMap = new HashMap<>();
+			paramMap.put("id", loginUser.get("ID"));
+			paramMap.put("rnum", rnum );
+			rs.reportRecipe(paramMap);
+			System.out.println("레시피 신고 또는 신고 취소 완료");
+			url = "redirect:/recipeDetailWithoutView?rnum="+rnum;
+		}
+		
+		return url;
+	}
 	
 	
 	

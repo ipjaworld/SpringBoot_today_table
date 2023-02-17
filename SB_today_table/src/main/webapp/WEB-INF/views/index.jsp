@@ -39,7 +39,7 @@
 		
 		<div class="main-page-card col-md-4 col-sm-12" id="main-favorite">
 			<div class="card-inner">
-				<a class="" href="recipeFavoriteAndRec?kind=1">
+				<a class="" href="recipeFavoriteAndRec?kind=1&page=1">
 					<img src="image/regularcustomerRecipe.png" />
 				</a>
 				<div class="main-page-card-black-area"></div>

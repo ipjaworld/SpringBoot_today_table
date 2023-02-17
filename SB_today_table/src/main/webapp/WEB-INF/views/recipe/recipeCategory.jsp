@@ -87,7 +87,7 @@
 		<jsp:param name="command" value="recipeCategory?status=${status}" />
 	</jsp:include> --%>
 	<div id="paging" align="center" style="font-size:110%;">
-	<c:url var="action" value="recipeCategory?status=${status}" />
+	<c:url var="action" value="recipeCategory?kind=${kind}&status=${status}" />
 	<c:if test="${paging.prev}">
 		<a href="${action}&page=${paging.beginPage-1}">◀</a>&nbsp;
 	</c:if>
