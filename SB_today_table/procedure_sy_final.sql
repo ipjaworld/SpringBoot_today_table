@@ -502,5 +502,31 @@ BEGIN
     commit;
 END;
 
+-- 아이디 찾기
+create or replace PROCEDURE findId(
+    p_name IN members.name%TYPE,
+    p_phone IN members.phone%TYPE,
+    p_rc OUT SYS_REFCURSOR
+)
+IS
+BEGIN
+    OPEN p_rc FOR
+    select * from members where name=p_name and phone=p_phone;
+END;
 
+-- 인증 후 비밀번호 변경
+create or replace PROCEDURE updatePwd(
+    p_id IN members.id%TYPE,
+    p_pwd IN members.pwd%TYPE,
+    p_result OUT NUMBER
+)
+IS
+BEGIN
+    p_result := 1;
+    update members set pwd=p_pwd where id=p_id;
+    commit;
+
+    EXCEPTION WHEN OTHERS THEN
+    p_result := 0;
+END;
 
