@@ -206,8 +206,28 @@ public class MainController {
 		
 	}
 	
-	
-	
+	@RequestMapping(value="/myRecipeDelete")
+	public String myRecipeDelete(
+			@RequestParam("rnum") int [] rnum,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		HashMap<String, Object> loginUser 
+		= (HashMap<String, Object>)session.getAttribute("loginUser");
+			
+		if( loginUser == null ) {
+			return "member/login"; 
+		}else {
+			HashMap<String, Object> paramMap = new HashMap<String, Object>();
+			for (int rnum1: rnum) {
+				paramMap.put("rnum", rnum1);
+				paramMap.put("id", loginUser.get("ID"));
+				rs.deleteRecipe(paramMap);
+			}
+
+		}
+		return "redirect:/myRecipeList";
+		
+	}
 	
 	
 	
