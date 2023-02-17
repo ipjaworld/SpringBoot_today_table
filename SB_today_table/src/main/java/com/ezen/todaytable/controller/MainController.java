@@ -28,7 +28,8 @@ public class MainController {
 	RecipeService rs;
 	
 	@RequestMapping("/")
-	public ModelAndView main() {
+	public ModelAndView main(HttpSession session) {
+		session.removeAttribute("refer");
 		ModelAndView mav = new ModelAndView();
 		
 		
