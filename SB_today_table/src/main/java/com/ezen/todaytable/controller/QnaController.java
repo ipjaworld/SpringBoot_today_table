@@ -32,12 +32,7 @@ public class QnaController {
 		public ModelAndView qnaList(HttpServletRequest request, HttpSession session,
 				@RequestParam("refer") String refer){
 			ModelAndView mav = new ModelAndView();
-			if (session.getAttribute("loginUser")==null) {
-				session.setAttribute("refer", refer);
-				
-				mav.setViewName("member/login");
-				return mav;
-			}
+			
 			session.setAttribute("refer", refer);
 			
 			HashMap<String, Object> paramMap = new HashMap<String, Object>();
@@ -46,7 +41,7 @@ public class QnaController {
 				paramMap.put("id","scott");
 				mav.addObject("title","나의 Q&A");
 				mav.addObject("text","내가 했던 질문들을 확인할 수 있습니다.");
-			} else { 
+			} else if (refer.equals("all")) { 
 				paramMap.put("id","");
 				mav.addObject("title","고객 게시판");
 				mav.addObject("text","궁금하신 사항은 언제든지 문의하세요.");

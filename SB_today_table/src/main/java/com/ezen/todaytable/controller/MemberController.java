@@ -72,6 +72,7 @@ public class MemberController {
 	            	
 	            	System.out.println(session.getAttribute("refer")+"나와라");
 		               if(session.getAttribute("refer")!=null) {
+		            	   session.setAttribute("loginUser", mvo);
 		            	   url = "redirect:/qnaList?refer=all";
 		               }else{
 		            	   session.setAttribute("loginUser", mvo);
@@ -96,6 +97,7 @@ public class MemberController {
 	@RequestMapping(value = "/logout")
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		session.removeAttribute("refer");
 		session.removeAttribute("loginUser");
 		return "redirect:/";
 	}
