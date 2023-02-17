@@ -1,4 +1,6 @@
--- 실행 전 : recipe_report, recipebanner 테이블 생성(final_table.sql에도 추가했습니다.)
+-- <데이터베이스 작업> : 필요한 사람들만 실행
+
+-- recipe_report, recipebanner 테이블 생성(final_table.sql에도 추가했습니다.)
 CREATE TABLE recipe_report
 (
 	reportseq number(5) NOT NULL,
@@ -35,6 +37,59 @@ ALTER TABLE recipe_report
 
 -- members 테이블에 address3이 없다면
 alter table members add address3 varchar2(100);
+
+-- recipe와 관련한 외래키 삭제 => 다시 생성
+-- ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명 (** 개인별로 제약조건명 다르니 조회 후 이름 변경)
+ALTER TABLE favorite DROP CONSTRAINT SYS_C007397;
+ALTER TABLE interest DROP CONSTRAINT SYS_C007398;
+ALTER TABLE processImg DROP CONSTRAINT SYS_C007399;
+ALTER TABLE recipeTag DROP CONSTRAINT SYS_C007400;
+ALTER TABLE reply DROP CONSTRAINT SYS_C007402;
+ALTER TABLE recipe_page DROP CONSTRAINT SYS_C007401;
+
+-- 외래키 재생성 
+
+ALTER TABLE favorite
+	ADD FOREIGN KEY (rnum)
+	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
+;
+ALTER TABLE interest
+	ADD FOREIGN KEY (rnum)
+	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
+;
+ALTER TABLE processImg
+	ADD FOREIGN KEY (rnum)
+	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
+;
+ALTER TABLE recipeTag
+	ADD FOREIGN KEY (rnum)
+	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
+;
+ALTER TABLE recipe_page
+	ADD FOREIGN KEY (rnum)
+	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
+;
+ALTER TABLE reply
+	ADD FOREIGN KEY (rnum)
+	REFERENCES recipe (rnum)
+	ON DELETE CASCADE
+;
+
+
+-- ing_view 뷰 생성(재료 불러올 때 필요)
+CREATE OR REPLACE VIEW ing_view 
+AS
+SELECT r.rnum, r.tag_id, i.tag, r.quantity FROM recipeTag r, ingTag i where r.tag_id=i.tag_id;
+select * from ing_view;
+
+-- favorite 필드가 없다면
+alter table recipe_page add favorites number(10) default 0;
+-- 위 명령 실행한 후 final_view.sql에서 view 생성 
 
 -- 배너리스트를 가져오는 프로시져입니다.
 CREATE OR REPLACE PROCEDURE getRecipeBannerList(
@@ -420,16 +475,6 @@ IS
 BEGIN
     select count(*) into v_cnt from reply where rnum = p_rnum;
     p_replycnt := v_cnt;
-END;
-
--- 댓글 삭제
-create or replace PROCEDURE deleteReply(
-    p_replynum IN boardReply.replynum%TYPE
-)
-IS
-BEGIN
-    delete from boardReply where replynum=p_replynum;
-    commit;
 END;
 
 -- 레시피 좋아요(관심리스트 등록)
