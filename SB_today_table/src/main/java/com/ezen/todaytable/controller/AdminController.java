@@ -355,35 +355,35 @@ public class AdminController {
 				@RequestParam(value="refer",required=false) String refer ) {
 				HttpSession session = request.getSession();
 				
+				//회원 공지사항으로 이동
 				ModelAndView mav = new ModelAndView();
-				if (session.getAttribute("loginAdmin") == null) {
-					mav.setViewName("admin/member/adminLogin");
-				return mav;
-				}
-				
-				mav.addObject("adminUser",null);
-				
-				if (session.getAttribute("loginAdmin") != null) {
-					HashMap<String, Object> adminUser =(HashMap<String, Object>)session.getAttribute("loginAdmin");
-					mav.addObject("adminUser",adminUser.get("AID"));
-					System.out.println(adminUser.get("AID"));
-				}
-				
 				HashMap<String, Object> paramMap = new HashMap<String, Object>();
 				paramMap.put("request", request);
 				paramMap.put("ref_cursor", null);
-				
 				as.getnoticeList(paramMap);
-
 				ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
-				
-				
+
 				mav.addObject("paging", (Paging) paramMap.get("paging"));
 				mav.addObject("key", (String) paramMap.get("key"));
 				mav.addObject("noticeList", list);
 				mav.setViewName("admin/notice/noticeList");
+				
+				
+				//관리자 공지사항으로 이동
 				String admin="admin";
 				if(admin.equals(refer)) {
+					if (session.getAttribute("loginAdmin") == null) {
+						mav.setViewName("admin/member/adminLogin");
+						return mav;
+					}
+				
+					mav.addObject("adminUser",null);
+				
+					if (session.getAttribute("loginAdmin") != null) {
+						HashMap<String, Object> adminUser =(HashMap<String, Object>)session.getAttribute("loginAdmin");
+						mav.addObject("adminUser",adminUser.get("AID"));
+					}	
+					
 				mav.setViewName("admin/notice/adminNoticeList");	
 				}
 			

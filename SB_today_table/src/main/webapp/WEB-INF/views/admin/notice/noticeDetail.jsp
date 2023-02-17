@@ -5,7 +5,7 @@
 	<h1>공지사항</h1>   
 	<form name="frm" method="post">
 	<input type="hidden" name="qseq" value="${noticeVO.ASEQ}">
-	<table id="qnaList"> <!-- 게시물의 내용 -->
+	<table> <!-- 게시물의 내용 -->
 		<tr><th colspan='2' style="width:800px; text-align: center;"><img src="imageNotice/${noticeVO.AIMAGE}" style="height:250px; width:250px;"></th>
 		<tr><th width="400px">제목</th><td align="left"width="400px"> ${noticeVO.ASUBJECT}</td></tr>
 		<tr><th width="400px">등록일</th><td align="left"width="400px"> <fmt:parseDate value = "${noticeVO.ADATE}" var = "aDate" pattern = "yy/MM/dd" />

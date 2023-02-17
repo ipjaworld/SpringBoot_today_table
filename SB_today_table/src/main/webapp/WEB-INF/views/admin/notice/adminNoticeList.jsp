@@ -30,7 +30,7 @@
 	    	</td>
 	    	<td>${noticeVO.ASEQ}</td>
 	    	<td>	    	
-	    	<img src="${noticeVO.AIMAGE}" style="width:100px;"/>	    	
+	    	<img src="imageNotice/${noticeVO.AIMAGE}" style="width:100px;"/>	    	
 	    	</td>
 	      	<td><a href="noticeDetail?aseq=${noticeVO.ASEQ}&refer=admin">${noticeVO.ASUBJECT}</a></td>
 	      	<td>${noticeVO.AID}(관리자)</td>

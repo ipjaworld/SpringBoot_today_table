@@ -18,7 +18,7 @@
 	            <div class="footer-area-item col-md-2 col-sm-4"><a href="#" onclick="footer_go_to('ourstory')">회사 소개</a></div>
 	            <div class="footer-area-item col-md-2 col-sm-4"><a href="notice?first='1'">공지사항</a></div>
 	            <div class="footer-area-item col-md-2 col-sm-4"><a href="#" onclick="footer_go_to('terms')">이용약관</a></div>
-	            <div class="footer-area-item col-md-3 col-sm-6"><a href="#" onclick="footer_go_to('privatePolicy')">개인정보처리방침</a></div>
+	            <div class="footer-area-item col-md-2 col-sm-6"><a href="#" onclick="footer_go_to('privatePolicy')">개인정보방침</a></div>
 	            <div class="footer-area-item col-md-2 col-sm-6"><a href="qnaList?page=1&refer=all">고객센터</a></div>
 	            <div class="footer-area-item col-md-2 col-sm-7"><a href="admin">관리자</a></div>
 	        </div>
