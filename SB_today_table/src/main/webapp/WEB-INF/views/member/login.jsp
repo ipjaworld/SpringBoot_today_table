@@ -6,6 +6,7 @@
 <article id="loginForm">
 	<h1 class="login">Login</h1>
 	<form method="post" action="login" name="loginFrm">
+	<input type="hidden" name="refer" value="${refer}">
 		<fieldset id="loginField"> 
 			<legend></legend>
 				<label>User ID</label><input name="id" type="text"/><br>

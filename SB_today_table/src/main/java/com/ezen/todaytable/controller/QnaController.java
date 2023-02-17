@@ -33,6 +33,8 @@ public class QnaController {
 				@RequestParam("refer") String refer){
 			ModelAndView mav = new ModelAndView();
 			if (session.getAttribute("loginUser")==null) {
+				session.setAttribute("refer", refer);
+				
 				mav.setViewName("member/login");
 				return mav;
 			}

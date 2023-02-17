@@ -71,6 +71,10 @@ public class MemberController {
 	               HttpSession session = request.getSession();
 	               session.setAttribute("loginUser", mvo);
 	               url = "redirect:/";
+	               String refer=(String)session.getAttribute("refer");
+	               if(refer.equals("all")) {
+	            	   url = "redirect:/qnaList?refer="+refer;
+	               }
 	            }
 	           
 	      }
