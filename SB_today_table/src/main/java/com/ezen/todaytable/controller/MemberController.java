@@ -68,13 +68,15 @@ public class MemberController {
 		               model.addAttribute("message", "휴면 계정입니다. 휴면계정을 복구하려면 관리자에게 문의하세요");
 		            }
 	            else if( mvo.get("PWD").equals(membervo.getPwd())) {
-	               HttpSession session = request.getSession();
-	               session.setAttribute("loginUser", mvo);
-	               url = "redirect:/";
-	               String refer=(String)session.getAttribute("refer");
-	               if(refer.equals("all")) {
-	            	   url = "redirect:/qnaList?refer="+refer;
-	               }
+	            	HttpSession session = request.getSession();
+	            	
+	            	System.out.println(session.getAttribute("refer")+"나와라");
+		               if(session.getAttribute("refer")!=null) {
+		            	   url = "redirect:/qnaList?refer=all";
+		               }else{
+		            	   session.setAttribute("loginUser", mvo);
+		            	   url = "redirect:/";
+		               }
 	            }
 	           
 	      }
