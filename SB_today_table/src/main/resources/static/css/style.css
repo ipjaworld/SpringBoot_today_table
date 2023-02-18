@@ -1479,3 +1479,14 @@ padding:10px;
 	font-weight:bold;
 	text-align:center;
 }
+
+/* show and hide 관련 클래스 입니다.*/
+.show_and_hide{
+    transition-duration: 0.2s;
+}
+.hide{
+    opacity: 0;
+}
+.show{
+    opacity: 100;
+}
