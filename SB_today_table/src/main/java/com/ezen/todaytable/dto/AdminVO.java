@@ -21,7 +21,7 @@ public class AdminVO {
 	@NotEmpty(message="글 내용을 입력하세요")
 	private String acontent; 
 	
-	
+	private String mustread;
 	private String adate; 
 	private String aimage;
 	private int aseq; 

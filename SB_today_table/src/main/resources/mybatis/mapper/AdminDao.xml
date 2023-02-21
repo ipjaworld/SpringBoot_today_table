@@ -170,13 +170,21 @@
          ) 
       }
 </select >
-
+<!--공지사항 입력  -->
 <insert id="insertNotice" statementType="CALLABLE" parameterType="com.ezen.todaytable.dto.AdminVO">
 	{
          CALL insertNotice (
-         #{aid}, #{asubject},#{acontent},#{aimage},#{pwd}
+         #{aid}, #{asubject},#{acontent},#{aimage},#{pwd},#{mustread}
          ) 
       }
 </insert>
+<!--공지사항 삭제  -->
+<delete id="adminDeleteNotice">
+	{
+         CALL adminDeleteNotice (
+         #{aseq}
+         ) 
+      }
+</delete>
 	
 </mapper>

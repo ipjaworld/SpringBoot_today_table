@@ -29,7 +29,7 @@
 	    	</td>
 	    	<td>${noticeVO.ASEQ}</td>
 	    	<td>	    	
-	    	<img src="${noticeVO.AIMAGE}" style="width:100px;"/>	    	
+	    	<img src="imageNotice/${noticeVO.AIMAGE}" style="width:100px;"/>	    	
 	    	</td>
 	      	<td><a href="#" onClick="go_view('noticeDetail','aseq','${noticeVO.ASEQ}')">${noticeVO.ASUBJECT}</a></td>
 	      	<td>${noticeVO.AID}(관리자)</td>

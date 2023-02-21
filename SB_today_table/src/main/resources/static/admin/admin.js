@@ -75,6 +75,7 @@ function go_recommendlist(rnum,gesi){
 	}
 }
 
+/*레시피 삭제*/
 function go_adminRecipe_delete(){
 	var count = 0;
 	if( document.frm.rnum.length == undefined ){
@@ -92,6 +93,27 @@ function go_adminRecipe_delete(){
 	}	
 	else{	
 		document.frm.action = "adminDeleteRecipe";
+	    document.frm.submit();    
+	}    
+}
+
+function go_notice_delete(){
+	var count = 0;
+	if( document.frm.aseq.length == undefined ){
+		if( document.frm.aseq.checked==true ) count++;
+		
+	}else{
+		for( var i=0; i<document.frm.aseq.length; i++){
+			if( document.frm.aseq[i].checked==true){
+				count++;
+			}
+		}
+	}	
+	if(count == 0) {
+		alert("삭제할 게시물을 선택하세요");
+	}	
+	else{	
+		document.frm.action = "adminDeleteNotice";
 	    document.frm.submit();    
 	}    
 }

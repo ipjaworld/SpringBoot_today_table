@@ -291,45 +291,30 @@ CREATE OR REPLACE PROCEDURE insertNotice(
     a_subject in admins.asubject%type,
     a_content  in admins.acontent%type,
     a_image in admins.aimage%type,
-    a_pwd in admins.pwd%type
-    
+    a_pwd in admins.pwd%type,
+    a_mustread in admins.mustread%type   
 )
 IS
 BEGIN
-   insert into admins (aseq,aid,asubject,acontent,aimage,pwd) values(admin_seq.nextVal,a_id,a_subject,a_content,a_image,a_pwd);
+    if a_mustread='Y' then
+    insert into admins (aseq,aid,asubject,acontent,aimage,pwd,mustread) values(admin_seq.nextVal,a_id,a_subject,a_content,a_image,a_pwd,a_mustread);
+    else
+     insert into admins (aseq,aid,asubject,acontent,aimage,pwd) values(admin_seq.nextVal,a_id,a_subject,a_content,a_image,a_pwd);
+    end if;
+    commit;
+END;
+--공지사항 삭제
+CREATE OR REPLACE PROCEDURE adminDeleteNotice(
+    a_aseq in admins.aseq%type
+)
+IS
+BEGIN
+    delete from admins where aseq=a_aseq;
     commit;
 END;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+select*from admins;
+insert into admins (aseq,aid,pwd) values(admin_seq.nextVal,'admin','admin');
 - ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명
 ALTER TABLE favorite DROP CONSTRAINT SYS_C007581;
 ALTER TABLE interest DROP CONSTRAINT SYS_C007582;
@@ -337,51 +322,6 @@ ALTER TABLE processImg DROP CONSTRAINT SYS_C007583;
 ALTER TABLE recipeTag DROP CONSTRAINT SYS_C007596;
 ALTER TABLE reply DROP CONSTRAINT SYS_C007586;
 ALTER TABLE recipe_page DROP CONSTRAINT SYS_C007585;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 select*from recipe_page;
 commit;

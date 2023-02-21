@@ -46,7 +46,9 @@ public interface IAdminDao {
 	void getnoticeList(HashMap<String, Object> paramMap);
 	//공지사항 디테일
 	void getNoticeDetail(HashMap<String, Object> paramMap);
-	
+	//공지사항 입력
 	void insertNotice(AdminVO adminvo);
+	//공지사항 삭제
+	void adminDeleteNotice(int aseq);
 	
 }

@@ -11,14 +11,16 @@
 			<fieldset id="join">
 				<legend>Notice Write</legend><br>
 				<div>
-					<label>제 목</label>&nbsp;<input type="text" name="asubject" value="${dto.asubject}"><br>
+					<label>제 목</label>&nbsp;<input type="text" name="asubject" size="60" value="${dto.asubject}">
+					&nbsp;&nbsp; 중요 <input type="checkbox" name="mustread" value="Y">
+					<br>
 				</div>
 				<div>
 					<label>내 용:</label> <textarea cols="70" rows="15"	name="acontent" style="vertical-align:middle;">${dto.acontent}</textarea><br>
 				</div>
 				<div>
 					<label>이미지 사진</label><input type="button" value="파일선택"
-						onClick="selectimg();">
+						onClick="selectimg();"><br>
 					<div id="image" style="float: left"></div>
 					<div>
 						<input type="hidden" name="aimage">

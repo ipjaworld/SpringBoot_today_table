@@ -329,6 +329,7 @@ public class AdminService {
 	      paramMap.put("paging", paging);
 		
 	}
+	//레시피삭제
 	public void adminDeleteRecipe(int[] rnum) {
 		
 		for(int rnum1: rnum) {
@@ -336,6 +337,7 @@ public class AdminService {
 		}
 		
 	}
+	//공지사항 리스트
 	public void getnoticeList(HashMap<String, Object> paramMap) {
 		HttpServletRequest request = (HttpServletRequest)paramMap.get("request");
 	      HttpSession session = request.getSession();   
@@ -385,12 +387,22 @@ public class AdminService {
 	      paramMap.put("paging", paging);
 		
 	}
+	//공지사항 디테일
 	public void getNoticeDetail(HashMap<String, Object> paramMap) {
 		adao.getNoticeDetail(paramMap);
 		
 	}
+	//공지사항 글작성
 	public void insertNotice(AdminVO adminvo) {
 		adao.insertNotice(adminvo);
+		
+	}
+	//공지사항 삭제
+	public void adminDeleteNotice(int[] num) {
+		
+		for(int aseq:num) {
+			adao.adminDeleteNotice(aseq);
+		}
 		
 	}
 	

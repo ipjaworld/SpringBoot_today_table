@@ -347,6 +347,18 @@ public class AdminController {
 
 		return "redirect:/adminRecipeList?first='1'";
 	}
+	//공지사항 삭제
+	
+	@RequestMapping("/adminDeleteNotice")
+	public String adminDeleteNotice(@RequestParam("aseq") int[] aseq) {
+		for(int a: aseq) {
+		System.out.println("aseq : "+a);
+		}
+		as.adminDeleteNotice(aseq);
+		
+		return "redirect:/notice?first=1&refer=admin";
+	}
+	
 	
 	
 	// 공지사항 리스트 이동
@@ -457,6 +469,10 @@ public class AdminController {
 			}else if(result.getFieldError("acontent")!=null) {
 				model.addAttribute("message",result.getFieldError("acontent").getDefaultMessage());
 			}else {	
+				String mread="Y";
+				if(!mread.equals(adminvo.getMustread())) {
+					adminvo.setMustread("N");
+				}
 				as.insertNotice(adminvo);
 				// Service와 Dao에 insertBoard를 제작해주세요
 				url="redirect:/notice?first=1&refer=admin";
