@@ -7,8 +7,9 @@
 	<table class="admin-search-area" style="margin:0 auto">
 		<tr><td>제목+내용 검색 
 			<input type="text" name="key" value="${key}" > 
-			    <input class="btn" type="button" value="검색"   onClick="location.href='notice?first=1&refer=admin&key=${key}'">
-			    <input class="btn" type="button" name="btn_total" value="전체보기 "  onClick="location.href='notice?first=1&refer=admin'">		    
+				<input type="hidden" name="refer" value="admin">
+			    <input class="btn" type="button" value="검색"   onClick="go_search('notice');">
+			    <input class="btn" type="button" name="btn_total" value="전체보기 "  onClick="go_total('notice');">		    
 		    </td></tr>
 		<tr>    		    
 	</table>
