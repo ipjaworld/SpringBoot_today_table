@@ -8,7 +8,7 @@ function goFavOrRec(ths){
 function goRecipeCate(ths, status){
 	// let kind = $(ths).text();
 	let kind=$(ths).attr('name');
-	alert("kind : " + kind);
+	// alert("kind : " + kind);
 	location.href="recipeCategory?kind="+kind+"&status="+status+"&page=1";
 }
 
@@ -266,7 +266,7 @@ function go_recipe(comm){
 	}else{
 		checkIng = $('input[name="checkIng"]').val();
 	} 
-	alert("checkIng : " + checkIng + "divCount : " + divCount ); // 확인용 
+	// alert("checkIng : " + checkIng + "divCount : " + divCount ); // 확인용 
 	document.frm.action = comm + "?count="+ divCount;
 	document.frm.submit();
 }
@@ -353,11 +353,12 @@ $(function(){ // 레시피 쓰기/수정에서 '추가' 버튼 눌렀을 때
       
 // 레시피 작성 중 이미지 수정 버튼을 눌렀을 때
 $(document).on("click", '#update-button', function(event) { 
-		alert("이미지 수정 div 생성");
+		// alert("이미지 수정 div 생성");
 		let num = $(this).attr('name');
 		$('.recipe_process_edit_area').append(
-			`<Strong>${num}번 이미지 수정</Strong>`+
+			// `<Strong>${num}번 이미지 수정</Strong>`+
 			"<div class='prs_add_btn mb-5' style='position:relative;  border:1px solid black; width:500px; margin:0 auto;'>" +
+			`<Strong>${num}번 이미지 수정</Strong>`+
 			"<form name='ImgEditForm' id='ImgEditForm' method='post'  enctype='multipart/form-data' >" + 
 			"<input type='file' name='editImg'>" + 
 			"<input type='button' id='editImgButton' value='이미지 수정' name='" + num + "'>" + 
@@ -368,7 +369,7 @@ $(document).on("click", '#update-button', function(event) {
 
 // 이미지 수정을 취소할 때	
 $(document).on("click", '#deleteEditForm', function(event) { 
-		alert("이미지 수정 div 삭제");
+		// alert("이미지 수정 div 삭제");
 		let num = $(this).attr('name').substr(6);
 		$('input[name="delete'+num+'"').closest('div').remove();
 	});
@@ -378,7 +379,7 @@ $(document).on("click", '#delete-button', function(event) {
 	let delete_name = $(this).attr('name');
 	// alert("delete_name : " + delete_name);
 	let j = delete_name;
-	alert("삭제할 div 번호 : "  + j);
+	// alert("삭제할 div 번호 : "  + j);
     // $('div[name="process'+j+'"]').remove();
     // let origin = $(this).parent('div').nextAll('.process').attr('name').substr(7);
 	/*
@@ -395,7 +396,7 @@ $(document).on("click", '#delete-button', function(event) {
 	   $(this).children('.btn').attr('name', (num-1));
 		});
 	$(this).parent('div').remove();
-	alert("삭제 완료");
+	// alert("삭제 완료");
 	
 });
 

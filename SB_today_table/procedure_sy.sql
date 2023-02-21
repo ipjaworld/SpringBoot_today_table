@@ -1,7 +1,7 @@
 select * from recipe order by rnum desc;
 select * from recipe_page;
 select * from recipe_page_view;
-select * from reply;
+select * from reply order by replyseq desc;
 select * from recipeTag;
 select * from ingTag;
 select * from processImg order by rnum;

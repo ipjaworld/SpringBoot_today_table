@@ -15,7 +15,7 @@ public class ReplyVO {
 	private Integer rnum;
 	@NotEmpty(message="덧글 내용을 입력하세요.")
 	@NotNull(message="덧글 내용을 입력하세요.")
-	private String content;
+	private String reply;
 	private Timestamp replydate;
 	
 }

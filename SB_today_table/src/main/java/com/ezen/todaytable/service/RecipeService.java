@@ -30,11 +30,8 @@ public class RecipeService {
 		// * 아래 4개의 과정을 하나의 프로시저로
 		rdao.getRecipe(paramMap);
 		// recipe 조회
-		
 		// 재료 조회
-		
 		// 상세과정 조회
-		
 		// 댓글 리스트 조회
 		
 		
@@ -68,7 +65,6 @@ public class RecipeService {
 		paging.setDisplayRow(12);
 		paging.setPage(page);
 		
-		// 초안 : favorites list만
 		HashMap<String, Object> cntMap = new HashMap<String, Object>();
 		cntMap.put("cnt", 0);
 		if(Integer.parseInt(String.valueOf(paramMap.get("kind")))==1) // 관리자 리스트를 선택했다면
@@ -103,65 +99,14 @@ public class RecipeService {
 	}
 
 	public void insertRecipe(HashMap<String, Object> paramMap) {
-		/*
-		String checkIng = (String) paramMap.get("checkIng");
-		System.out.println("service로 전달된 checkIng : " + checkIng);
-		String [] ingredients = checkIng.split("\\s");
-		for(String str : ingredients) { // 확인용
-			System.out.println("ingredients 배열 : " + str);
-		}
-		ArrayList<String> ingArray = new ArrayList<String>();
-		ArrayList<String> qtyArray = new ArrayList<String>();
-		for(int i=0; i<ingredients.length; i++) {
-			if(ingredients[i].startsWith("#")) {
-				String substr = ingredients[i].substring(1);
-				ingArray.add(substr);
-			}else {
-				qtyArray.add(ingredients[i]);
-			}
-		}
-		
-		for(String str : ingArray) { // 확인용
-			System.out.println("ingArray 내용 : " + str);
-		}
-		for(String str : qtyArray) { // 확인용
-			System.out.println("qtyArray 내용 : " + str);
-		}
-		*/
-		
-		
 		rdao.insertRecipe(paramMap);
-		// 방금 넣은 rnum 조회해서 리턴
-		/*
-		int rnum = Integer.parseInt(String.valueOf(paramMap.get("max_rnum")));
-		System.out.println("rnum : " + rnum);
-		ArrayList<ProcessImgVO> processList = (ArrayList<ProcessImgVO>) paramMap.get("processList");
-		// process 반복문 프로시져 : processList 반복하며 insertProcess 반복(rnum 활용) 
-		for(ProcessImgVO pvo : processList) {
-			HashMap<String, Object> pvoMap = new HashMap<String, Object>();
-			pvoMap.put("rnum", rnum);
-			pvoMap.put("iseq", pvo.getIseq());
-			pvoMap.put("links", pvo.getLinks());
-			pvoMap.put("description", pvo.getDescription());
-			rdao.insertProcess(pvoMap);
-			// rdao.insertProcess(rnum, pvo.getIseq(), pvo.getLinks(), pvo.getDescription());
-		}
-		
-		for(int i=0; i<ingArray.size(); i++) {
-			rdao.insertIng(ingArray.get(i), rnum, qtyArray.get(i));
-			// rdao.insertRecipeTag(qtyArray.get(i));
-		}
-		*/
-		// 재료 반복문 프로시저 : 
-		// 1) 기존 ingTag에 있는지 확인 = 있다면 기존 태그 활용
-		// = 없다면 : 2) ingTag에 삽입 3) 방금 삽입한 태그 아이디 확인 4) recipeTag에 삽입
 		
 	}
 	
 public void insertProcessIng(HashMap<String, Object> paramMap) {
 		
 		String checkIng = (String) paramMap.get("checkIng");
-		System.out.println("service로 전달된 checkIng : " + checkIng);
+		System.out.println("service로 전달된 checkIng : " + checkIng); // 확인용
 		String [] ingredients = checkIng.split("\\s");
 		ArrayList<String> ingArray = new ArrayList<String>();
 		ArrayList<String> qtyArray = new ArrayList<String>();
@@ -191,17 +136,17 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 		for(int i=0; i<ingArray.size(); i++) {
 			HashMap<String, Object> ingMap = new HashMap<String, Object>();
 			ingMap.put("tag", (String) ingArray.get(i));
-			System.out.println("tag : " +  ingArray.get(i));
+			System.out.println("tag : " +  ingArray.get(i)); // 확인용
 			ingMap.put("rnum", rnum);
-			System.out.println("ing에서의 rnum : " + rnum);
+			// System.out.println("ing에서의 rnum : " + rnum);
 			ingMap.put("quantity", (String) qtyArray.get(i));
-			System.out.println("quantity : " +  qtyArray.get(i));
+			System.out.println("quantity : " +  qtyArray.get(i)); // 확인용
 			ingMap.put("cnt", null);
 			rdao.getTagCnt(ingMap);
 			// rdao.insertIng(ingArray.get(i), rnum, qtyArray.get(i));
 			// rdao.insertIng(ingMap);
 			int cnt = Integer.parseInt(String.valueOf(ingMap.get("cnt")));
-			System.out.println("cnt : " + cnt);
+			System.out.println("cnt : " + cnt); // 확인용
 			if(cnt==0) {
 				rdao.insertTag(ingMap);
 				System.out.println("cnt가 0이므로 태그가 삽입됩니다.");
@@ -264,15 +209,15 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 		for(int i=0; i<ingArray.size(); i++) {
 			HashMap<String, Object> ingMap = new HashMap<String, Object>();
 			ingMap.put("tag", (String) ingArray.get(i));
-			System.out.println("tag : " +  ingArray.get(i));
+			System.out.println("tag : " +  ingArray.get(i)); // 확인용
 			ingMap.put("rnum", rnum);
-			System.out.println("ing에서의 rnum : " + rnum);
+			// System.out.println("ing에서의 rnum : " + rnum);
 			ingMap.put("quantity", (String) qtyArray.get(i));
-			System.out.println("quantity : " +  qtyArray.get(i));
+			System.out.println("quantity : " +  qtyArray.get(i)); // 확인용
 			ingMap.put("cnt", null);
 			rdao.getTagCnt(ingMap);
 			int cnt = Integer.parseInt(String.valueOf(ingMap.get("cnt")));
-			System.out.println("cnt : " + cnt);
+			System.out.println("cnt : " + cnt); // 확인용
 			if(cnt==0) {
 				rdao.insertTag(ingMap);
 				System.out.println("cnt가 0이므로 태그가 삽입됩니다.");
@@ -319,7 +264,7 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 			paging.setDisplayRow(12);
 			paging.setPage(page);
 			
-			System.out.println("key 확인용 : " + key); // 확인용
+			// System.out.println("key 확인용 : " + key); // 확인용
 			
 			// ArrayList<HashMap<String, Object>> recipeList = new ArrayList<HashMap<String, Object>>();
 			
@@ -402,7 +347,7 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 		// System.out.println("ref_cursor(0) : " + recipeList.get(0)); // 확인용
 		ArrayList<Integer> replyCountList = new ArrayList<Integer>();
 		for(HashMap<String, Object> rvo : recipeList) {
-			System.out.println("replycnt를 위해 들어가는 rnum : " + rvo.get("RNUM"));
+			// System.out.println("replycnt를 위해 들어가는 rnum : " + rvo.get("RNUM"));
 			rvo.put("replycnt", 0);
 			rdao.getReplyCount(rvo);
 			replyCountList.add(Integer.parseInt(String.valueOf(rvo.get("replycnt"))));
@@ -435,7 +380,7 @@ public void insertProcessIng(HashMap<String, Object> paramMap) {
 		cntMap.put("cnt", 0);
 		cntMap.put("recipekey", paramMap.get("recipekey"));
 		cntMap.put("kind", Integer.parseInt(String.valueOf(paramMap.get("kind"))));
-		System.out.println("service의 kind : " + paramMap.get("kind"));
+		// System.out.println("service의 kind : " + paramMap.get("kind"));
 		rdao.getRecipeCounts(cntMap); 
 		int count = Integer.parseInt(String.valueOf(cntMap.get("cnt")));
 		paging.setTotalCount(count);

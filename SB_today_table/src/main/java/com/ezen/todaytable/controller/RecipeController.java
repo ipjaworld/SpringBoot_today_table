@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.todaytable.dto.Paging;
 import com.ezen.todaytable.dto.ProcessImgVO;
@@ -93,10 +94,10 @@ public class RecipeController {
 		HashMap<String, Object> loginUser = (HashMap<String, Object>) session.getAttribute("loginUser");
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("rnum", rnum);
-		System.out.println("loginUser : " + loginUser);
+		// System.out.println("loginUser : " + loginUser);
 		if(session.getAttribute("loginUser") == null) paramMap.put("id", "none");
 		else paramMap.put("id", (String) loginUser.get("ID"));
-		System.out.println("id : " + (String) loginUser.get("ID"));
+		// System.out.println("id : " + (String) loginUser.get("ID"));
 		
 		// 1. recipe 전달받는 cursor
 		paramMap.put("ref_cursor1", null);
@@ -193,7 +194,6 @@ public class RecipeController {
 	@RequestMapping(value="editImg", method=RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> editImg(Model model, HttpServletRequest request) {
-		System.out.println("editImg 도착 ");
 		String path = context.getRealPath("/imageRecipe");
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
@@ -217,7 +217,6 @@ public class RecipeController {
 			@RequestParam("count") int count) {
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-		System.out.println("writeRecipe 도착");
 		mav.setViewName("recipe/recipeForm");
 		if(result.getFieldError("subject") != null) {
 			mav.addObject("message", result.getFieldError("subject").getDefaultMessage());
@@ -289,7 +288,6 @@ public class RecipeController {
 	@RequestMapping("/recipeUpdateForm")
 	public ModelAndView recipeUpdateForm(HttpServletRequest request, @RequestParam("rnum") int rnum) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println("recipeUpdateForm controller 도착");
 		String url = "recipe/recipeUpdateForm";
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginUser") == null) url = "member/loginForm";
@@ -323,9 +321,8 @@ public class RecipeController {
 			HttpServletRequest request, @RequestParam("count") int count) {
 		ModelAndView mav = new ModelAndView();
 		
-		System.out.println("id : " + recipeformvo.getId() + "rnum : " + recipeformvo.getRnum() + "thumbnail : " + recipeformvo.getThumbnail());
-		System.out.println("updateRecipe 도착");
-		System.out.println("request.getParameter : " + request.getParameter("id"));
+		// System.out.println("id : " + recipeformvo.getId() + "rnum : " + recipeformvo.getRnum() + "thumbnail : " + recipeformvo.getThumbnail());
+		// System.out.println("request.getParameter : " + request.getParameter("id"));
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		
 		if(result.getFieldError("subject") != null) {
@@ -379,7 +376,6 @@ public class RecipeController {
 		// paramMap.put("lastTagId", 0);
 		rs.updateRecipe(paramMap);
 		// rs.updateProcessIng(paramMap);
-		System.out.println("processIng 성공");
 		mav.setViewName("redirect:/recipeDetailWithoutView?rnum="+recipeformvo.getRnum());
 		
 		}
@@ -404,9 +400,11 @@ public class RecipeController {
 		
 		paramMap.put("replyCountList", null);
 		rs.getReplyCount(paramMap);
+		/*
 		for(Integer replycnt : (ArrayList<Integer>) paramMap.get("replyCountList")) { // 확인용
 			System.out.println("replycnt : " + replycnt);
 		}
+		*/
 		mav.addObject("recipeList", (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor"));
 		mav.addObject("paging", (Paging) paramMap.get("paging"));
 		mav.addObject("key", (String) paramMap.get("key"));
@@ -558,7 +556,7 @@ public class RecipeController {
 			@ModelAttribute("replyVO") @Valid ReplyVO replyVO, 	BindingResult result,
 			@RequestParam("rnum") int rnum,
 			@RequestParam("reply") String reply,
-			HttpServletRequest request
+			HttpServletRequest request, RedirectAttributes re
 			) {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
@@ -567,13 +565,23 @@ public class RecipeController {
 		if( loginUser == null ) {
 			mav.setViewName("member/login");
 		}else {
-			HashMap<String, Object> paramMap = new HashMap<>();
-			paramMap.put("id", loginUser.get("ID"));
-			paramMap.put("rnum", rnum );
-			paramMap.put("reply", reply );
+			if(result.getFieldError("reply")!=null) {
+				re.addFlashAttribute("replyMessage", result.getFieldError("reply").getDefaultMessage());
+				mav.setViewName("redirect:/recipeDetailWithoutView?rnum="+rnum);
+				// mav.addObject("replyMessage", result.getFieldError("reply").getDefaultMessage());
+				System.out.println("replyMessage : " + result.getFieldError("reply").getDefaultMessage());
+			}
+			else {
+				HashMap<String, Object> paramMap = new HashMap<>();
+				paramMap.put("id", loginUser.get("ID"));
+				paramMap.put("rnum", rnum );
+				paramMap.put("reply", reply );
+				
+				rs.addReply( paramMap );
+				System.out.println("addReply 성공");
+				mav.setViewName("redirect:/recipeDetailWithoutView?rnum="+rnum);
+			}
 			
-			rs.addReply( paramMap );
-			mav.setViewName("redirect:/recipeDetailWithoutView?rnum="+rnum);
 		}
 		return mav;
 	}

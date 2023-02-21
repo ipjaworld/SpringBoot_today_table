@@ -49,7 +49,7 @@ $(function(){
 	            if(data.STATUS == 1){  	
 	            	let name = $('.process').length;
 					let i = name + 1;
-					alert("i : " + i);
+					// alert("i : " + i);
 	            	$("#recipe-process").append(
 	            			"<div class='process' name='process"+i +"'>"+
 	            			"<img height='150' id='process"+i+"' src='imageRecipe/"+data.FILENAME+"' />"+
@@ -81,11 +81,11 @@ $(document).on("click", '#editImgButton', function(event) {
 	        success : function( data ){
 	            if(data.STATUS == 1){
 	            	let num = $(this).attr('name');
-	            	alert('전달된 editImgButton의 num : ' + num);
+	            	// alert('전달된 editImgButton의 num : ' + num);
 	            	$('#process'+num).attr('src', 'imageRecipe/'+data.FILENAME);
 	            	$('input[name="processImg'+num+'"]').val(data.FILENAME);
 	            	$(this).closest('div').remove();
-	            	alert("이미지 수정 후 삭제 완료");
+	            	// alert("이미지 수정 후 삭제 완료");
 	            }
 	        },
 	        error: function(request,status,error) {	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);	}
@@ -94,22 +94,23 @@ $(document).on("click", '#editImgButton', function(event) {
 
 </script>
 
-<div class="recipe_process_edit_area">
-	<div style="position:relative;  border:1px solid black; width:500px; margin:0 auto;">
-		<form name="thumbnailForm" id="thumbnailForm" method="post"  enctype="multipart/form-data" >
-			<input type="file" name="timg">
-			<!-- <input type="file" name="thumbnail" required> -->
-			<input type="button" id="thumbButton" value="썸네일 추가">
-		</form>
-	</div> 
-	${message}
-
-</div>
-
 <article id="recipe-update">
 	<h1>레시피&nbsp;&nbsp;작성&nbsp;/&nbsp;등록</h1>
+	<c:if test="${not empty message}">
+		테스트
+		<script type="text/javascript">alert(${message});</script>
+	</c:if>
 	<!-- 썸네일 업로드 폼 -->
-	
+	<div class="recipe_process_edit_area">
+		<div style="position:relative;  border:1px solid black; width:500px; margin:0 auto;">
+			<form name="thumbnailForm" id="thumbnailForm" method="post"  enctype="multipart/form-data" >
+				<input type="file" name="timg">
+				<!-- <input type="file" name="thumbnail" required> -->
+				<input type="button" id="thumbButton" value="썸네일 추가">
+			</form>
+		</div> 
+		
+	</div>
 	<form name="frm" method="post">
 		<%-- <input type="hidden" name="id" value="${loginUser.ID}"/> --%>
 		<input type="hidden" name="nick" value="${loginUser.NICK}"/>
@@ -141,7 +142,7 @@ $(document).on("click", '#editImgButton', function(event) {
 						<option value="4">원플레이트</option>
 						<option value="5">음료</option>
 						<option value="6">디저트</option>
-						<option value="7">직접 입력</option>
+						<!-- <option value="7">직접 입력</option> -->
 					</select>
 				</td>
 			</tr>

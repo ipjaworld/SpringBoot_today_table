@@ -165,6 +165,7 @@ $(document).on("click", '#replyBtn', function(event) {
 	</div>
 	<div class="recipe-reply-input">
 		<form method="post" name="recipeReplyAddForm" id="recipeReplyAddForm">
+		${replyMessage} 
 			<div>
 				<div>
 					<textarea name="reply" rows="3" cols="70"></textarea>
