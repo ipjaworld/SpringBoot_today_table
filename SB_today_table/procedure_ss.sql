@@ -191,11 +191,13 @@ IS
     v_fuseyn varchar2(10);
 BEGIN
     select fuseyn into v_fuseyn from favorite where rnum=p_rnum and id=p_id;
-    
+   
     if v_fuseyn='Y' then
-    update favorite set fuseyn='N'where rnum=p_rnum and id=p_id;
+    update favorite set fuseyn='N' where rnum=p_rnum and id=p_id;
+    update recipe_page set favorites=favorites-1 where rnum=p_rnum;
     elsif v_fuseyn='N'then
     update favorite set fuseyn='Y' where rnum=p_rnum and id=p_id;
+    update recipe_page set favorites=favorites+1 where rnum=p_rnum;
     commit;
 end if;
 END;
