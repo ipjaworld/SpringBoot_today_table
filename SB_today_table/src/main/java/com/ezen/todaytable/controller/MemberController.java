@@ -393,7 +393,7 @@ public class MemberController {
 				ms.withDrawal(id);
 				request.setAttribute("message", "탈퇴되었습니다. 탈퇴회원의 정보는 3개월간 보관되며 그 기간안에 별도의 가입없이 계정 복구가 가능합니다");
 				session.removeAttribute("loginUser");
-				return "redirect:/";
+				return "member/loginForm";
 			}
 		}
 
